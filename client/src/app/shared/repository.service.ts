@@ -11,11 +11,7 @@ export class RepositoryService {
 
   constructor(private http: HttpClient) { }
 
-  postNewUser(user: User) {
-    return lastValueFrom(this.http.post("/api/post/user", user))
 
-
-  }
 
 
 }

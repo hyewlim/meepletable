@@ -15,16 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/game")
 public class GameController {
 
     @Autowired
     private BggService bggService;
 
-    @Autowired
-    private UserRepository userRepository;
 
-    @GetMapping ("/game")
+    @GetMapping
     public ResponseEntity<String> getGames(@RequestParam String name) {
 
         List<Boardgame> bgList = bggService.getGames(name);
@@ -38,15 +36,6 @@ public class GameController {
 
     }
 
-    @PostMapping ("/post/user")
-    public ResponseEntity<String> postUser(@RequestBody User user) {
 
-        System.out.println(user.toString());
-
-        userRepository.postUser(user);
-
-        return null;
-
-    }
 
 }

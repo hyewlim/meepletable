@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
-import {RepositoryService} from "../shared/repository.service";
-import {User} from "../shared/models";
+import {User} from "../../shared/models";
+import {UserService} from "../../shared/user.service";
 
 @Component({
   selector: 'app-signup',
@@ -15,7 +15,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private route: Router,
-              private repository: RepositoryService) {
+              private userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class SignupComponent implements OnInit {
   processForm() {
 
     console.log(this.signupForm.value)
-    this.repository.postNewUser(this.signupForm.value as User)
+    this.userService.postNewUser(this.signupForm.value as User)
 
     this.route.navigate(['collection'])
 

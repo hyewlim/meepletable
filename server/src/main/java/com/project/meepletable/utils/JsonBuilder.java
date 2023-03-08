@@ -31,4 +31,10 @@ public class JsonBuilder {
 
     }
 
+    public static JsonObject authResult(Boolean result){
+        return Json.createObjectBuilder()
+                .add("result", result)
+                .build();
+    }
+
 }

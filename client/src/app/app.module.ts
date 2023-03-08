@@ -6,13 +6,14 @@ import {GoogleMapsModule} from "@angular/google-maps";
 import {AppRoutingModule} from "./app-routing.module";
 
 import { AppComponent } from './app.component';
-import { SignupComponent } from './components/signup.component';
-import { PageNotFoundComponent } from './components/page-not-found.component';
+import { SignupComponent } from './components/user/signup.component';
+import { PageNotFoundComponent } from './components/error/page-not-found.component';
 import { HomeComponent } from './components/home.component';
 import { SearchComponent } from './components/search.component';
 import { MapComponent } from './components/map.component';
 import { HeaderComponent } from './components/header.component';
 import { CollectionComponent } from './components/collection.component';
+import { SigninComponent } from './components/user/signin.component';
 
 
 
@@ -26,6 +27,7 @@ import { CollectionComponent } from './components/collection.component';
     MapComponent,
     HeaderComponent,
     CollectionComponent,
+    SigninComponent,
 
   ],
   imports: [

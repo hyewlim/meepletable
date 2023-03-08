@@ -1,0 +1,26 @@
+
+
+<div>
+
+  <form [formGroup]="signinForm" (ngSubmit)="processForm()" #signupF>
+
+    <div>
+      <label for="username">Username: </label>
+      <input type="text" formControlName="username" id="username">
+    </div>
+
+    <div>
+      <label for="password">Password: </label>
+      <input type="password" formControlName="password" id="password">
+    </div>
+
+    <br>
+
+    <button type="submit">Sign In</button>
+    <button type="button" (click)="signupF.reset()">Reset</button>
+
+
+  </form>
+
+
+</div>
