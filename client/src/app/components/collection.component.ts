@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Boardgame} from "../shared/models";
 
 @Component({
   selector: 'app-collection',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class CollectionComponent {
 
+  boardgames!: Boardgame[];
 }

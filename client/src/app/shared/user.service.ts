@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {LogInUser, User} from "./models";
+import {User} from "./models";
 import {lastValueFrom} from "rxjs";
 
 @Injectable({
@@ -13,7 +13,7 @@ export class UserService {
     return lastValueFrom(this.http.post("/api/user", user))
   }
 
-  authUser(user: LogInUser) {
+  authUser(user: User) {
     return lastValueFrom(this.http.post('/api/user/auth', user))
 
   }

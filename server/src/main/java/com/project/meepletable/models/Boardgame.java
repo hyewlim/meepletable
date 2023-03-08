@@ -2,23 +2,23 @@ package com.project.meepletable.models;
 
 public class Boardgame {
 
-    private String id;
+    private int id;
     private String type;
     private String name;
-    private String yearPublished;
+    private int yearPublished;
 
-    public Boardgame(String id, String type, String name, String yearPublished) {
+    public Boardgame(int id, String type, String name, int yearPublished) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.yearPublished = yearPublished;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -38,11 +38,11 @@ public class Boardgame {
         this.name = name;
     }
 
-    public String getYearPublished() {
+    public int getYearPublished() {
         return yearPublished;
     }
 
-    public void setYearPublished(String yearPublished) {
+    public void setYearPublished(int yearPublished) {
         this.yearPublished = yearPublished;
     }
 

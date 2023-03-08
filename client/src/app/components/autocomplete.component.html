@@ -1,0 +1,13 @@
+<p-autoComplete
+
+  [(ngModel)]="text"
+  [suggestions]="results"
+  (completeMethod)="search($event)"
+  (onSelect)="selectResult($event)">
+  <ng-template let-bg pTemplate="item">
+    <div>
+      {{bg.name}} <span *ngIf="bg.yearPublished > 0">({{bg.yearPublished}})</span>
+    </div>
+  </ng-template>
+</p-autoComplete>
+

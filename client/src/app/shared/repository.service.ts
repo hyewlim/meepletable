@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {User} from "./models";
-import {lastValueFrom} from "rxjs";
+import {Boardgame, User} from "./models";
+import {lastValueFrom, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RepositoryService {
 
-
+  boardgames = new Subject<Boardgame[]>()
   constructor(private http: HttpClient) { }
 
 

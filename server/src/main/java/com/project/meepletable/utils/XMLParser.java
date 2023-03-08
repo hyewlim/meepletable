@@ -40,7 +40,7 @@ public class XMLParser {
             for (int i = 0; i < bgList.getLength(); i++) {
 
                 Element item = (Element) bgList.item(i);
-                String id = item.getAttribute("id");
+                int id = Integer.parseInt(item.getAttribute("id"));
                 String type = item.getAttribute("type");
                 String name = item.getElementsByTagName("name")
                         .item(0)
@@ -48,13 +48,25 @@ public class XMLParser {
                         .getNamedItem("value")
                         .getNodeValue();
 
-                String yearPublished = item.getElementsByTagName("yearpublished")
-                        .item(0)
-                        .getAttributes()
-                        .getNamedItem("value")
-                        .getNodeValue();
+//                String yearPublished = item.getElementsByTagName("yearpublished")
+//                        .item(0)
+//                        .getAttributes()
+//                        .getNamedItem("value")
+//                        .getNodeValue();
 
-                Boardgame bg = new Boardgame(id, type, name, yearPublished);
+                NodeList yearPublishedList = item.getElementsByTagName("yearpublished");
+                String yearPublished;
+                if (yearPublishedList.getLength() > 0) {
+                    yearPublished = yearPublishedList.item(0)
+                            .getAttributes()
+                            .getNamedItem("value")
+                            .getNodeValue();
+                } else {
+                    yearPublished = "0";
+                }
+
+
+                Boardgame bg = new Boardgame(id, type, name, Integer.parseInt(yearPublished));
                 boardgameList.add(bg);
 
 

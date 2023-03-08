@@ -4,7 +4,8 @@ export interface User {
   email: string
 }
 
-export interface LogInUser {
-  username: string
-  password: string
+export interface Boardgame {
+  id: number
+  name: string
+  yearPublished: number
 }

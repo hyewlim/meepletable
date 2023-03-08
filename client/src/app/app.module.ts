@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {GoogleMapsModule} from "@angular/google-maps";
 import {AppRoutingModule} from "./app-routing.module";
 
@@ -15,6 +15,10 @@ import { HeaderComponent } from './components/header.component';
 import { CollectionComponent } from './components/collection.component';
 import { SigninComponent } from './components/user/signin.component';
 
+import {ButtonModule} from 'primeng/button';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import { AutocompleteComponent } from './components/autocomplete.component';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -28,6 +32,7 @@ import { SigninComponent } from './components/user/signin.component';
     HeaderComponent,
     CollectionComponent,
     SigninComponent,
+    AutocompleteComponent,
 
   ],
   imports: [
@@ -37,6 +42,10 @@ import { SigninComponent } from './components/user/signin.component';
     GoogleMapsModule,
     HttpClientJsonpModule,
     AppRoutingModule,
+    ButtonModule,
+    AutoCompleteModule,
+    FormsModule,
+    BrowserAnimationsModule
 
   ],
   exports: [
