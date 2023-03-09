@@ -2,8 +2,11 @@
 
   [(ngModel)]="text"
   [suggestions]="results"
+  [minLength]="3"
+  placeholder="search for game"
   (completeMethod)="search($event)"
-  (onSelect)="selectResult($event)">
+  (onSelect)="selectResult($event)"
+  (click)="onClear()">
   <ng-template let-bg pTemplate="item">
     <div>
       {{bg.name}} <span *ngIf="bg.yearPublished > 0">({{bg.yearPublished}})</span>

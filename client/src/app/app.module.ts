@@ -19,6 +19,11 @@ import {ButtonModule} from 'primeng/button';
 import {AutoCompleteModule} from 'primeng/autocomplete';
 import { AutocompleteComponent } from './components/autocomplete.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {CardModule} from "primeng/card";
+import {TableModule} from "primeng/table";
+import {ToolbarModule} from "primeng/toolbar";
+import {FileUploadModule} from "primeng/fileupload";
+import {RatingModule} from "primeng/rating";
 
 
 @NgModule({
@@ -45,7 +50,12 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     ButtonModule,
     AutoCompleteModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    CardModule,
+    TableModule,
+    ToolbarModule,
+    FileUploadModule,
+    RatingModule
 
   ],
   exports: [

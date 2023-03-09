@@ -11,10 +11,18 @@ export class BglookupService {
 
   constructor(private http: HttpClient) { }
 
-  getResults(query: any) {
+  getSearchResults(query: any) {
     const params = new HttpParams()
       .append('name', query)
 
-    return lastValueFrom(this.http.get<Boardgame[]>('/api/game', {params: params}))
+    return lastValueFrom(this.http.get<Boardgame[]>('/api/games', {params: params}))
+  }
+
+  getGameDetails(query: number) {
+
+    // http://localhost:8081/api/game/30549
+
+    return lastValueFrom(this.http.get<Boardgame>('/api/game/' + query))
+
   }
 }

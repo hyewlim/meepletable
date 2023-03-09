@@ -21,6 +21,21 @@ public class JsonBuilder {
 
     }
 
+    public static JsonObject bgDetailToJson(Boardgame bg) {
+
+        return Json.createObjectBuilder()
+                .add("id", bg.getId())
+                .add("name", bg.getName())
+                .add("thumbnail", bg.getThumbnail())
+                .add("image", bg.getImage())
+                .add("yearPublished", bg.getYearPublished())
+                .add("playingTime", bg.getPlayingTime())
+                .add("description", bg.getDescription())
+                .build();
+
+
+    }
+
     public static JsonObject bgToJson(Boardgame bg) {
 
         return Json.createObjectBuilder()

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {BglookupService} from "../shared/bglookup.service";
 import {Boardgame} from "../shared/models";
 import {Subscription} from "rxjs";
@@ -15,7 +15,8 @@ export class AutocompleteComponent {
 
   results!: Boardgame[];
 
-  boardgamesSelected!: Boardgame[];
+  @Output()
+  newBgEvent = new EventEmitter<Boardgame>;
 
   bgSelectionSub$!: Subscription;
 
@@ -25,7 +26,7 @@ export class AutocompleteComponent {
 
   search(event: any) {
     console.log(event.query)
-    this.bglookupService.getResults(event.query)
+    this.bglookupService.getSearchResults(event.query)
       .then(data => {
 
       this.results = data;
@@ -35,8 +36,11 @@ export class AutocompleteComponent {
 
   selectResult(boardgame: any) {
     console.log(boardgame)
-    this.boardgamesSelected.push(boardgame);
-    this.repositoryService.boardgames.next(this.boardgamesSelected)
-    //to be completed
+    this.newBgEvent.emit(boardgame);
+
+  }
+
+  onClear() {
+    this.text = '';
   }
 }

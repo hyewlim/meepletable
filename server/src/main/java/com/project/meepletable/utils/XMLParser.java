@@ -10,6 +10,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,17 @@ public class XMLParser {
     public static List<Boardgame> parseBoardgameListXML(String url) {
 
         List<Boardgame> boardgameList = new ArrayList<>();
+
+        //<items total="64" termsofuse="https://boardgamegeek.com/xmlapi/termsofuse">
+        //  <item type="boardgame" id="317365">
+        //      <name type="primary" value="Adventure Games: The Gloom City File"/>
+        //      <yearpublished value="2021"/>
+        //  </item>
+        //  <item type="boardgame" id="119193">
+        //      <name type="primary" value="Crazy Creatures of Dr. Gloom"/>
+        //      <yearpublished value="2012"/>
+        //  </item>
+        //</items>
 
         //get the document builder
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -47,12 +59,6 @@ public class XMLParser {
                         .getAttributes()
                         .getNamedItem("value")
                         .getNodeValue();
-
-//                String yearPublished = item.getElementsByTagName("yearpublished")
-//                        .item(0)
-//                        .getAttributes()
-//                        .getNamedItem("value")
-//                        .getNodeValue();
 
                 NodeList yearPublishedList = item.getElementsByTagName("yearpublished");
                 String yearPublished;
@@ -82,6 +88,77 @@ public class XMLParser {
 
         return boardgameList;
 
+    }
+
+    public static Boardgame parseBgDetails(String url) {
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+
+        Boardgame bg;
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+
+            Document document = builder.parse(new URL(url).openStream());
+            document.getDocumentElement().normalize();
+            Element root = document.getDocumentElement();
+            NodeList bgList = root.getElementsByTagName("item");
+
+            Element item = (Element) bgList.item(0);
+
+            int id = Integer.parseInt(item.getAttribute("id"));
+
+            String name = item.getElementsByTagName("name")
+                    .item(0)
+                    .getAttributes()
+                    .getNamedItem("value")
+                    .getNodeValue();
+
+            String image = item.getElementsByTagName("image")
+                    .item(0)
+                    .getTextContent();
+
+            String thumbnail = item.getElementsByTagName("thumbnail")
+                    .item(0)
+                    .getTextContent();
+
+            String description = item.getElementsByTagName("description")
+                    .item(0)
+                    .getTextContent();
+
+            String yearPublished = item.getElementsByTagName("yearpublished")
+                    .item(0)
+                    .getAttributes()
+                    .getNamedItem("value")
+                    .getNodeValue();
+
+
+            String playingTime = item.getElementsByTagName("playingtime")
+                    .item(0)
+                    .getAttributes()
+                    .getNamedItem("value")
+                    .getNodeValue();
+
+            bg = new Boardgame(
+                    id,
+                    name,
+                    Integer.parseInt(yearPublished),
+                    thumbnail,
+                    image,
+                    Integer.parseInt(playingTime),
+                    description);
+
+
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SAXException e) {
+            throw new RuntimeException(e);
+        }
+
+        return bg;
     }
 
 }

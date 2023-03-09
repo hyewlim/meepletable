@@ -13,7 +13,7 @@ public class BggService {
 
     public List<Boardgame> getGames(String name) {
 
-        //https://boardgamegeek.com/xmlapi/search?search=Crossbows%20and%20Catapults
+        //https://boardgamegeek.com/xmlapi2/search?query=gloom&type=boardgame
 
         final String BGG_API_URL = "https://boardgamegeek.com/xmlapi2/search";
 
@@ -23,6 +23,20 @@ public class BggService {
                 .toUriString();
 
         return XMLParser.parseBoardgameListXML(url);
+
+    }
+
+    public Boardgame getGameDetail(int id) {
+
+        //https://boardgamegeek.com/xmlapi2/thing?id=30549
+
+        final String BGG_API_URL = "https://boardgamegeek.com/xmlapi2/thing";
+
+        String url = UriComponentsBuilder.fromUriString(BGG_API_URL)
+                .queryParam("id", id)
+                .toUriString();
+
+        return XMLParser.parseBgDetails(url);
 
     }
 }

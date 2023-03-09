@@ -6,12 +6,26 @@ public class Boardgame {
     private String type;
     private String name;
     private int yearPublished;
+    private String thumbnail;
+    private String image;
+    private int playingTime;
+    private String description;
 
     public Boardgame(int id, String type, String name, int yearPublished) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.yearPublished = yearPublished;
+    }
+
+    public Boardgame(int id, String name, int yearPublished, String thumbnail, String image, int playingTime, String description) {
+        this.id = id;
+        this.name = name;
+        this.yearPublished = yearPublished;
+        this.thumbnail = thumbnail;
+        this.image = image;
+        this.playingTime = playingTime;
+        this.description = description;
     }
 
     public int getId() {
@@ -46,13 +60,49 @@ public class Boardgame {
         this.yearPublished = yearPublished;
     }
 
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getPlayingTime() {
+        return playingTime;
+    }
+
+    public void setPlayingTime(int playingTime) {
+        this.playingTime = playingTime;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Boardgame{" +
-                "id='" + id + '\'' +
+                "id=" + id +
                 ", type='" + type + '\'' +
                 ", name='" + name + '\'' +
-                ", yearPublished='" + yearPublished + '\'' +
+                ", yearPublished=" + yearPublished +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", image='" + image + '\'' +
+                ", playingTime=" + playingTime +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

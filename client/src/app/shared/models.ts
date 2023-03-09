@@ -8,4 +8,9 @@ export interface Boardgame {
   id: number
   name: string
   yearPublished: number
+  playingTime: number
+  image: string
+  thumbnail: string
+  description: string
+
 }
