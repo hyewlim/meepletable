@@ -12,5 +12,6 @@ export interface Boardgame {
   image: string
   thumbnail: string
   description: string
+  comments: string
 
 }

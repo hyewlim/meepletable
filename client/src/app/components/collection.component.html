@@ -9,7 +9,7 @@
   <p-toolbar styleClass="mb-4 gap-2">
     <ng-template pTemplate="left">
       <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-      <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button>
+      <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!boardgamesSelected || !boardgamesSelected.length"></button>
     </ng-template>
 
     <ng-template pTemplate="right">
@@ -18,13 +18,13 @@
     </ng-template>
   </p-toolbar>
 
-  <p-table #dt [value]="products" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']" [tableStyle]="{'min-width': '75rem'}"
-           [(selection)]="selectedProducts" [rowHover]="true" dataKey="id"
+  <p-table #dt [value]="boardgames" [rows]="10" [paginator]="true" [globalFilterFields]="['title']" [tableStyle]="{'min-width': '75rem'}"
+           [(selection)]="boardgamesSelected" [rowHover]="true" dataKey="id"
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
-        <h5 class="m-0">Manage Products</h5>
-        <span class="p-input-icon-left">
+        <h5 class="m-0">Manage Collection</h5>
+        <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" placeholder="Search..." />
                 </span>
@@ -35,39 +35,66 @@
         <th style="width: 4rem">
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
-        <th pSortableColumn="name" style="min-width:15rem">Name <p-sortIcon field="name"></p-sortIcon></th>
         <th>Image</th>
-        <th pSortableColumn="price">Price <p-sortIcon field="price"></p-sortIcon></th>
-        <th pSortableColumn="category" style="min-width:10rem">Category <p-sortIcon field="category"></p-sortIcon></th>
-        <th pSortableColumn="rating">Reviews <p-sortIcon field="rating"></p-sortIcon></th>
-        <th pSortableColumn="inventoryStatus" style="min-width:10rem">Status <p-sortIcon field="inventoryStatus"></p-sortIcon></th>
+        <th pSortableColumn="title" style="min-width:15rem">Title <p-sortIcon field="title"></p-sortIcon></th>
+
+        <th pSortableColumn="year">Year <p-sortIcon field="year"></p-sortIcon></th>
+        <th pSortableColumn="playingTime" style="min-width:10rem">Playing Time <p-sortIcon field="playingTime"></p-sortIcon></th>
+        <th pSortableColumn="comments">Comments <p-sortIcon field="comments"></p-sortIcon></th>
+
         <th></th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-product>
+    <ng-template pTemplate="body" let-boardgame>
       <tr>
         <td>
-          <p-tableCheckbox [value]="product"></p-tableCheckbox>
+          <p-tableCheckbox [value]="boardgame"></p-tableCheckbox>
         </td>
-        <td>{{product.name}}</td>
-        <td><img [src]="'https://primefaces.org/cdn/primeng/images/demo/product/' + product.image" [alt]="product.name" width="100" class="shadow-4" /></td>
-        <td>{{product.price | currency:'USD'}}</td>
-        <td>{{product.category}}</td>
-        <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td>
-        <td><span [class]="'product-badge status-' + (product.inventoryStatus ? product.inventoryStatus.toLowerCase() : '')">{{product.inventoryStatus}}</span></td>
+        <td><img [src]="boardgame.thumbnail" [alt]="boardgame.name" width="50" height="50" class="shadow-4" /></td>
+        <td>{{boardgame.name}}</td>
+        <td>{{boardgame.yearPublished}}</td>
+        <td>{{boardgame.playingTime}}</td>
+        <td>{{boardgame.comments}}</td>
         <td>
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(product)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(boardgame)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(boardgame)"></button>
         </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="summary">
       <div class="flex align-items-center justify-content-between">
-        In total there are {{products ? products.length : 0 }} products.
+        There are {{boardgames ? boardgames.length : 0 }} boardgames in your collection.
       </div>
     </ng-template>
   </p-table>
 </div>
+
+
+
+<p-dialog [(visible)]="bgDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <img [src]="boardgame.thumbnail" [alt]="boardgame.name" class="boardgame-image" *ngIf="boardgame.thumbnail">
+    <div class="field">
+
+      <label for="name">Name</label>
+      <input type="text" pInputText id="name" [(ngModel)]="boardgame.name" required autofocus />
+      <small class="p-error" *ngIf="submitted && !boardgame.name">Name is required.</small>
+    </div>
+    <div class="field">
+      <label for="comments">Comments</label>
+      <textarea id="comments" pInputTextarea [(ngModel)]="boardgame.comments" required rows="3" cols="20"></textarea>
+    </div>
+
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
 
 <!--<div *ngIf="boardgames">-->

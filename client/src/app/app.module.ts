@@ -24,6 +24,8 @@ import {TableModule} from "primeng/table";
 import {ToolbarModule} from "primeng/toolbar";
 import {FileUploadModule} from "primeng/fileupload";
 import {RatingModule} from "primeng/rating";
+import {DialogModule} from "primeng/dialog";
+import {ConfirmDialogModule} from "primeng/confirmdialog";
 
 
 @NgModule({
@@ -55,7 +57,9 @@ import {RatingModule} from "primeng/rating";
     TableModule,
     ToolbarModule,
     FileUploadModule,
-    RatingModule
+    RatingModule,
+    DialogModule,
+    ConfirmDialogModule
 
   ],
   exports: [
