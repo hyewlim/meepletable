@@ -9,9 +9,12 @@ import {lastValueFrom, Subject} from "rxjs";
 export class RepositoryService {
 
   boardgames = new Subject<Boardgame[]>()
+
   constructor(private http: HttpClient) { }
 
-
+  saveBoardgames(boardgames: Boardgame[]) {
+    return lastValueFrom(this.http.post("/api/games/post", boardgames))
+  }
 
 
 }

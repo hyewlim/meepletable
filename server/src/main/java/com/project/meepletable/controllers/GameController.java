@@ -64,6 +64,13 @@ public class GameController {
 
     }
 
+    @PostMapping("/games/post")
+    public ResponseEntity<String> saveGames(@RequestBody String body){
+        System.out.println(body);
+
+        return null;
+    }
+
 
 
 }

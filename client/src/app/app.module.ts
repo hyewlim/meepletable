@@ -26,6 +26,7 @@ import {FileUploadModule} from "primeng/fileupload";
 import {RatingModule} from "primeng/rating";
 import {DialogModule} from "primeng/dialog";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
+import {RippleModule} from "primeng/ripple";
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
     FileUploadModule,
     RatingModule,
     DialogModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    RippleModule
 
   ],
   exports: [

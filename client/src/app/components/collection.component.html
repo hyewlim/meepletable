@@ -1,35 +1,33 @@
-
-<app-autocomplete (newBgEvent)="addBoardgame($event)"></app-autocomplete>
-
-<br>
-<br>
-
+<!--<app-autocomplete (newBgEvent)="addBoardgame($event)"></app-autocomplete>-->
 
 <div class="card">
   <p-toolbar styleClass="mb-4 gap-2">
     <ng-template pTemplate="left">
-      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
-      <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!boardgamesSelected || !boardgamesSelected.length"></button>
+      <app-autocomplete (newBgEvent)="addBoardgame($event)"></app-autocomplete>
+<!--      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>-->
+<!--      <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!boardgamesSelected || !boardgamesSelected.length"></button>-->
     </ng-template>
 
     <ng-template pTemplate="right">
       <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
-      <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help"></button>
+      <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="saveCollection()"></button>
     </ng-template>
   </p-toolbar>
 
   <p-table #dt [value]="boardgames" [rows]="10" [paginator]="true" [globalFilterFields]="['title']" [tableStyle]="{'min-width': '75rem'}"
            [(selection)]="boardgamesSelected" [rowHover]="true" dataKey="id"
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
         <h5 class="m-0">Manage Collection</h5>
         <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
                     <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" placeholder="Search..." />
-                </span>
+        </span>
       </div>
     </ng-template>
+
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 4rem">
@@ -63,7 +61,12 @@
     </ng-template>
     <ng-template pTemplate="summary">
       <div class="flex align-items-center justify-content-between">
-        There are {{boardgames ? boardgames.length : 0 }} boardgames in your collection.
+        <div *ngIf="boardgames.length > 1">
+          There are {{boardgames ? boardgames.length : 0 }} boardgames in your collection.
+        </div>
+        <div *ngIf="boardgames.length === 1">
+          There is 1 boardgame in your collection
+        </div>
       </div>
     </ng-template>
   </p-table>
@@ -71,20 +74,24 @@
 
 
 
-<p-dialog [(visible)]="bgDialog" [style]="{width: '450px'}" header="Product Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="bgDialog" [style]="{width: '450px'}" header="Game Details" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
-    <img [src]="boardgame.thumbnail" [alt]="boardgame.name" class="boardgame-image" *ngIf="boardgame.thumbnail">
-    <div class="field">
 
-      <label for="name">Name</label>
-      <input type="text" pInputText id="name" [(ngModel)]="boardgame.name" required autofocus />
-      <small class="p-error" *ngIf="submitted && !boardgame.name">Name is required.</small>
-    </div>
+    <img [src]="boardgame.thumbnail" [alt]="boardgame.name" class="boardgame-image" *ngIf="boardgame.thumbnail">
+
     <div class="field">
-      <label for="comments">Comments</label>
+      <p>Title: {{boardgame.name}}</p>
+<!--      <label for="name">Name: </label>-->
+<!--      <input type="text" pInputText id="name" [(ngModel)]="boardgame.name" required autofocus />-->
+<!--      <small class="p-error" *ngIf="submitted && !boardgame.name">Name is required.</small>-->
+    </div>
+
+    <br>
+
+    <div class="field">
+      <label for="comments">Comments: </label>
       <textarea id="comments" pInputTextarea [(ngModel)]="boardgame.comments" required rows="3" cols="20"></textarea>
     </div>
-
 
   </ng-template>
 
@@ -97,31 +104,9 @@
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
 
-<!--<div *ngIf="boardgames">-->
-
-<!--  <div *ngFor="let bg of boardgames">-->
-
-<!--    <p-card header="{{bg.name}}" subheader="{{bg.yearPublished}}" [style]="{width: '180px'}" styleClass="p-card-shadow">-->
-<!--      <ng-template pTemplate="header">-->
-<!--        <img alt="image" src="{{bg.image}}">-->
-<!--      </ng-template>-->
-<!--&lt;!&ndash;      <p>{{bg.description}}</p>&ndash;&gt;-->
-<!--&lt;!&ndash;      <ng-template pTemplate="footer">&ndash;&gt;-->
-<!--&lt;!&ndash;        <p-button label="Save" icon="pi pi-check"></p-button>&ndash;&gt;-->
-<!--&lt;!&ndash;        <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button>&ndash;&gt;-->
-<!--&lt;!&ndash;      </ng-template>&ndash;&gt;-->
-<!--    </p-card>-->
-
-<!--  </div>-->
-
+<!--<div>-->
+<!--  <button pButton type="button" class="p-button-raised p-button-rounded">Save Collection</button>-->
+<!--  <button pButton type="button" class="p-button-raised p-button-rounded">Load Collection</button>-->
 <!--</div>-->
-
-<br>
-<br>
-
-<div>
-  <button pButton type="button" class="p-button-raised p-button-rounded">Save Collection</button>
-  <button pButton type="button" class="p-button-raised p-button-rounded">Load Collection</button>
-</div>
 
 
