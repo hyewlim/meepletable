@@ -36,16 +36,21 @@ export class SigninComponent implements OnInit{
   processForm() {
 
     this.userService.authUser(this.signinForm.value)
-      .then((result) => {
-        if (result === 0) {
+      .then((data) => {
 
+        if ((<any>data).result === 0) {
+          // return error todo
+          console.error("user not authenticated")
+          alert("wrong authentication")
+        } else {
           this.userService.signedInUser.next(this.signinForm.value)
           console.log("User signed in", this.userService.signedInUser)
+          this.route.navigate(['collection'])
         }
       })
     // server will return true if user is authenticated, do something..
 
-    this.route.navigate(['collection'])
+
 
   }
 
