@@ -1,11 +1,10 @@
 package com.project.meepletable.utils;
 
 import com.project.meepletable.models.Boardgame;
-import jakarta.json.Json;
-import jakarta.json.JsonArray;
-import jakarta.json.JsonArrayBuilder;
-import jakarta.json.JsonObject;
+import jakarta.json.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +49,24 @@ public class JsonBuilder {
         return Json.createObjectBuilder()
                 .add("result", result)
                 .build();
+    }
+
+    public static Boardgame create(String json) {
+        Boardgame bg = new Boardgame();
+        InputStream is = new ByteArrayInputStream(json.getBytes());
+        JsonReader jsonreader = Json.createReader(is);
+        JsonObject jsonObject = jsonreader.readObject();
+
+        bg.setName(jsonObject.getString("name"));
+        bg.setId(jsonObject.getInt("id"));
+        bg.setImage(jsonObject.getString("image"));
+        bg.setThumbnail(jsonObject.getString("thumbnail"));
+        bg.setYearPublished(jsonObject.getInt("yearPublished"));
+        bg.setPlayingTime(jsonObject.getInt("playingTime"));
+        bg.setComment(jsonObject.getString("comment"));
+
+        return bg;
+
     }
 
 }

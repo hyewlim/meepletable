@@ -1,5 +1,8 @@
 package com.project.meepletable.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.meepletable.models.Boardgame;
 import com.project.meepletable.models.User;
 import com.project.meepletable.repositories.UserRepository;
@@ -14,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
@@ -65,9 +69,16 @@ public class GameController {
     }
 
     @PostMapping("/games/post")
-    public ResponseEntity<String> saveGames(@RequestBody String body, @RequestParam String user){
-        System.out.println(body);
-        System.out.println(user);
+    public ResponseEntity<String> saveGames(@RequestBody String body, @RequestParam String userId) throws JsonProcessingException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<Boardgame> bgs = objectMapper.readValue(body, new TypeReference<List<Boardgame>>(){});
+
+        for (Boardgame bg: bgs) {
+            System.out.println(bg.toString());
+        }
+
+
 
         return null;
     }

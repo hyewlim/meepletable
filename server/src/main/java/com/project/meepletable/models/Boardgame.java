@@ -37,6 +37,9 @@ public class Boardgame {
         this.playingTime = playingTime;
     }
 
+    public Boardgame() {
+    }
+
     public int getId() {
         return id;
     }

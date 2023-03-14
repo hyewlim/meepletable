@@ -5,7 +5,7 @@ import {ConfirmationService} from "primeng/api";
 import {MessageService} from "primeng/api";
 import {HttpClient} from "@angular/common/http";
 import {RepositoryService} from "../shared/repository.service";
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {UserService} from "../shared/user.service";
 
 @Component({
@@ -23,25 +23,21 @@ export class CollectionComponent implements OnInit, OnDestroy {
   bgDialog!: boolean;
   submitted!: boolean;
 
-  signedInUser!: User;
 
-  userSub$!: Subscription;
 
   constructor(private bglookup: BglookupService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
               private repositoryService: RepositoryService,
               private userService: UserService) {
+
+
+
   }
 
   ngOnInit(): void {
-    this.userSub$ = this.userService.signedInUser.subscribe(
-      (user) => {
-        this.signedInUser = user
-      }
-    )
 
-    }
+  }
 
   addBoardgame(newBg: Boardgame){
 
@@ -93,10 +89,13 @@ export class CollectionComponent implements OnInit, OnDestroy {
   }
 
   saveCollection() {
-    this.repositoryService.saveBoardgames(this.boardgames, this.signedInUser.username)
+
+    this.repositoryService.saveBoardgames(this.boardgames, this.userService.user.userId)
   }
 
   ngOnDestroy(): void {
-    this.userSub$.unsubscribe();
+
+
   }
+  
 }

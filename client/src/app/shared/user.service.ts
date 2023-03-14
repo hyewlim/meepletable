@@ -10,6 +10,8 @@ export class UserService {
 
   signedInUser = new Subject<User>()
 
+  user!: User;
+
   constructor(private http: HttpClient) { }
 
   postNewUser(user: User) {
@@ -18,9 +20,19 @@ export class UserService {
 
   authUser(user: User) {
     return lastValueFrom(this.http.post('/api/user/auth', user))
-
-
   }
+
+  getUserIdObservable() {
+    return this.signedInUser.asObservable();
+  }
+
+  setUser(user: User) {
+    this.signedInUser.next(user);
+    // below is bugged
+    this.user = user;
+  }
+
+
 
 
 }

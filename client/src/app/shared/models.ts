@@ -2,6 +2,7 @@ export interface User {
   username: string
   password: string
   email: string
+  userId: number
 }
 
 export interface Boardgame {

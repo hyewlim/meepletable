@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {UserService} from "../../shared/user.service";
+import {User} from "../../shared/models";
 
 
 @Component({
@@ -35,6 +36,8 @@ export class SigninComponent implements OnInit{
 
   processForm() {
 
+    console.log(this.signinForm.value["username"])
+
     this.userService.authUser(this.signinForm.value)
       .then((data) => {
 
@@ -43,8 +46,8 @@ export class SigninComponent implements OnInit{
           console.error("user not authenticated")
           alert("wrong authentication")
         } else {
-          this.userService.signedInUser.next(this.signinForm.value)
-          console.log("User signed in", this.userService.signedInUser)
+          const newUser = { username: this.signinForm.value["username"], userId: (<any>data).result, ...{} } as User
+          this.userService.setUser(newUser);
           this.route.navigate(['collection'])
         }
       })

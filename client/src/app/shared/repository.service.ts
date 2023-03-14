@@ -14,10 +14,10 @@ export class RepositoryService {
   constructor(private http: HttpClient,
               private userService: UserService) { }
 
-  saveBoardgames(boardgames: Boardgame[], username: string) {
+  saveBoardgames(boardgames: Boardgame[], userId: number) {
 
     const params = new HttpParams()
-      .append("user", username)
+      .append("userId", userId)
 
 
     return lastValueFrom(this.http.post("/api/games/post", boardgames, {params: params}))

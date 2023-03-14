@@ -9,4 +9,6 @@ public class Queries {
             "select user_id from users where username=? and password=sha1(?)";
 //            "select count(*) > 0 as auth_state from users where username=? and password=sha1(?)";
 
+    public static String SQL_INSERT_COLLECTION =
+            "insert into boardgames values (?, ?, ?, ?, ?, ?)";
 }

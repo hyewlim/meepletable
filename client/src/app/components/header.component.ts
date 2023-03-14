@@ -13,21 +13,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   signedInUser!: User;
 
-  userSub$!: Subscription;
+  // userSub$!: Subscription;
 
   constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
-    this.userSub$ = this.userService.signedInUser.subscribe(
-      (user) => {
-        this.signedInUser = user
+
+    this.userService.getUserIdObservable().subscribe(
+      data => {
+        this.signedInUser = data;
       }
     )
+
+    // this.userSub$ = this.userService.signedInUser.subscribe(
+    //   (user) => {
+    //     this.signedInUser = user
+    //   }
+    // )
   }
 
   ngOnDestroy(): void {
-    this.userSub$.unsubscribe();
+    // this.userSub$.unsubscribe();
   }
 
 
