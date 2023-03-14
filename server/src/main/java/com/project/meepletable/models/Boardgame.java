@@ -9,7 +9,7 @@ public class Boardgame {
     private String thumbnail;
     private String image;
     private int playingTime;
-    private String description;
+    private String comment;
 
     public Boardgame(int id, String type, String name, int yearPublished) {
         this.id = id;
@@ -18,14 +18,23 @@ public class Boardgame {
         this.yearPublished = yearPublished;
     }
 
-    public Boardgame(int id, String name, int yearPublished, String thumbnail, String image, int playingTime, String description) {
+    public Boardgame(int id, String name, int yearPublished, String thumbnail, String image, int playingTime, String comment) {
         this.id = id;
         this.name = name;
         this.yearPublished = yearPublished;
         this.thumbnail = thumbnail;
         this.image = image;
         this.playingTime = playingTime;
-        this.description = description;
+        this.comment = comment;
+    }
+
+    public Boardgame(int id, String name, int yearPublished, String thumbnail, String image, int playingTime) {
+        this.id = id;
+        this.name = name;
+        this.yearPublished = yearPublished;
+        this.thumbnail = thumbnail;
+        this.image = image;
+        this.playingTime = playingTime;
     }
 
     public int getId() {
@@ -84,12 +93,12 @@ public class Boardgame {
         this.playingTime = playingTime;
     }
 
-    public String getDescription() {
-        return description;
+    public String getComment() {
+        return comment;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @Override
@@ -102,7 +111,7 @@ public class Boardgame {
                 ", thumbnail='" + thumbnail + '\'' +
                 ", image='" + image + '\'' +
                 ", playingTime=" + playingTime +
-                ", description='" + description + '\'' +
+                ", comment='" + comment + '\'' +
                 '}';
     }
 }

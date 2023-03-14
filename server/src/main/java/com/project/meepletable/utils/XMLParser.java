@@ -121,9 +121,9 @@ public class XMLParser {
                     .item(0)
                     .getTextContent();
 
-            String description = item.getElementsByTagName("description")
-                    .item(0)
-                    .getTextContent();
+//            String description = item.getElementsByTagName("description")
+//                    .item(0)
+//                    .getTextContent();
 
             String yearPublished = item.getElementsByTagName("yearpublished")
                     .item(0)
@@ -144,8 +144,8 @@ public class XMLParser {
                     Integer.parseInt(yearPublished),
                     thumbnail,
                     image,
-                    Integer.parseInt(playingTime),
-                    description);
+                    Integer.parseInt(playingTime)
+                    );
 
 
         } catch (ParserConfigurationException e) {

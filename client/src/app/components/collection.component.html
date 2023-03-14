@@ -38,7 +38,7 @@
 
         <th pSortableColumn="year">Year <p-sortIcon field="year"></p-sortIcon></th>
         <th pSortableColumn="playingTime" style="min-width:10rem">Playing Time <p-sortIcon field="playingTime"></p-sortIcon></th>
-        <th pSortableColumn="comments">Comments <p-sortIcon field="comments"></p-sortIcon></th>
+        <th pSortableColumn="comment">Comment <p-sortIcon field="comment"></p-sortIcon></th>
 
         <th></th>
       </tr>
@@ -52,7 +52,7 @@
         <td>{{boardgame.name}}</td>
         <td>{{boardgame.yearPublished}}</td>
         <td>{{boardgame.playingTime}}</td>
-        <td>{{boardgame.comments}}</td>
+        <td>{{boardgame.comment}}</td>
         <td>
           <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(boardgame)"></button>
           <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(boardgame)"></button>
@@ -89,8 +89,8 @@
     <br>
 
     <div class="field">
-      <label for="comments">Comments: </label>
-      <textarea id="comments" pInputTextarea [(ngModel)]="boardgame.comments" required rows="3" cols="20"></textarea>
+      <label for="comment">Comment: </label>
+      <textarea id="comment" pInputTextarea [(ngModel)]="boardgame.comment" required rows="3" cols="20"></textarea>
     </div>
 
   </ng-template>

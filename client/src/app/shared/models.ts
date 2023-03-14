@@ -11,7 +11,6 @@ export interface Boardgame {
   playingTime: number
   image: string
   thumbnail: string
-  description: string
-  comments: string
+  comment: string
 
 }

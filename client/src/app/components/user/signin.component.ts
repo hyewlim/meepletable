@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {UserService} from "../../shared/user.service";
-import {User} from "../../shared/models";
+
 
 @Component({
   selector: 'app-signin',
@@ -14,7 +14,8 @@ export class SigninComponent implements OnInit{
 
   constructor(private fb: FormBuilder,
               private userService: UserService,
-              private route: Router) {
+              private route: Router,
+              ) {
   }
 
   ngOnInit(): void {
@@ -36,7 +37,8 @@ export class SigninComponent implements OnInit{
 
     this.userService.authUser(this.signinForm.value)
       .then((result) => {
-        if (result) {
+        if (result === 0) {
+
           this.userService.signedInUser.next(this.signinForm.value)
           console.log("User signed in", this.userService.signedInUser)
         }
@@ -46,6 +48,34 @@ export class SigninComponent implements OnInit{
     this.route.navigate(['collection'])
 
   }
+
+  // showDialogError() {
+  //
+  //   const dialogConfig = {
+  //     header: 'Error',
+  //     content: 'An error occurred.',
+  //     closable: false,
+  //     modal: true,
+  //     styleClass: 'error-dialog',
+  //     baseZIndex: 10000,
+  //     autoZIndex: false,
+  //     closeOnEscape: true,
+  //     showHeader: true,
+  //     draggable: true,
+  //     resizable: true,
+  //     width: '300px',
+  //     height: 'auto',
+  //     position: {
+  //       top: '50px',
+  //       left: '50px'
+  //     }
+  //   }
+  //
+  //   // @ts-ignore
+  //   this.dialogService.open(SigninComponent, dialogConfig)
+  //
+  //
+  // }
 
 
 }

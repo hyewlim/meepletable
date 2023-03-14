@@ -6,6 +6,7 @@ public class Queries {
             "insert into users(username, email, password) values(?,?,sha1(?))";
 
     public static String SQL_AUTH_USER =
-            "select count(*) > 0 as auth_state from users where username=? and password=sha1(?)";
+            "select user_id from users where username=? and password=sha1(?)";
+//            "select count(*) > 0 as auth_state from users where username=? and password=sha1(?)";
 
 }

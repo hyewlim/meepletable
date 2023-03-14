@@ -65,8 +65,9 @@ public class GameController {
     }
 
     @PostMapping("/games/post")
-    public ResponseEntity<String> saveGames(@RequestBody String body){
+    public ResponseEntity<String> saveGames(@RequestBody String body, @RequestParam String user){
         System.out.println(body);
+        System.out.println(user);
 
         return null;
     }

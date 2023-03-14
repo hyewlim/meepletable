@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {Boardgame, User} from "./models";
 import {lastValueFrom, Subject} from "rxjs";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,16 @@ export class RepositoryService {
 
   boardgames = new Subject<Boardgame[]>()
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private userService: UserService) { }
 
-  saveBoardgames(boardgames: Boardgame[]) {
-    return lastValueFrom(this.http.post("/api/games/post", boardgames))
+  saveBoardgames(boardgames: Boardgame[], username: string) {
+
+    const params = new HttpParams()
+      .append("user", username)
+
+
+    return lastValueFrom(this.http.post("/api/games/post", boardgames, {params: params}))
   }
 
 

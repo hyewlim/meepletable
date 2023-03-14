@@ -7,6 +7,7 @@ import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 
 import java.util.List;
+import java.util.Optional;
 
 public class JsonBuilder {
 
@@ -30,9 +31,8 @@ public class JsonBuilder {
                 .add("image", bg.getImage())
                 .add("yearPublished", bg.getYearPublished())
                 .add("playingTime", bg.getPlayingTime())
-                .add("description", bg.getDescription())
+                .add("comment", Optional.ofNullable(bg.getComment()).isPresent() ? bg.getComment() : "")
                 .build();
-
 
     }
 
@@ -46,7 +46,7 @@ public class JsonBuilder {
 
     }
 
-    public static JsonObject authResult(Boolean result){
+    public static JsonObject authResult(int result){
         return Json.createObjectBuilder()
                 .add("result", result)
                 .build();

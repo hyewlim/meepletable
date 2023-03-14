@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {Boardgame} from "../shared/models";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Boardgame, User} from "../shared/models";
 import {BglookupService} from "../shared/bglookup.service";
 import {ConfirmationService} from "primeng/api";
 import {MessageService} from "primeng/api";
 import {HttpClient} from "@angular/common/http";
 import {RepositoryService} from "../shared/repository.service";
+import {Subscription} from "rxjs";
+import {UserService} from "../shared/user.service";
 
 @Component({
   selector: 'app-collection',
@@ -12,7 +14,7 @@ import {RepositoryService} from "../shared/repository.service";
   styleUrls: ['./collection.component.css'],
   providers: [ConfirmationService, MessageService]
 })
-export class CollectionComponent implements OnInit {
+export class CollectionComponent implements OnInit, OnDestroy {
 
   boardgamesSelected: Boardgame[] = [];
   boardgames: Boardgame[] = [];
@@ -20,16 +22,25 @@ export class CollectionComponent implements OnInit {
 
   bgDialog!: boolean;
   submitted!: boolean;
-  Delete: any;
+
+  signedInUser!: User;
+
+  userSub$!: Subscription;
 
   constructor(private bglookup: BglookupService,
               private messageService: MessageService,
               private confirmationService: ConfirmationService,
-              private repositoryService: RepositoryService) {
+              private repositoryService: RepositoryService,
+              private userService: UserService) {
   }
 
   ngOnInit(): void {
-        throw new Error('Method not implemented.');
+    this.userSub$ = this.userService.signedInUser.subscribe(
+      (user) => {
+        this.signedInUser = user
+      }
+    )
+
     }
 
   addBoardgame(newBg: Boardgame){
@@ -71,13 +82,21 @@ export class CollectionComponent implements OnInit {
 
   saveProduct() {
     this.submitted = true;
-    console.log(this.boardgame)
-    this.boardgames = [...this.boardgames];
+
+    const index = this.boardgames.findIndex(
+      (game) => game.id === this.boardgame.id)
+
+    this.boardgames[index].comment = this.boardgame.comment
+    // this.boardgames = [...this.boardgames];
     this.bgDialog = false;
     this.boardgame = {} as Boardgame
   }
 
   saveCollection() {
-    this.repositoryService.saveBoardgames(this.boardgames)
+    this.repositoryService.saveBoardgames(this.boardgames, this.signedInUser.username)
+  }
+
+  ngOnDestroy(): void {
+    this.userSub$.unsubscribe();
   }
 }

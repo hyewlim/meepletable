@@ -22,14 +22,15 @@ public class UserRepository {
                 user.getPassword());
     }
 
-    public boolean authUser(User user){
+    public int authUser(User user){
 
         final SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_AUTH_USER, user.getUsername(), user.getPassword());
 
         while (rs.next()) {
-            return rs.getBoolean("auth_state");
+            return rs.getInt("user_id");
         }
-        return false;
+
+        return 0;
     }
 
 }
