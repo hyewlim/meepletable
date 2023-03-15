@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {BglookupService} from "../shared/bglookup.service";
-import {Boardgame} from "../shared/models";
+import {BglookupService} from "../../shared/bglookup.service";
+import {Boardgame} from "../../shared/models";
 import {Subscription} from "rxjs";
-import {RepositoryService} from "../shared/repository.service";
+import {RepositoryService} from "../../shared/repository.service";
 
 @Component({
   selector: 'app-autocomplete',

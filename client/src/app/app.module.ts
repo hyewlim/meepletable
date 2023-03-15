@@ -9,15 +9,16 @@ import { AppComponent } from './app.component';
 import { SignupComponent } from './components/user/signup.component';
 import { PageNotFoundComponent } from './components/error/page-not-found.component';
 import { HomeComponent } from './components/home.component';
-import { SearchComponent } from './components/search.component';
-import { MapComponent } from './components/map.component';
+import { MapComponent } from './components/meetup/map.component';
 import { HeaderComponent } from './components/header.component';
-import { CollectionComponent } from './components/collection.component';
+import { CollectionComponent } from './components/game-collection/collection.component';
 import { SigninComponent } from './components/user/signin.component';
+import { AutocompleteComponent } from './components/game-collection/autocomplete.component';
+import { MeetupComponent } from './components/meetup/meetup.component';
+import { GameSessionComponent } from './components/meetup/game-session.component';
 
 import {ButtonModule} from 'primeng/button';
 import {AutoCompleteModule} from 'primeng/autocomplete';
-import { AutocompleteComponent } from './components/autocomplete.component';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CardModule} from "primeng/card";
 import {TableModule} from "primeng/table";
@@ -27,6 +28,9 @@ import {RatingModule} from "primeng/rating";
 import {DialogModule} from "primeng/dialog";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {RippleModule} from "primeng/ripple";
+import {CheckboxModule} from "primeng/checkbox";
+import {StyleClassModule} from "primeng/styleclass";
+import {DividerModule} from "primeng/divider";
 
 
 @NgModule({
@@ -35,12 +39,13 @@ import {RippleModule} from "primeng/ripple";
     SignupComponent,
     PageNotFoundComponent,
     HomeComponent,
-    SearchComponent,
     MapComponent,
     HeaderComponent,
     CollectionComponent,
     SigninComponent,
     AutocompleteComponent,
+    MeetupComponent,
+    GameSessionComponent,
 
   ],
   imports: [
@@ -61,7 +66,10 @@ import {RippleModule} from "primeng/ripple";
     RatingModule,
     DialogModule,
     ConfirmDialogModule,
-    RippleModule
+    RippleModule,
+    CheckboxModule,
+    StyleClassModule,
+    DividerModule
 
   ],
   exports: [

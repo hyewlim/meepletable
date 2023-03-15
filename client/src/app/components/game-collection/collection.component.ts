@@ -1,12 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Boardgame, User} from "../shared/models";
-import {BglookupService} from "../shared/bglookup.service";
+import {Boardgame, User} from "../../shared/models";
+import {BglookupService} from "../../shared/bglookup.service";
 import {ConfirmationService} from "primeng/api";
 import {MessageService} from "primeng/api";
 import {HttpClient} from "@angular/common/http";
-import {RepositoryService} from "../shared/repository.service";
+import {RepositoryService} from "../../shared/repository.service";
 import {Observable, Subscription} from "rxjs";
-import {UserService} from "../shared/user.service";
+import {UserService} from "../../shared/user.service";
 
 @Component({
   selector: 'app-collection',
