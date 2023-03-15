@@ -31,6 +31,7 @@ import {RippleModule} from "primeng/ripple";
 import {CheckboxModule} from "primeng/checkbox";
 import {StyleClassModule} from "primeng/styleclass";
 import {DividerModule} from "primeng/divider";
+import {GMapModule} from "primeng/gmap";
 
 
 @NgModule({
@@ -69,7 +70,8 @@ import {DividerModule} from "primeng/divider";
     RippleModule,
     CheckboxModule,
     StyleClassModule,
-    DividerModule
+    DividerModule,
+    GMapModule
 
   ],
   exports: [
