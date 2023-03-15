@@ -5,11 +5,14 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.meepletable.models.Boardgame;
 import com.project.meepletable.models.User;
+import com.project.meepletable.repositories.GamesRepository;
 import com.project.meepletable.repositories.UserRepository;
 import com.project.meepletable.services.BgaService;
 import com.project.meepletable.services.BggService;
 import com.project.meepletable.utils.JsonBuilder;
+import jakarta.json.Json;
 import jakarta.json.JsonArray;
+import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +32,9 @@ public class GameController {
 
     @Autowired
     private BgaService bgaService;
+
+    @Autowired
+    private GamesRepository gamesRepo;
 
 
     @GetMapping("/games")
@@ -68,19 +74,44 @@ public class GameController {
 
     }
 
-    @PostMapping("/games/post")
-    public ResponseEntity<String> saveGames(@RequestBody String body, @RequestParam String userId) throws JsonProcessingException {
+    @PostMapping("/games/collection")
+    public ResponseEntity<String> saveCollection(@RequestBody String body, @RequestParam String userId) throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Boardgame> bgs = objectMapper.readValue(body, new TypeReference<List<Boardgame>>(){});
+        List<Boardgame> boardgameList = objectMapper.readValue(body, new TypeReference<List<Boardgame>>(){});
 
-        for (Boardgame bg: bgs) {
-            System.out.println(bg.toString());
-        }
-
-
+        gamesRepo.saveCollection(boardgameList, Integer.parseInt(userId));
 
         return null;
+    }
+
+    @GetMapping("/games/collection")
+    public ResponseEntity<String> getCollection(@RequestParam String userId) {
+
+        List<Boardgame> bgList = gamesRepo.getCollection(Integer.parseInt(userId));
+
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+
+        for (Boardgame bg: bgList){
+            arrayBuilder.add(JsonBuilder.bgDetailToJson(bg));
+        }
+
+        JsonArray result = arrayBuilder.build();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(result.toString());
+
+    }
+
+    @DeleteMapping("/games/collection")
+    public ResponseEntity<String> deleteCollection(@RequestParam int userId, @RequestParam int bgId) {
+
+        int result = gamesRepo.deleteCollection(userId, bgId);
+
+        return ResponseEntity.ok(String.valueOf(result));
+
     }
 
 

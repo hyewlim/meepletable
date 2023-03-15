@@ -16,7 +16,7 @@ import {UserService} from "../shared/user.service";
 })
 export class CollectionComponent implements OnInit, OnDestroy {
 
-  boardgamesSelected: Boardgame[] = [];
+  boardgamesSelected!: Boardgame[];
   boardgames: Boardgame[] = [];
   boardgame!: Boardgame;
 
@@ -36,6 +36,12 @@ export class CollectionComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.repositoryService.loadBoardgames(this.userService.user.userId)
+      .then(data => {
+        console.log(data)
+        this.boardgames = data
+      })
 
   }
 
@@ -57,6 +63,17 @@ export class CollectionComponent implements OnInit, OnDestroy {
   }
 
   deleteSelectedProducts() {
+    this.confirmationService.confirm({
+      message: "Are you sure you want to delete the selected boardgames?",
+      header: "confirm",
+      icon: "pi pi-exclamation-triangle",
+      accept: () => {
+        this.boardgames = this.boardgames.filter(val => !this.boardgamesSelected.includes(val));
+        this.boardgamesSelected = [];
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Games Deleted', life:3000})
+
+      }
+    })
 
   }
 
@@ -66,7 +83,26 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   }
 
-  deleteProduct(product: any) {
+  deleteProduct(boardgame: Boardgame) {
+
+    this.confirmationService.confirm({
+      message: "Are you sure you want to delete " + boardgame.name + "?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
+      accept: () => {
+        this.boardgames = this.boardgames.filter(val => val.id !== boardgame.id);
+        this.boardgame = {} as Boardgame;
+        this.messageService.add({severity: "success", summary: "Successful", detail: "Game Deleted", life:3000})
+      }
+    });
+
+    console.log(this.boardgames)
+
+    this.repositoryService.deleteBoardgame(this.userService.user.userId, boardgame.id)
+      .then(value => {
+        console.log(value)
+      })
+
 
   }
 
@@ -97,5 +133,5 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
 
   }
-  
+
 }

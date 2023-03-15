@@ -20,7 +20,26 @@ export class RepositoryService {
       .append("userId", userId)
 
 
-    return lastValueFrom(this.http.post("/api/games/post", boardgames, {params: params}))
+    return lastValueFrom(this.http.post("/api/games/collection", boardgames, {params: params}))
+  }
+
+  loadBoardgames(userId: number) {
+
+    const params = new HttpParams()
+      .append("userId", userId)
+
+    return lastValueFrom(this.http.get<Boardgame[]>("/api/games/collection", {params: params}))
+
+  }
+
+  deleteBoardgame(userId: number, bgId: number) {
+
+    const params = new HttpParams()
+      .append("userId", userId)
+      .append("bgId", bgId)
+
+    return lastValueFrom(this.http.delete("/api/games/collection", {params: params}))
+
   }
 
 

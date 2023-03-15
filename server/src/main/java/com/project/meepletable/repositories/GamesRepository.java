@@ -38,6 +38,33 @@ public class GamesRepository {
         });
 
 
+        for (Boardgame bg: bgList) {
+            jdbcTemplate.update(SQL_INSERT_COMMENT, userId, bg.getId(), bg.getComment());
+
+        }
+
+
+
+    }
+
+    public List<Boardgame> getCollection(int userId) {
+
+        return jdbcTemplate.query(SQL_GET_COLLECTION,
+                (rs, rowNum) -> new Boardgame(
+                        rs.getInt("bg_id"),
+                        rs.getString("title"),
+                        rs.getInt("year_published"),
+                        rs.getString("thumbnail"),
+                        rs.getString("image"),
+                        rs.getInt("playing_time"),
+                        rs.getString("comment")
+                ), userId);
+
+    }
+
+    public int deleteCollection(int userId, int bgId) {
+
+        return jdbcTemplate.update(SQL_DELETE_COLLECTION, userId, bgId);
 
     }
 }
