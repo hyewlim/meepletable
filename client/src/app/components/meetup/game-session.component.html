@@ -1,1 +1,51 @@
+
+
+
+
 <p>game-session works!</p>
+
+<button (click)="openSession()" type="button">Add Session</button>
+
+
+
+<p-dialog [(visible)]="sessionDialog" [style]="{width: '450px'}" header="Add Session" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+
+<!--    pull name from login-->
+
+    <div class="field">
+      <div>
+        <label>Enter address</label>
+        <input
+          type="text"
+          class="my-search-box"
+          (keydown.enter)="$event.preventDefault()"
+          placeholder="Search Location"
+          type="text"
+          #search
+        />
+      </div>
+    </div>
+
+<!--    <div class="field">-->
+<!--          <label for="name">Name: </label>-->
+<!--          <input type="text" pInputText id="name" required autofocus />-->
+<!--&lt;!&ndash;          <small class="p-error" *ngIf="submitted && !boardgame.name">Name is required.</small>&ndash;&gt;-->
+<!--    </div>-->
+
+    <br>
+
+    <div class="field">
+      <label for="comment">Comment: </label>
+      <textarea id="comment" pInputTextarea  required rows="3" cols="20"></textarea>
+    </div>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+  </ng-template>
+</p-dialog>
+
+<!--<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>-->

@@ -73,24 +73,40 @@ export class MapComponent implements OnInit, AfterViewInit {
     )
 
     autocomplete.addListener('place_changed', () => {
-      this.ngZone.run(() => {
-        let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+      const places = autocomplete.getPlace();
+      if (places.name?.length === 0 )
+        return
 
-        if (place.geometry === undefined || place.geometry === null) {
-          return;
-        }
-
-        console.log({place}, place.geometry.location?.lat());
-
-        this.latitude = place.geometry.location?.lat();
-        this.longitude = place.geometry.location?.lng();
-        this.center = {
-          lat: this.latitude,
-          lng: this.longitude
-        }
-
-      })
+      const bounds = new google.maps.LatLngBounds();
+      if (!places.geometry || !places.geometry.location)
+        return
+      if (places.geometry.viewport) {
+        bounds.union(places.geometry.viewport);
+      } else {
+        bounds.extend(places.geometry.location);
+      }
+      this.map.fitBounds(bounds);
     })
+
+    // autocomplete.addListener('place_changed', () => {
+    //   this.ngZone.run(() => {
+    //     let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+    //
+    //     if (place.geometry === undefined || place.geometry === null) {
+    //       return;
+    //     }
+    //
+    //     console.log({place}, place.geometry.location?.lat());
+    //
+    //     this.latitude = place.geometry.location?.lat();
+    //     this.longitude = place.geometry.location?.lng();
+    //     this.center = {
+    //       lat: this.latitude,
+    //       lng: this.longitude
+    //     }
+    //
+    //   })
+    // })
 
   }
 
