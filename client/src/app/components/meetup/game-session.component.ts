@@ -1,20 +1,38 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {GoogleMap} from "@angular/google-maps";
 import {environment} from "../../../environments/environment.development";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {GooglemapService} from "../../shared/googlemap.service";
 
 @Component({
   selector: 'app-game-session',
   templateUrl: './game-session.component.html',
   styleUrls: ['./game-session.component.css']
 })
-export class GameSessionComponent {
+export class GameSessionComponent implements OnInit {
+
+  form!: FormGroup;
+
   sessionDialog: boolean = false;
   map!: GoogleMap;
+
+  text!: string;
+
+  results!: string[];
 
   @ViewChild('search')
   public searchElementRef!: ElementRef;
 
+  constructor(private fb: FormBuilder,
+              private gMapService: GooglemapService) {
+  }
 
+  ngOnInit(): void {
+
+    this.form = this.fb.group({
+      address: this.fb.control<string>("")
+    })
+    }
 
   openSession() {
     this.sessionDialog = true;
@@ -36,9 +54,25 @@ export class GameSessionComponent {
 
   }
 
-  //https://maps.googleapis.com/maps/api/place/autocomplete/json?key=AIzaSyArhQ2zZuRa7-QwSBIWs6L2SLQjEsx6QII&input=26 jalan berseh&language=en&types=geocode
-  // search for place
 
 
 
+
+  submitForm() {
+
+    this.gMapService.getGeoCode(this.form.value['address'])
+      .then(data => {
+        console.log(data)
+      })
+  }
+
+  searchGeocode(event: any) {
+
+    this.gMapService.getGeoCode(event.query)
+      .then(data => {
+        console.log(data)
+      })
+
+
+  }
 }

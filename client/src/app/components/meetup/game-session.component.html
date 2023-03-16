@@ -12,8 +12,13 @@
   <ng-template pTemplate="content">
 
 <!--    pull name from login-->
+    <form [formGroup]="form" (ngSubmit)="submitForm()">
 
-    <div class="field">
+
+      <p-autoComplete formControlName="address" [suggestions]="results" (completeMethod)="searchGeocode($event)"></p-autoComplete>
+
+
+      <div class="field">
       <div>
         <label>Enter address</label>
         <input
@@ -22,6 +27,7 @@
           (keydown.enter)="$event.preventDefault()"
           placeholder="Search Location"
           type="text"
+          formControlName="address"
           #search
         />
       </div>
@@ -39,6 +45,10 @@
       <label for="comment">Comment: </label>
       <textarea id="comment" pInputTextarea  required rows="3" cols="20"></textarea>
     </div>
+
+      <button type="submit">Submit</button>
+
+    </form>
 
   </ng-template>
 
