@@ -16,12 +16,12 @@ export class MapComponent implements OnInit, AfterViewInit {
   @ViewChild(MapInfoWindow, { static: false })
   info!: MapInfoWindow;
 
-  @ViewChild('search')
-  public searchElementRef!: ElementRef;
+  // @ViewChild('search')
+  // public searchElementRef!: ElementRef;
 
-  apiUrl = environment.gMapApiUrl;
+  // apiUrl = environment.gMapApiUrl;
 
-  apiLoaded: Observable<boolean>;
+  // apiLoaded: Observable<boolean>;
 
   zoom = 12;
   center!: google.maps.LatLngLiteral;
@@ -47,11 +47,11 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   constructor(private httpClient: HttpClient,
               private ngZone: NgZone) {
-    this.apiLoaded = httpClient.jsonp(this.apiUrl, 'callback')
-      .pipe(
-        map(() => true),
-        catchError(() => of(false)),
-      );
+    // this.apiLoaded = httpClient.jsonp(this.apiUrl, 'callback')
+    //   .pipe(
+    //     map(() => true),
+    //     catchError(() => of(false)),
+    //   );
   }
 
   ngOnInit(): void {
@@ -64,29 +64,29 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    let autocomplete = new google.maps.places.Autocomplete(
-      this.searchElementRef.nativeElement
-    );
-
-    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(
-      this.searchElementRef.nativeElement
-    )
-
-    autocomplete.addListener('place_changed', () => {
-      const places = autocomplete.getPlace();
-      if (places.name?.length === 0 )
-        return
-
-      const bounds = new google.maps.LatLngBounds();
-      if (!places.geometry || !places.geometry.location)
-        return
-      if (places.geometry.viewport) {
-        bounds.union(places.geometry.viewport);
-      } else {
-        bounds.extend(places.geometry.location);
-      }
-      this.map.fitBounds(bounds);
-    })
+    // let autocomplete = new google.maps.places.Autocomplete(
+    //   this.searchElementRef.nativeElement
+    // );
+    //
+    // this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+    //   this.searchElementRef.nativeElement
+    // )
+    //
+    // autocomplete.addListener('place_changed', () => {
+    //   const places = autocomplete.getPlace();
+    //   if (places.name?.length === 0 )
+    //     return
+    //
+    //   const bounds = new google.maps.LatLngBounds();
+    //   if (!places.geometry || !places.geometry.location)
+    //     return
+    //   if (places.geometry.viewport) {
+    //     bounds.union(places.geometry.viewport);
+    //   } else {
+    //     bounds.extend(places.geometry.location);
+    //   }
+    //   this.map.fitBounds(bounds);
+    // })
 
     // autocomplete.addListener('place_changed', () => {
     //   this.ngZone.run(() => {
@@ -114,9 +114,9 @@ export class MapComponent implements OnInit, AfterViewInit {
     console.log(event)
   }
 
-  logCenter() {
-    console.log(JSON.stringify(this.map.getCenter()));
-  }
+  // logCenter() {
+  //   console.log(JSON.stringify(this.map.getCenter()));
+  // }
 
   addMarker() {
     // @ts-ignore
@@ -134,15 +134,15 @@ export class MapComponent implements OnInit, AfterViewInit {
     });
   }
 
-  zoomIn() {
-    // @ts-ignore
-    if (this.zoom < this.options.maxZoom) this.zoom++;
-  }
-
-  zoomOut() {
-    // @ts-ignore
-    if (this.zoom > this.options.minZoom) this.zoom--;
-  }
+  // zoomIn() {
+  //   // @ts-ignore
+  //   if (this.zoom < this.options.maxZoom) this.zoom++;
+  // }
+  //
+  // zoomOut() {
+  //   // @ts-ignore
+  //   if (this.zoom > this.options.minZoom) this.zoom--;
+  // }
 
   openInfo(marker: MapMarker, content: string) {
     this.infoContent = content;

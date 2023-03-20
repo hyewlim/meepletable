@@ -13,5 +13,10 @@ export interface Boardgame {
   image: string
   thumbnail: string
   comment: string
+}
 
+export interface Address {
+  name: string
+  latitude: number
+  longitude: number
 }

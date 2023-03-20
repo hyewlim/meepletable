@@ -1,37 +1,20 @@
 
-
-
-
 <p>game-session works!</p>
 
 <button (click)="openSession()" type="button">Add Session</button>
 
-
-
 <p-dialog [(visible)]="sessionDialog" [style]="{width: '450px'}" header="Add Session" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
 
-<!--    pull name from login-->
-    <form [formGroup]="form" (ngSubmit)="submitForm()">
-
-
-      <p-autoComplete formControlName="address" [suggestions]="results" (completeMethod)="searchGeocode($event)"></p-autoComplete>
-
+    <form [formGroup]="form" >
 
       <div class="field">
-      <div>
-        <label>Enter address</label>
-        <input
-          type="text"
-          class="my-search-box"
-          (keydown.enter)="$event.preventDefault()"
-          placeholder="Search Location"
-          type="text"
-          formControlName="address"
-          #search
-        />
+        <label>Address: </label>
+        <br>
+        <app-googlemaps-autocomplete
+          (chosenAddress)="foundAddress($event)"></app-googlemaps-autocomplete>
       </div>
-    </div>
+
 
 <!--    <div class="field">-->
 <!--          <label for="name">Name: </label>-->
@@ -43,18 +26,26 @@
 
     <div class="field">
       <label for="comment">Comment: </label>
-      <textarea id="comment" pInputTextarea  required rows="3" cols="20"></textarea>
+      <br>
+      <textarea
+        id="comment"
+        pInputTextarea
+        required rows="3"
+        cols="20"
+        style="width: 300px"
+        formControlName="comment"></textarea>
     </div>
 
-      <button type="submit">Submit</button>
 
     </form>
 
   </ng-template>
 
+
+
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveForm()"></button>
   </ng-template>
 </p-dialog>
 

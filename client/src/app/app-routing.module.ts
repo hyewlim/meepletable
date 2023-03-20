@@ -10,6 +10,7 @@ import {MeetupComponent} from "./components/meetup/meetup.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'home', component: HomeComponent },
   { path: 'signup', component: SignupComponent},
   { path: 'signin', component: SigninComponent},
   { path: 'collection', component: CollectionComponent},

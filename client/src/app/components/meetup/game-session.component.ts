@@ -3,6 +3,8 @@ import {GoogleMap} from "@angular/google-maps";
 import {environment} from "../../../environments/environment.development";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {GooglemapService} from "../../shared/googlemap.service";
+import {Address} from "../../shared/models";
+import {RepositoryService} from "../../shared/repository.service";
 
 @Component({
   selector: 'app-game-session',
@@ -20,59 +22,44 @@ export class GameSessionComponent implements OnInit {
 
   results!: string[];
 
+  chosenAddress!: Address;
+
   @ViewChild('search')
   public searchElementRef!: ElementRef;
 
   constructor(private fb: FormBuilder,
-              private gMapService: GooglemapService) {
+              private repositoryService: RepositoryService) {
   }
 
   ngOnInit(): void {
-
     this.form = this.fb.group({
-      address: this.fb.control<string>("")
+      comment: this.fb.control<string>("")
     })
-    }
+
+  }
 
   openSession() {
     this.sessionDialog = true;
-
-    let autocomplete = new google.maps.places.Autocomplete(
-      this.searchElementRef.nativeElement
-    );
-
-    this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(
-      this.searchElementRef.nativeElement
-    )
   }
 
   hideDialog() {
-
+    this.sessionDialog = false;
   }
 
-  saveProduct() {
+  saveForm() {
 
+    let sessionInfo = {
+      address: this.chosenAddress,
+      comment: this.form.value['comment']
+    }
+    console.log(sessionInfo)
+
+    //save to markers[] , post to repository
+
+    this.sessionDialog = false;
   }
 
-
-
-
-
-  submitForm() {
-
-    this.gMapService.getGeoCode(this.form.value['address'])
-      .then(data => {
-        console.log(data)
-      })
-  }
-
-  searchGeocode(event: any) {
-
-    this.gMapService.getGeoCode(event.query)
-      .then(data => {
-        console.log(data)
-      })
-
-
+  foundAddress(address: Address) {
+    this.chosenAddress = address;
   }
 }

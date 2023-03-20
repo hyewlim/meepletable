@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment.development";
 import {lastValueFrom} from "rxjs";
 
@@ -28,11 +28,14 @@ export class GooglemapService {
     // return lastValueFrom(this.http.get(this.GEOCODE_URL, {params: params}))
 
     const params = new HttpParams()
-      .append('key', environment.googleAPIKey)
+      .append("key", environment.googleAPIKey)
       .append("input", address)
       .append("language", "en")
       .append("types", "geocode")
       .append("components", "country:sg")
+
+    // const headers = new HttpHeaders()
+    //   .append("Access-Control-Allow-Origin", "*")
 
     return lastValueFrom(this.http.get(this.PLACE_AUTOCOMPLETE_URL, {params: params}))
   }

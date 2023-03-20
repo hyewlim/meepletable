@@ -32,6 +32,8 @@ import {CheckboxModule} from "primeng/checkbox";
 import {StyleClassModule} from "primeng/styleclass";
 import {DividerModule} from "primeng/divider";
 import {GMapModule} from "primeng/gmap";
+import { GooglemapsAutocompleteComponent } from './components/meetup/googlemaps-autocomplete.component';
+import {DropdownModule} from "primeng/dropdown";
 
 
 @NgModule({
@@ -47,33 +49,36 @@ import {GMapModule} from "primeng/gmap";
     AutocompleteComponent,
     MeetupComponent,
     GameSessionComponent,
+    GooglemapsAutocompleteComponent,
 
   ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    GoogleMapsModule,
-    HttpClientJsonpModule,
-    AppRoutingModule,
-    ButtonModule,
-    AutoCompleteModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    CardModule,
-    TableModule,
-    ToolbarModule,
-    FileUploadModule,
-    RatingModule,
-    DialogModule,
-    ConfirmDialogModule,
-    RippleModule,
-    CheckboxModule,
-    StyleClassModule,
-    DividerModule,
-    GMapModule
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        GoogleMapsModule,
+        HttpClientJsonpModule,
+        AppRoutingModule,
+        ButtonModule,
+        AutoCompleteModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        CardModule,
+        TableModule,
+        ToolbarModule,
+        FileUploadModule,
+        RatingModule,
+        DialogModule,
+        ConfirmDialogModule,
+        RippleModule,
+        CheckboxModule,
+        StyleClassModule,
+        DividerModule,
+        GMapModule,
+        GoogleMapsModule,
+        DropdownModule
 
-  ],
+    ],
   exports: [
     MapComponent
   ],
