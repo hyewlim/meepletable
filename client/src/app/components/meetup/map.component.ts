@@ -1,151 +1,86 @@
 import {AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
-import {catchError, map, Observable, of} from "rxjs";
+import {catchError, map, Observable, of, Subscription} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment.development";
 import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
+import {Address} from "../../shared/models";
+import {MapService} from "../../shared/map.service";
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements OnInit {
 
   @ViewChild(GoogleMap, { static: false })
-  map!: GoogleMap;
+  map!: google.maps.Map;
   @ViewChild(MapInfoWindow, { static: false })
   info!: MapInfoWindow;
 
-  // @ViewChild('search')
-  // public searchElementRef!: ElementRef;
-
-  // apiUrl = environment.gMapApiUrl;
-
-  // apiLoaded: Observable<boolean>;
-
-  zoom = 12;
-  center!: google.maps.LatLngLiteral;
-  options: google.maps.MapOptions = {
-    mapTypeId: 'hybrid',
-    zoomControl: false,
-    scrollwheel: false,
-    disableDoubleClickZoom: true,
-    maxZoom: 15,
-    minZoom: 8,
-  };
-  markers = [] as any;
+  markers = []
   infoContent = ''
 
-  latitude!: any;
-  longitude!: any;
 
   initialCoordinates = {
     lat: 1.322914,
     lng: 103.839112,
   }
 
+  markersSub$!: Subscription;
 
-  constructor(private httpClient: HttpClient,
-              private ngZone: NgZone) {
-    // this.apiLoaded = httpClient.jsonp(this.apiUrl, 'callback')
-    //   .pipe(
-    //     map(() => true),
-    //     catchError(() => of(false)),
-    //   );
+
+  constructor(private mapService: MapService) {
   }
 
   ngOnInit(): void {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.center = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      };
+
+    const latlng = { lat: 1.3379833, lng: 103.7931053}
+
+    // @ts-ignore
+    this.map = new google.maps.Map(document.getElementById("map"), {
+      center: latlng,
+      zoom: 12,
+    })
+
+    const marker = new google.maps.Marker({
+      position: latlng,
+      map: this.map,
     });
-  }
-
-  ngAfterViewInit(): void {
-    // let autocomplete = new google.maps.places.Autocomplete(
-    //   this.searchElementRef.nativeElement
-    // );
-    //
-    // this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(
-    //   this.searchElementRef.nativeElement
-    // )
-    //
-    // autocomplete.addListener('place_changed', () => {
-    //   const places = autocomplete.getPlace();
-    //   if (places.name?.length === 0 )
-    //     return
-    //
-    //   const bounds = new google.maps.LatLngBounds();
-    //   if (!places.geometry || !places.geometry.location)
-    //     return
-    //   if (places.geometry.viewport) {
-    //     bounds.union(places.geometry.viewport);
-    //   } else {
-    //     bounds.extend(places.geometry.location);
-    //   }
-    //   this.map.fitBounds(bounds);
-    // })
-
-    // autocomplete.addListener('place_changed', () => {
-    //   this.ngZone.run(() => {
-    //     let place: google.maps.places.PlaceResult = autocomplete.getPlace();
-    //
-    //     if (place.geometry === undefined || place.geometry === null) {
-    //       return;
-    //     }
-    //
-    //     console.log({place}, place.geometry.location?.lat());
-    //
-    //     this.latitude = place.geometry.location?.lat();
-    //     this.longitude = place.geometry.location?.lng();
-    //     this.center = {
-    //       lat: this.latitude,
-    //       lng: this.longitude
-    //     }
-    //
-    //   })
-    // })
+    // @ts-ignore
+    this.markers.push(marker1);
 
   }
+
 
   click(event: google.maps.MapMouseEvent) {
     console.log(event)
   }
 
-  // logCenter() {
-  //   console.log(JSON.stringify(this.map.getCenter()));
-  // }
 
-  addMarker() {
-    // @ts-ignore
-    this.markers.push({
-      position: {
-        lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-        lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-      },
-      label: {
-        color: 'red',
-        text: 'Marker label ' + (this.markers.length + 1),
-      },
-      title: 'Marker title ' + (this.markers.length + 1),
-      options: { animation: google.maps.Animation.BOUNCE },
-    });
-  }
 
-  // zoomIn() {
+
+  // addMarker() {
   //   // @ts-ignore
-  //   if (this.zoom < this.options.maxZoom) this.zoom++;
+  //   this.markers.push({
+  //     position: {
+  //       lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
+  //       lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
+  //     },
+  //     label: {
+  //       color: 'red',
+  //       text: 'Marker label ' + (this.markers.length + 1),
+  //     },
+  //     title: 'Marker title ' + (this.markers.length + 1),
+  //     options: { animation: google.maps.Animation.BOUNCE },
+  //   });
   // }
-  //
-  // zoomOut() {
-  //   // @ts-ignore
-  //   if (this.zoom > this.options.minZoom) this.zoom--;
-  // }
+  infoWindow!: MapInfoWindow;
 
-  openInfo(marker: MapMarker, content: string) {
-    this.infoContent = content;
+
+
+  openInfo(marker: MapMarker, windowIndex: number) {
+
     this.info.open(marker);
   }
 }
