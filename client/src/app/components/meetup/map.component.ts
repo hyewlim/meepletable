@@ -3,7 +3,7 @@ import {catchError, map, Observable, of, Subscription} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment.development";
 import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
-import {Address} from "../../shared/models";
+import {Address, GameSession} from "../../shared/models";
 import {MapService} from "../../shared/map.service";
 import InfoWindow = google.maps.InfoWindow;
 
@@ -19,8 +19,10 @@ export class MapComponent implements OnInit {
   @ViewChild(MapInfoWindow, { static: false })
   info!: MapInfoWindow;
 
-  markers = []
+  markers: GameSession[] = []
   infoContent = ''
+
+  markersSub$!: Subscription;
 
   iconImage = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
 
@@ -29,8 +31,6 @@ export class MapComponent implements OnInit {
     lat: 1.322914,
     lng: 103.839112,
   }
-
-  markersSub$!: Subscription;
 
 
   marker1 = {
@@ -48,6 +48,12 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.markersSub$ = this.mapService.markersChanged.subscribe(
+      data => {
+        this.markers = data;
+      }
+    )
 
 
 

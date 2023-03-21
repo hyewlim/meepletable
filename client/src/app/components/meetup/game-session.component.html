@@ -1,35 +1,45 @@
 
 <button (click)="openSession()" type="button">Add Session</button>
+<br>
+
+<div *ngIf="sessions">
+  <div *ngFor="let session of sessions">
+    <p-card header="{{session.title}}" subheader="{{session.date}} / {{session.address.name}}" [style]="{width: '360px'}" styleClass="p-card-shadow">
+      <p>{{session.comment}}</p>
+      <ng-template pTemplate="footer">
+        <p-button label="Join" icon="pi pi-plus-circle"></p-button>
+      </ng-template>
+    </p-card>
+  </div>
+</div>
+
+
+
+
+
 
 <p-dialog [(visible)]="sessionDialog" [style]="{width: '450px'}" header="Add Session" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
-
     <form [formGroup]="form" >
-
+      <div>
+        <label for="title">Title: </label>
+        <br>
+        <input type="text" formControlName="title" id="title">
+      </div>
+      <br>
       <div>
         <label>Address: </label>
         <br>
         <app-googlemaps-autocomplete
           (chosenAddress)="foundAddress($event)"></app-googlemaps-autocomplete>
       </div>
-
-
-<!--    <div class="field">-->
-<!--          <label for="name">Name: </label>-->
-<!--          <input type="text" pInputText id="name" required autofocus />-->
-<!--&lt;!&ndash;          <small class="p-error" *ngIf="submitted && !boardgame.name">Name is required.</small>&ndash;&gt;-->
-<!--    </div>-->
-
       <br>
-
       <div>
         <label for="date">Date: </label>
         <br>
         <input type="date" formControlName="date" id="date">
       </div>
-
       <br>
-
       <div>
         <label for="playerCount">Player Count: </label>
         <br>
@@ -41,11 +51,8 @@
           <option value="5">5</option>
           <option value=">6">>6</option>
         </select>
-
       </div>
-
       <br>
-
       <div>
         <label for="comment">Comment: </label>
         <br>
@@ -57,10 +64,7 @@
           style="width: 300px"
           formControlName="comment"></textarea>
       </div>
-
-
     </form>
-
   </ng-template>
 
 

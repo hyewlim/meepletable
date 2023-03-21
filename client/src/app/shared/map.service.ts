@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import {Address, GameSession} from "./models";
-import {Subject} from "rxjs";
+import {lastValueFrom, Subject} from "rxjs";
+import {HttpClient} from "@angular/common/http";
+import {UserService} from "./user.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapService {
 
-  markers = []
+  markers: GameSession[] = []
 
   // private markers: Address[] = [
   //   {name: "200 Turf Club Rd", latitude: 1.3379833, longitude: 103.7931053},
@@ -15,27 +17,21 @@ export class MapService {
   //
   // ]
 
-  iconImage = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+  markersChanged = new Subject<GameSession[]>();
 
-  markersChanged = new Subject<Address[]>();
-
-  constructor() { }
+  constructor(private http: HttpClient,
+              private userService: UserService) { }
 
   addMarkers(session: GameSession) {
 
-    // @ts-ignore
-    this.markers.push({
-      position: {
-        lat: session.address.latitude,
-        lng: session.address.longitude
-      },
-      title: session.address.name,
-      icon: this.iconImage,
-      host: session.host,
-      comment: session.comment,
-      playerCount: session.playerCount,
-      date: session.date
-    });
+    this.markers.push(session)
+    this.markersChanged.next(this.markers);
+
+
+    return lastValueFrom(this.http.post("/api/session" + "/" + this.userService.user.userId, session))
+
+
+
 
   }
 

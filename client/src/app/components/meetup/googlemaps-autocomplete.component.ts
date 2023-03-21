@@ -36,8 +36,10 @@ export class GooglemapsAutocompleteComponent {
 
         let addressToBeEmitted = <Address>{
           name: <string>place.name,
-          latitude: <number>place.geometry.location?.lat(),
-          longitude: <number>place.geometry.location?.lng()
+          position: {
+            lat: <number>place.geometry.location?.lat(),
+            lng: <number>place.geometry.location?.lng()
+          }
         }
 
         this.chosenAddress.emit(addressToBeEmitted)

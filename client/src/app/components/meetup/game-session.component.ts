@@ -7,6 +7,7 @@ import {Address, GameSession} from "../../shared/models";
 import {RepositoryService} from "../../shared/repository.service";
 import {UserService} from "../../shared/user.service";
 import {MapService} from "../../shared/map.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-game-session',
@@ -26,8 +27,15 @@ export class GameSessionComponent implements OnInit {
 
   chosenAddress!: Address;
 
+  sessions: GameSession[] = [];
+
+  sessionSub$!: Subscription;
+
   @ViewChild('search')
   public searchElementRef!: ElementRef;
+
+  iconImage = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+
 
   constructor(private fb: FormBuilder,
               private repositoryService: RepositoryService,
@@ -36,12 +44,22 @@ export class GameSessionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
+    this.form = this.createSessionForm();
+    this.sessionSub$ = this.mapService.markersChanged.subscribe(
+      data => {
+        this.sessions = data
+      }
+    )
+
+  }
+
+  private createSessionForm(): FormGroup {
+    return this.fb.group({
+      title: this.fb.control<string>(""),
       comment: this.fb.control<string>(""),
       playerCount: this.fb.control<number>(2),
       date: this.fb.control(new Date())
     })
-
   }
 
   openSession() {
@@ -55,11 +73,13 @@ export class GameSessionComponent implements OnInit {
   saveForm() {
 
     let sessionInfo: GameSession = {
+      title: this.form.value['title'],
       host: this.userService.user.username,
       address: this.chosenAddress,
       date: this.form.value['date'],
       playerCount: this.form.value['playerCount'],
-      comment: this.form.value['comment']
+      comment: this.form.value['comment'],
+      icon: this.iconImage
     }
     console.log(sessionInfo)
 
@@ -72,4 +92,6 @@ export class GameSessionComponent implements OnInit {
   foundAddress(address: Address) {
     this.chosenAddress = address;
   }
+
+
 }

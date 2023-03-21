@@ -17,15 +17,22 @@ export interface Boardgame {
 
 export interface Address {
   name: string
-  latitude: number
-  longitude: number
+  position: {
+    lat: number
+    lng: number
+  }
+
 }
 
 export interface GameSession {
 
+  title: string
   host: string
   address: Address
   date: Date
   playerCount: number
   comment: string
+  icon: string;
 }
+
+
