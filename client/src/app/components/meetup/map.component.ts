@@ -5,6 +5,7 @@ import {environment} from "../../../environments/environment.development";
 import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
 import {Address} from "../../shared/models";
 import {MapService} from "../../shared/map.service";
+import InfoWindow = google.maps.InfoWindow;
 
 @Component({
   selector: 'app-map',
@@ -21,6 +22,8 @@ export class MapComponent implements OnInit {
   markers = []
   infoContent = ''
 
+  iconImage = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+
 
   initialCoordinates = {
     lat: 1.322914,
@@ -30,25 +33,23 @@ export class MapComponent implements OnInit {
   markersSub$!: Subscription;
 
 
+  marker1 = {
+    position: {lat: 1.3379833, lng: 103.7931053},
+    icon: this.iconImage,
+    title: "200 Cross Street",
+    description: "this is for fun"
+
+  }
+
+
+
+
   constructor(private mapService: MapService) {
   }
 
   ngOnInit(): void {
 
-    const latlng = { lat: 1.3379833, lng: 103.7931053}
 
-    // @ts-ignore
-    this.map = new google.maps.Map(document.getElementById("map"), {
-      center: latlng,
-      zoom: 12,
-    })
-
-    const marker = new google.maps.Marker({
-      position: latlng,
-      map: this.map,
-    });
-    // @ts-ignore
-    this.markers.push(marker1);
 
   }
 
@@ -75,12 +76,12 @@ export class MapComponent implements OnInit {
   //     options: { animation: google.maps.Animation.BOUNCE },
   //   });
   // }
-  infoWindow!: MapInfoWindow;
 
 
-
-  openInfo(marker: MapMarker, windowIndex: number) {
-
+  openInfo(marker: MapMarker) {
+    // @ts-ignore
     this.info.open(marker);
   }
+
+
 }

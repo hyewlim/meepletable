@@ -6,6 +6,17 @@
     [center]="initialCoordinates"
     [zoom]="12"
   >
+    <map-marker
+      #marker="mapMarker"
+      [position]="marker1.position"
+      [title]="marker1.title"
+      [icon]="marker1.icon"
+      (mapClick)="openInfo(marker)"
+      >
+
+    </map-marker>
+
+    <map-info-window>{{marker1.title}} - {{marker1.description}}</map-info-window>
 
 <!--    <map-marker-->
 <!--      #markerElem-->
@@ -18,7 +29,7 @@
 <!--    >-->
 <!--    </map-marker>-->
 
-    <map-info-window>{{ infoContent }}</map-info-window>
+
 
   </google-map>
 </div>

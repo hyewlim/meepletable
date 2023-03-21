@@ -20,3 +20,12 @@ export interface Address {
   latitude: number
   longitude: number
 }
+
+export interface GameSession {
+
+  host: string
+  address: Address
+  date: Date
+  playerCount: number
+  comment: string
+}

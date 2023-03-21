@@ -6,7 +6,7 @@
 
     <form [formGroup]="form" >
 
-      <div class="field">
+      <div>
         <label>Address: </label>
         <br>
         <app-googlemaps-autocomplete
@@ -20,19 +20,43 @@
 <!--&lt;!&ndash;          <small class="p-error" *ngIf="submitted && !boardgame.name">Name is required.</small>&ndash;&gt;-->
 <!--    </div>-->
 
-    <br>
-
-    <div class="field">
-      <label for="comment">Comment: </label>
       <br>
-      <textarea
-        id="comment"
-        pInputTextarea
-        required rows="3"
-        cols="20"
-        style="width: 300px"
-        formControlName="comment"></textarea>
-    </div>
+
+      <div>
+        <label for="date">Date: </label>
+        <br>
+        <input type="date" formControlName="date" id="date">
+      </div>
+
+      <br>
+
+      <div>
+        <label for="playerCount">Player Count: </label>
+        <br>
+        <select formControlName="playerCount">
+          <option value="">Select a number</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value=">6">>6</option>
+        </select>
+
+      </div>
+
+      <br>
+
+      <div>
+        <label for="comment">Comment: </label>
+        <br>
+        <textarea
+          id="comment"
+          pInputTextarea
+          required rows="3"
+          cols="20"
+          style="width: 300px"
+          formControlName="comment"></textarea>
+      </div>
 
 
     </form>
