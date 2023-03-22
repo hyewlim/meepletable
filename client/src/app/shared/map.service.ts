@@ -11,12 +11,6 @@ export class MapService {
 
   markers: GameSession[] = []
 
-  // private markers: Address[] = [
-  //   {name: "200 Turf Club Rd", latitude: 1.3379833, longitude: 103.7931053},
-  //   {name: "261 Waterloo St", latitude: 1.2989163, longitude: 103.8519697},
-  //
-  // ]
-
   markersChanged = new Subject<GameSession[]>();
 
   constructor(private http: HttpClient,
@@ -33,6 +27,10 @@ export class MapService {
 
 
 
+  }
+
+  loadMarkers(userId: number) {
+    return lastValueFrom(this.http.get<GameSession[]>("/api/session" + "/" + userId));
   }
 
   getMarkers() {

@@ -45,7 +45,13 @@ export class GameSessionComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.createSessionForm();
-    this.sessionSub$ = this.mapService.markersChanged.subscribe(
+    // this.sessionSub$ = this.mapService.markersChanged.subscribe(
+    //   data => {
+    //     this.sessions = data
+    //   }
+    // )
+
+    this.mapService.loadMarkers(this.userService.user.userId).then(
       data => {
         this.sessions = data
       }

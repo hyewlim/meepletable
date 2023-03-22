@@ -27,11 +27,11 @@ public class Queries {
 
 
     public static String SQL_ADD_GAME_SESSION =
-            "insert into game_session(game_session_id, title, user_id, address_name, address_position, date, player_count, comment, icon) values (?,?,?,?,POINT(?,?),?,?,?,?)";
+            "insert into game_session(game_session_id, title, user_id, address_name, address_position, date, player_count, comment, icon) values (?,?,?,?,POINT(?, ?),?,?,?,?)";
 
     public static String SQL_GET_SESSIONS =
             """
-            select title, users.username, address_name, address_position, date, player_count, comment, icon from game_session
+            select title, users.username, address_name, ST_X(address_position) as X, ST_Y(address_position) as Y, date, player_count, comment, icon from game_session
             join users on game_session.user_id = users.user_id
             where game_session.user_id=?
             """;

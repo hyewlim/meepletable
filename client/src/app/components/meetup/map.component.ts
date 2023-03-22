@@ -26,23 +26,10 @@ export class MapComponent implements OnInit {
 
   iconImage = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
 
-
   initialCoordinates = {
     lat: 1.322914,
     lng: 103.839112,
   }
-
-
-  marker1 = {
-    position: {lat: 1.3379833, lng: 103.7931053},
-    icon: this.iconImage,
-    title: "200 Cross Street",
-    description: "this is for fun"
-
-  }
-
-
-
 
   constructor(private mapService: MapService) {
   }
@@ -55,34 +42,11 @@ export class MapComponent implements OnInit {
       }
     )
 
-
-
   }
-
 
   click(event: google.maps.MapMouseEvent) {
     console.log(event)
   }
-
-
-
-
-  // addMarker() {
-  //   // @ts-ignore
-  //   this.markers.push({
-  //     position: {
-  //       lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-  //       lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-  //     },
-  //     label: {
-  //       color: 'red',
-  //       text: 'Marker label ' + (this.markers.length + 1),
-  //     },
-  //     title: 'Marker title ' + (this.markers.length + 1),
-  //     options: { animation: google.maps.Animation.BOUNCE },
-  //   });
-  // }
-
 
   openInfo(marker: MapMarker) {
     // @ts-ignore

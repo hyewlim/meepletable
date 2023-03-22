@@ -1,6 +1,7 @@
 package com.project.meepletable.utils;
 
 import com.project.meepletable.models.Boardgame;
+import com.project.meepletable.models.GameSession;
 import jakarta.json.*;
 
 import java.io.ByteArrayInputStream;
@@ -13,7 +14,7 @@ public class JsonBuilder {
     public static JsonArray bgJsonArray(List<Boardgame> boardgameList) {
 
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
-        for (Boardgame bg: boardgameList) {
+        for (Boardgame bg : boardgameList) {
             arrayBuilder.add(bgToJson(bg));
         }
 
@@ -45,7 +46,7 @@ public class JsonBuilder {
 
     }
 
-    public static JsonObject authResult(int result){
+    public static JsonObject authResult(int result) {
         return Json.createObjectBuilder()
                 .add("result", result)
                 .build();
@@ -66,6 +67,38 @@ public class JsonBuilder {
         bg.setComment(jsonObject.getString("comment"));
 
         return bg;
+
+    }
+
+    public static JsonObject gsDetailToJson(GameSession gs) {
+
+        return Json.createObjectBuilder()
+                .add("title", gs.getTitle())
+                .add("host", gs.getHost())
+                .add("address", JsonBuilder.addressToJson(gs))
+                .add("date", String.valueOf(gs.getDate()))
+                .add("playerCount", gs.getPlayerCount())
+                .add("comment", gs.getComment())
+                .add("icon", gs.getIcon())
+                .build();
+
+    }
+
+    public static JsonObject positionToJson(GameSession gs) {
+
+        return Json.createObjectBuilder()
+                .add("lat", gs.getAddress().getPosition().getLat())
+                .add("lng", gs.getAddress().getPosition().getLng())
+                .build();
+
+    }
+
+    public static JsonObject addressToJson(GameSession gs) {
+
+        return Json.createObjectBuilder()
+                .add("name", gs.getAddress().getName())
+                .add("position", JsonBuilder.positionToJson(gs))
+                .build();
 
     }
 
