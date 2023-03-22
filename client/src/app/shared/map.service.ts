@@ -29,8 +29,8 @@ export class MapService {
 
   }
 
-  loadMarkers(userId: number) {
-    return lastValueFrom(this.http.get<GameSession[]>("/api/session" + "/" + userId));
+  loadMarkers() {
+    return lastValueFrom(this.http.get<GameSession[]>("/api/session"));
   }
 
   getMarkers() {

@@ -1,27 +1,27 @@
 
-<div >
+<div>
 
   <google-map
     (mapClick)="click($event)"
     [center]="initialCoordinates"
     [zoom]="12"
   >
-    <map-marker
-      *ngFor="let m of markers"
-      #marker="mapMarker"
-      [position]="m.address.position"
-      [title]="m.title"
-      [icon]="m.icon"
-      (mapClick)="openInfo(marker)"
+
+
+      <map-marker
+        *ngFor="let m of markers"
+        #marker="mapMarker"
+        [position]="m.address.position"
+        [title]="m.title"
+        [icon]="m.icon"
+        (mapClick)="openInfo(marker, infoWindow)"
       >
+        <map-info-window #infoWindow="mapInfoWindow">
+          {{m.title}}
+        </map-info-window>
 
-      <map-info-window>
-        {{m.title}}
-        {{m.date}}
-        {{m.address.name}}
-      </map-info-window>
+      </map-marker>
 
-    </map-marker>
 
 
   </google-map>

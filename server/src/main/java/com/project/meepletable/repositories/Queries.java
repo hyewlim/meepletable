@@ -33,7 +33,6 @@ public class Queries {
             """
             select title, users.username, address_name, ST_X(address_position) as X, ST_Y(address_position) as Y, date, player_count, comment, icon from game_session
             join users on game_session.user_id = users.user_id
-            where game_session.user_id=?
             """;
 
 }

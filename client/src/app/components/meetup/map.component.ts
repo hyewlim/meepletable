@@ -39,6 +39,7 @@ export class MapComponent implements OnInit {
     this.markersSub$ = this.mapService.markersChanged.subscribe(
       data => {
         this.markers = data;
+        console.log(...this.markers.values())
       }
     )
 
@@ -48,9 +49,8 @@ export class MapComponent implements OnInit {
     console.log(event)
   }
 
-  openInfo(marker: MapMarker) {
-    // @ts-ignore
-    this.info.open(marker);
+  openInfo(marker: MapMarker, infoWindow: MapInfoWindow) {
+    infoWindow.open(marker)
   }
 
 

@@ -51,9 +51,10 @@ export class GameSessionComponent implements OnInit {
     //   }
     // )
 
-    this.mapService.loadMarkers(this.userService.user.userId).then(
+    this.mapService.loadMarkers().then(
       data => {
         this.sessions = data
+        this.mapService.markersChanged.next(data)
       }
     )
 

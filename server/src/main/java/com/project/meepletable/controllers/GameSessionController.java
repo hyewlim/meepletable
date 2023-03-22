@@ -29,10 +29,10 @@ public class GameSessionController {
         return null;
     }
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<String> getSessions(@PathVariable int userId) {
+    @GetMapping()
+    public ResponseEntity<String> getSessions() {
 
-        List<GameSession> gameSessionList = sessionRepository.getSessions(userId);
+        List<GameSession> gameSessionList = sessionRepository.getSessions();
 
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
 

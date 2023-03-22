@@ -39,7 +39,7 @@ public class GameSessionRepository {
                 );
     }
 
-    public List<GameSession> getSessions(int userId) {
+    public List<GameSession> getSessions() {
 
         return jdbcTemplate.query(SQL_GET_SESSIONS,
                 (rs, rowNum) -> new GameSession(
@@ -56,7 +56,7 @@ public class GameSessionRepository {
                         rs.getInt("player_count"),
                         rs.getString("comment"),
                         rs.getString("icon")
-                ), userId);
+                ));
 
     }
 }
