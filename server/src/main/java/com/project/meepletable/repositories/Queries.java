@@ -35,4 +35,8 @@ public class Queries {
             join users on game_session.user_id = users.user_id
             """;
 
+
+    public static String SQL_FIND_USER_BY_EMAIL =
+            "select * from users where email=?";
+
 }

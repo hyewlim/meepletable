@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 import static com.project.meepletable.repositories.Queries.*;
 
 @Repository
@@ -31,6 +33,13 @@ public class UserRepository {
         }
 
         return 0;
+    }
+
+    Optional<User> findByEmail(String email) {
+
+        jdbcTemplate.queryForRowSet(SQL_FIND_USER_BY_EMAIL, email);
+
+        return null;
     }
 
 }
