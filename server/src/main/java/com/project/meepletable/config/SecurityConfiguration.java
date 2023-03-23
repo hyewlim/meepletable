@@ -1,6 +1,7 @@
 package com.project.meepletable.config;
 
-import jakarta.servlet.Filter;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -13,8 +14,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
-
+    @Autowired
     private JwtAuthenticationFilter jwtAuthFilter;
+    @Autowired
     private AuthenticationProvider authenticationProvider;
 
     @Bean
@@ -24,12 +26,12 @@ public class SecurityConfiguration {
             .disable()
             .authorizeHttpRequests()
             .requestMatchers("/api/v1/auth/**")
-            .permitAll()
+                .permitAll()
             .anyRequest()
-            .authenticated()
+                .authenticated()
             .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

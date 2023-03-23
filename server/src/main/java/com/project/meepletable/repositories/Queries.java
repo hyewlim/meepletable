@@ -39,4 +39,7 @@ public class Queries {
     public static String SQL_FIND_USER_BY_EMAIL =
             "select * from users where email=?";
 
+    public static String SQL_FIND_USER_BY_USERNAME =
+            "select * from users where username=?";
+
 }
