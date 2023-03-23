@@ -35,11 +35,19 @@ public class UserRepository {
         return 0;
     }
 
-    Optional<User> findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
 
-        jdbcTemplate.queryForRowSet(SQL_FIND_USER_BY_EMAIL, email);
+        User user = jdbcTemplate.queryForObject(SQL_FIND_USER_BY_EMAIL, User.class, email);
 
-        return null;
+        return Optional.of(user);
+    }
+
+    public void save(User user) {
+        jdbcTemplate.update(SQL_POST_USER,
+                user.getUsername(),
+                user.getEmail(),
+                user.getPassword(),
+                user.getRole());
     }
 
 }
