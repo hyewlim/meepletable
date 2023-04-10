@@ -9,16 +9,19 @@ import {Subscription} from "rxjs";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
 
   signedInUser!: User;
 
   // userSub$!: Subscription;
 
+
   constructor(private userService: UserService) {
   }
 
   ngOnInit(): void {
+
+
 
     this.userService.getUserIdObservable().subscribe(
       data => {
@@ -26,16 +29,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     )
 
-    // this.userSub$ = this.userService.signedInUser.subscribe(
-    //   (user) => {
-    //     this.signedInUser = user
-    //   }
-    // )
   }
 
-  ngOnDestroy(): void {
-    // this.userSub$.unsubscribe();
-  }
+
 
 
 }

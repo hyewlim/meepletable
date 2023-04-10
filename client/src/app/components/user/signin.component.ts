@@ -27,7 +27,7 @@ export class SigninComponent implements OnInit{
   createForm(): FormGroup {
 
     return this.fb.group({
-      username: this.fb.control<string>('', Validators.required),
+      email: this.fb.control<string>('', [Validators.required, Validators.email]),
       password: this.fb.control<string>('', Validators.required)
 
     })
@@ -36,54 +36,27 @@ export class SigninComponent implements OnInit{
 
   processForm() {
 
-    console.log(this.signinForm.value["username"])
+    console.log(this.signinForm.value)
 
-    this.userService.authUser(this.signinForm.value)
-      .then((data) => {
+    this.userService.authUser(this.signinForm.value as User)
 
-        if ((<any>data).result === 0) {
-          // return error todo
-          console.error("user not authenticated")
-          alert("wrong authentication")
-        } else {
-          const newUser = { username: this.signinForm.value["username"], userId: (<any>data).result, ...{} } as User
-          this.userService.setUser(newUser);
-          this.route.navigate(['collection'])
-        }
-      })
+    // this.userService.authUser(this.signinForm.value)
+    //   .then((data) => {
+    //
+    //     if ((<any>data).result === 0) {
+    //       // return error todo
+    //       console.error("user not authenticated")
+    //       alert("wrong authentication")
+    //     } else {
+    //       const newUser = { username: this.signinForm.value["username"], userId: (<any>data).result, ...{} } as User
+    //       this.userService.setUser(newUser);
+    //       this.route.navigate(['collection'])
+    //     }
+    //   })
     // server will return true if user is authenticated, do something..
 
 
 
   }
-
-  // showDialogError() {
-  //
-  //   const dialogConfig = {
-  //     header: 'Error',
-  //     content: 'An error occurred.',
-  //     closable: false,
-  //     modal: true,
-  //     styleClass: 'error-dialog',
-  //     baseZIndex: 10000,
-  //     autoZIndex: false,
-  //     closeOnEscape: true,
-  //     showHeader: true,
-  //     draggable: true,
-  //     resizable: true,
-  //     width: '300px',
-  //     height: 'auto',
-  //     position: {
-  //       top: '50px',
-  //       left: '50px'
-  //     }
-  //   }
-  //
-  //   // @ts-ignore
-  //   this.dialogService.open(SigninComponent, dialogConfig)
-  //
-  //
-  // }
-
 
 }

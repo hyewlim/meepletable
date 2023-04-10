@@ -8,6 +8,8 @@ import {lastValueFrom, Subject} from "rxjs";
 })
 export class UserService {
 
+  loggedIn: boolean = false;
+
   signedInUser = new Subject<User>()
 
   user!: User;
@@ -19,7 +21,7 @@ export class UserService {
   }
 
   authUser(user: User) {
-    return lastValueFrom(this.http.post('/api/user/auth', user))
+    return lastValueFrom(this.http.post('/api/v1/auth/authenticate', user))
   }
 
   getUserIdObservable() {

@@ -31,6 +31,8 @@ public class UserController {
     @PostMapping("/auth")
     public ResponseEntity<String> authUser(@RequestBody User user) {
 
+        System.out.println(user.toString());
+
         int result = userRepository.authUser(user);
 
         return ResponseEntity.ok(JsonBuilder.authResult(result).toString());

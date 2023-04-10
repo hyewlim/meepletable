@@ -34,6 +34,7 @@ import {DividerModule} from "primeng/divider";
 import {GMapModule} from "primeng/gmap";
 import { GooglemapsAutocompleteComponent } from './components/meetup/googlemaps-autocomplete.component';
 import {DropdownModule} from "primeng/dropdown";
+import {SplitButtonModule} from "primeng/splitbutton";
 
 
 @NgModule({
@@ -52,33 +53,34 @@ import {DropdownModule} from "primeng/dropdown";
     GooglemapsAutocompleteComponent,
 
   ],
-    imports: [
-        BrowserModule,
-        HttpClientModule,
-        ReactiveFormsModule,
-        GoogleMapsModule,
-        HttpClientJsonpModule,
-        AppRoutingModule,
-        ButtonModule,
-        AutoCompleteModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        CardModule,
-        TableModule,
-        ToolbarModule,
-        FileUploadModule,
-        RatingModule,
-        DialogModule,
-        ConfirmDialogModule,
-        RippleModule,
-        CheckboxModule,
-        StyleClassModule,
-        DividerModule,
-        GMapModule,
-        GoogleMapsModule,
-        DropdownModule
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    GoogleMapsModule,
+    HttpClientJsonpModule,
+    AppRoutingModule,
+    ButtonModule,
+    AutoCompleteModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    CardModule,
+    TableModule,
+    ToolbarModule,
+    FileUploadModule,
+    RatingModule,
+    DialogModule,
+    ConfirmDialogModule,
+    RippleModule,
+    CheckboxModule,
+    StyleClassModule,
+    DividerModule,
+    GMapModule,
+    GoogleMapsModule,
+    DropdownModule,
+    SplitButtonModule
 
-    ],
+  ],
   exports: [
     MapComponent
   ],
