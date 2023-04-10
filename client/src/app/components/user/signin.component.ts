@@ -36,9 +36,11 @@ export class SigninComponent implements OnInit{
 
   processForm() {
 
-    console.log(this.signinForm.value)
-
     this.userService.authUser(this.signinForm.value as User)
+      .then(r => {
+        this.route.navigate(['collection'])
+      } )
+
 
     // this.userService.authUser(this.signinForm.value)
     //   .then((data) => {

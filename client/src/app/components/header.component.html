@@ -9,19 +9,32 @@
 
 
   <div class="p-toolbar-group-right">
-    <span *ngIf="signedInUser">User: {{signedInUser.username}} </span>
     <p-button
+      *ngIf="isLoggedIn"
       class="button-space" label="Collection"
       icon="pi pi-box" styleClass="p-button-warning"
       routerLink="collection"></p-button>
     <p-button
+      *ngIf="isLoggedIn"
       class="button-space" label="Meetup"
       icon="pi pi-map-marker" styleClass="p-button-warning"
       routerLink="meetup"></p-button>
     <p-button
+      *ngIf="!isLoggedIn"
       class="button-space" label="Login"
       icon="pi pi-user" styleClass="p-button-warning"
       routerLink="signin"></p-button>
+    <p-button
+      *ngIf="isLoggedIn"
+      class="button-space" label="Log Out"
+      icon="pi pi-user" styleClass="p-button-warning"
+      routerLink="signin"></p-button>
+
+    <p-button
+      *ngIf="isLoggedIn"
+      label="{{signedInUsername}}"
+      styleClass="p-button-outlined p-button-warning">
+    </p-button>
   </div>
 </p-toolbar>
 
