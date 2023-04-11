@@ -6,7 +6,7 @@ import {MessageService} from "primeng/api";
 import {HttpClient} from "@angular/common/http";
 import {RepositoryService} from "../../shared/repository.service";
 import {Observable, Subscription} from "rxjs";
-import {UserService} from "../../shared/user.service";
+import {UserService} from "../user/user.service";
 
 @Component({
   selector: 'app-collection',

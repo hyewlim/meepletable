@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Boardgame, User} from "./models";
 import {lastValueFrom, Subject} from "rxjs";
-import {UserService} from "./user.service";
+import {UserService} from "../components/user/user.service";
 
 @Injectable({
   providedIn: 'root'

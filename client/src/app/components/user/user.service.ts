@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {User} from "./models";
+import {User} from "../../shared/models";
 import {BehaviorSubject, catchError, lastValueFrom, Subject, tap, throwError} from "rxjs";
 import {JWTTokenService} from "./jwt-token.service";
 
@@ -30,13 +30,14 @@ export class UserService{
 
   }
 
-  postNewUser(user: User) {
-    return lastValueFrom(this.http.post("/api/user", user))
+  registerNewUser(user: User) {
+    return lastValueFrom(this.http.post("/api/v1/auth/register", user))
   }
 
   authUser(user: User) {
     return lastValueFrom(this.http.post('/api/v1/auth/authenticate', user)
       .pipe( tap((response) => {
+
         // @ts-ignore
         localStorage.setItem("jwt_token", response['token']);
         // @ts-ignore
@@ -64,7 +65,6 @@ export class UserService{
     // below is bugged
     this.user = user;
   }
-
 
 
 

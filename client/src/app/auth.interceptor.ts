@@ -13,10 +13,12 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req)
       .pipe(
         catchError( (error: HttpErrorResponse) => {
-          if (error.status === 401) {
-            this.router.navigate(['signin'])
-          }
-          alert("username or password is wrong, please try again")
+          // need to redo
+          // if (error.status === 401) {
+          //   this.router.navigate(['signin'])
+          //   alert("username or password is wrong, please try again")
+          // }
+
           return throwError(() => error);
         })
       );

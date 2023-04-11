@@ -5,7 +5,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {GooglemapService} from "../../shared/googlemap.service";
 import {Address, GameSession} from "../../shared/models";
 import {RepositoryService} from "../../shared/repository.service";
-import {UserService} from "../../shared/user.service";
+import {UserService} from "../user/user.service";
 import {MapService} from "../../shared/map.service";
 import {Subscription} from "rxjs";
 

@@ -1,7 +1,7 @@
 import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {MenuItem} from "primeng/api";
 import {User} from "../shared/models";
-import {UserService} from "../shared/user.service";
+import {UserService} from "./user/user.service";
 import {Subscription} from "rxjs";
 
 @Component({

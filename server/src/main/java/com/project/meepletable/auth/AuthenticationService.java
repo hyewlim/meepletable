@@ -11,6 +11,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AuthenticationService {
     @Autowired
@@ -22,7 +24,7 @@ public class AuthenticationService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public Optional<String> register(RegisterRequest request) {
 
         User user = new User(
                 request.getUsername(),
@@ -31,10 +33,10 @@ public class AuthenticationService {
                 Role.USER
         );
 
-        repository.save(user);
-        String jwtToken = jwtService.generateToken(user);
-        AuthenticationResponse response = new AuthenticationResponse(jwtToken);
-        return response;
+        return Optional.of(repository.save(user));
+//        String jwtToken = jwtService.generateToken(user);
+//        AuthenticationResponse response = new AuthenticationResponse(jwtToken);
+
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {

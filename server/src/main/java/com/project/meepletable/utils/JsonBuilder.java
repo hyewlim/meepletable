@@ -102,4 +102,11 @@ public class JsonBuilder {
 
     }
 
+    public static JsonObject SQLError(String resp) {
+
+        return Json.createObjectBuilder()
+                .add("error", resp)
+                .build();
+    }
+
 }

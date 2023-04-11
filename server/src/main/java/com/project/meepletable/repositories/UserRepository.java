@@ -3,10 +3,13 @@ package com.project.meepletable.repositories;
 import com.project.meepletable.models.Role;
 import com.project.meepletable.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 import static com.project.meepletable.repositories.Queries.*;
@@ -17,12 +20,25 @@ public class UserRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void postUser(User user){
+    public String save(User user) {
 
-        jdbcTemplate.update(SQL_POST_USER,
-                user.getUsername(),
-                user.getEmail(),
-                user.getPassword());
+        int result = 0;
+
+        try {
+            result = jdbcTemplate.update(SQL_POST_USER,
+                    user.getUsername(),
+                    user.getEmail(),
+                    user.getPassword(),
+                    user.getRole().name());
+        } catch (Exception e) {
+            if (e.getMessage().contains("Duplicate entry")){
+                System.err.println("Duplicate Entry");
+                return "username and/or password is unavailable";
+            }
+        }
+
+        return String.valueOf(result);
+
     }
 
     public int authUser(User user){
@@ -37,8 +53,6 @@ public class UserRepository {
     }
 
     public Optional<User> findByEmail(String email) {
-//
-//        User user = jdbcTemplate.queryForObject(SQL_FIND_USER_BY_EMAIL, User.class, email);
 
         final SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_FIND_USER_BY_EMAIL, email);
 
@@ -52,14 +66,6 @@ public class UserRepository {
         }
 
         return Optional.of(user);
-    }
-
-    public void save(User user) {
-        jdbcTemplate.update(SQL_POST_USER,
-                user.getUsername(),
-                user.getEmail(),
-                user.getPassword(),
-                user.getRole().name());
     }
 
 }

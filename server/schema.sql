@@ -6,11 +6,13 @@ use meepledb;
 
 create table users (
 
-    user_id int auto_increment,
+    user_id varchar(36),
     username varchar(128) not null,
     email varchar(128) not null,
     password varchar(256) not null,
     role ENUM('USER', 'ADMIN') not null,
+
+    UNIQUE (username, email),
 
     primary key (user_id)
 

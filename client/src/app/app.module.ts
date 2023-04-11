@@ -36,6 +36,7 @@ import { GooglemapsAutocompleteComponent } from './components/meetup/googlemaps-
 import {DropdownModule} from "primeng/dropdown";
 import {SplitButtonModule} from "primeng/splitbutton";
 import {AuthInterceptor} from "./auth.interceptor";
+import {InputTextModule} from "primeng/inputtext";
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import {AuthInterceptor} from "./auth.interceptor";
     GMapModule,
     GoogleMapsModule,
     DropdownModule,
-    SplitButtonModule
+    SplitButtonModule,
+    InputTextModule
 
   ],
   exports: [
