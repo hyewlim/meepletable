@@ -28,10 +28,6 @@ export class UserService{
       this.userName$.next(<string>this.jwtService.getUser());
     }
 
-
-
-
-
   }
 
   postNewUser(user: User) {
@@ -46,8 +42,17 @@ export class UserService{
         localStorage.setItem("jwt_token", response['token']);
         // @ts-ignore
         this.jwtService.setToken(response['token']);
-        this.userName$.next(<string>this.jwtService.getUser());
-        this.isLoggedIn$.next(true);
+        
+        if (response==='Bad credentials'){
+                console.error("user not authenticated")
+                alert("username or password is wrong, please try again")
+        } else {
+          this.userName$.next(<string>this.jwtService.getUser());
+          this.isLoggedIn$.next(true);
+        }
+
+
+
       })))
   }
 

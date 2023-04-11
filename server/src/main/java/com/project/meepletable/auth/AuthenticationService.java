@@ -39,6 +39,8 @@ public class AuthenticationService {
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
 
+        AuthenticationResponse response = new AuthenticationResponse();
+
         try {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -46,20 +48,19 @@ public class AuthenticationService {
                             request.getPassword()
                     )
             );
+            User user = repository.findByEmail(request.getEmail())
+                    .orElseThrow();
+            System.out.println(user.toString());
+            String jwtToken = jwtService.generateToken(user);
+            response.setToken(jwtToken);
+
 
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            response.setToken(e.getMessage());
         }
 
-
-
-
-
-        User user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
-        System.out.println(user.toString());
-        String jwtToken = jwtService.generateToken(user);
-        AuthenticationResponse response = new AuthenticationResponse(jwtToken);
         return response;
+
     }
 }

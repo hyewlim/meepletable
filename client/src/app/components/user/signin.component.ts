@@ -38,26 +38,14 @@ export class SigninComponent implements OnInit{
 
     this.userService.authUser(this.signinForm.value as User)
       .then(r => {
-        this.route.navigate(['collection'])
+        //todo navigation
+        if (this.userService.isLoggedIn$){
+          this.route.navigate(['collection'])
+        } else {
+          this.route.navigate(['signin'])
+        }
+
       } )
-
-
-    // this.userService.authUser(this.signinForm.value)
-    //   .then((data) => {
-    //
-    //     if ((<any>data).result === 0) {
-    //       // return error todo
-    //       console.error("user not authenticated")
-    //       alert("wrong authentication")
-    //     } else {
-    //       const newUser = { username: this.signinForm.value["username"], userId: (<any>data).result, ...{} } as User
-    //       this.userService.setUser(newUser);
-    //       this.route.navigate(['collection'])
-    //     }
-    //   })
-    // server will return true if user is authenticated, do something..
-
-
 
   }
 
