@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientJsonpModule, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {GoogleMapsModule} from "@angular/google-maps";
 import {AppRoutingModule} from "./app-routing.module";
@@ -35,6 +35,7 @@ import {GMapModule} from "primeng/gmap";
 import { GooglemapsAutocompleteComponent } from './components/meetup/googlemaps-autocomplete.component';
 import {DropdownModule} from "primeng/dropdown";
 import {SplitButtonModule} from "primeng/splitbutton";
+import {AuthInterceptor} from "./auth.interceptor";
 
 
 @NgModule({
@@ -84,7 +85,12 @@ import {SplitButtonModule} from "primeng/splitbutton";
   exports: [
     MapComponent
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+    }
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

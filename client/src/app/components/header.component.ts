@@ -34,4 +34,7 @@ export class HeaderComponent implements OnInit {
 
   }
 
+  logOut() {
+    this.userService.logOutUser();
+  }
 }

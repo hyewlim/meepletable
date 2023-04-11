@@ -28,7 +28,7 @@
       *ngIf="isLoggedIn"
       class="button-space" label="Log Out"
       icon="pi pi-user" styleClass="p-button-warning"
-      routerLink="signin"></p-button>
+      routerLink="signin" (click)="logOut()"></p-button>
 
     <p-button
       *ngIf="isLoggedIn"
