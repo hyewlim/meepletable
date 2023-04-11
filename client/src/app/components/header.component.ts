@@ -9,33 +9,29 @@ import {Subscription} from "rxjs";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit {
 
-  signedInUser!: User;
+  isLoggedIn!: boolean;
+  signedInUsername!: string;
 
-  // userSub$!: Subscription;
 
-  constructor(private userService: UserService) {
+  constructor(public userService: UserService) {
   }
 
   ngOnInit(): void {
 
-    this.userService.getUserIdObservable().subscribe(
+    this.userService.isLoggedIn$.subscribe(
       data => {
-        this.signedInUser = data;
+        this.isLoggedIn = data;
       }
     )
 
-    // this.userSub$ = this.userService.signedInUser.subscribe(
-    //   (user) => {
-    //     this.signedInUser = user
-    //   }
-    // )
-  }
+    this.userService.userName$.subscribe(
+      data => {
+        this.signedInUsername = data;
+      }
+    )
 
-  ngOnDestroy(): void {
-    // this.userSub$.unsubscribe();
   }
-
 
 }

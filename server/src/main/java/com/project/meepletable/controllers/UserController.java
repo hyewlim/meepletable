@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/user")
 public class UserController {
 
+    //need to delete
+
     @Autowired
     private UserRepository userRepository;
 
@@ -30,6 +32,8 @@ public class UserController {
 
     @PostMapping("/auth")
     public ResponseEntity<String> authUser(@RequestBody User user) {
+
+        System.out.println(user.toString());
 
         int result = userRepository.authUser(user);
 

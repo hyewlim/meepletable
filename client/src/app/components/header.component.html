@@ -1,60 +1,44 @@
 
-<button routerLink="collection">Collection</button>
-<button routerLink="meetup">Meetup</button>
-<button routerLink="signup">Sign Up</button>
-<button routerLink="signin">Sign In</button>
+<p-toolbar>
+  <div class="p-toolbar-group-left">
+
+    <img src="assets/meeplelogo2.png" width="140" height="40">
+
+
+  </div>
+
+
+  <div class="p-toolbar-group-right">
+    <p-button
+      *ngIf="isLoggedIn"
+      class="button-space" label="Collection"
+      icon="pi pi-box" styleClass="p-button-warning"
+      routerLink="collection"></p-button>
+    <p-button
+      *ngIf="isLoggedIn"
+      class="button-space" label="Meetup"
+      icon="pi pi-map-marker" styleClass="p-button-warning"
+      routerLink="meetup"></p-button>
+    <p-button
+      *ngIf="!isLoggedIn"
+      class="button-space" label="Login"
+      icon="pi pi-user" styleClass="p-button-warning"
+      routerLink="signin"></p-button>
+    <p-button
+      *ngIf="isLoggedIn"
+      class="button-space" label="Log Out"
+      icon="pi pi-user" styleClass="p-button-warning"
+      routerLink="signin"></p-button>
+
+    <p-button
+      *ngIf="isLoggedIn"
+      label="{{signedInUsername}}"
+      styleClass="p-button-outlined p-button-warning">
+    </p-button>
+  </div>
+</p-toolbar>
 
 
 
-<span *ngIf="signedInUser">User: {{signedInUser.username}} </span>
 
 
-<!--<p-toolbar>-->
-<!--  <div class="p-toolbar-group-start">-->
-<!--    <p-button label="New" icon="pi pi-plus"></p-button>-->
-<!--    <p-button label="Upload" icon="pi pi-upload" styleClass="p-button-success"></p-button>-->
-
-
-<!--  </div>-->
-
-<!--  <div class="p-toolbar-group-end">-->
-<!--    <p-button icon="pi pi-search"></p-button>-->
-<!--    <p-button icon="pi pi-calendar" styleClass="p-button-success"></p-button>-->
-<!--    <p-button icon="pi pi-times" styleClass="p-button-danger"></p-button>-->
-<!--  </div>-->
-<!--</p-toolbar>-->
-
-
-
-
-
-
-
-<!--<mat-toolbar>-->
-
-<!--  <button mat-icon-button>-->
-<!--    <mat-icon>menu</mat-icon>-->
-<!--  </button>-->
-
-<!--  <span>Meeple Table</span>-->
-
-<!--  <span class="example-spacer"></span>-->
-
-<!--  <button mat-icon-button>-->
-<!--    <mat-icon>collections_bookmark</mat-icon>-->
-<!--  </button>-->
-
-<!--  <button mat-icon-button>-->
-<!--    <mat-icon>search</mat-icon>-->
-<!--  </button>-->
-
-<!--  <button mat-flat-button color="accent" routerLink="signup">-->
-<!--    Sign Up-->
-<!--  </button>-->
-
-<!--  <button mat-flat-button color="accent">Log In</button>-->
-
-<!--&lt;!&ndash;  <button mat-icon-button>&ndash;&gt;-->
-<!--&lt;!&ndash;    <mat-icon>login</mat-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;  </button>&ndash;&gt;-->
-<!--</mat-toolbar>-->
