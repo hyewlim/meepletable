@@ -37,6 +37,7 @@ import {DropdownModule} from "primeng/dropdown";
 import {SplitButtonModule} from "primeng/splitbutton";
 import {AuthInterceptor} from "./auth.interceptor";
 import {InputTextModule} from "primeng/inputtext";
+import { ForgetPasswordComponent } from './components/user/forget-password.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import {InputTextModule} from "primeng/inputtext";
     MeetupComponent,
     GameSessionComponent,
     GooglemapsAutocompleteComponent,
+    ForgetPasswordComponent,
 
   ],
   imports: [

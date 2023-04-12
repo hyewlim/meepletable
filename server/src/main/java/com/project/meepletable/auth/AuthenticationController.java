@@ -1,14 +1,12 @@
 package com.project.meepletable.auth;
 
+import com.project.meepletable.models.User;
 import com.project.meepletable.utils.JsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -51,5 +49,13 @@ public class AuthenticationController {
         }
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/reset")
+    public ResponseEntity<String> resetPassword(@RequestParam String email){
+
+        service.resetPassword(email);
+        return ResponseEntity.ok(JsonBuilder.emailVerification(email).toString());
+
     }
 }

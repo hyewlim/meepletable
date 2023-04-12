@@ -22,7 +22,7 @@ public class EmailSenderService {
 
         mailSender.send(message);
 
-        System.out.println("mail sent successf");
+        System.out.println("mail sent successfully");
     }
 
 }

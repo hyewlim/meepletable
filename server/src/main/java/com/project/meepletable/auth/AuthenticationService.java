@@ -3,18 +3,26 @@ package com.project.meepletable.auth;
 import com.project.meepletable.models.Role;
 import com.project.meepletable.models.User;
 import com.project.meepletable.repositories.UserRepository;
+import com.project.meepletable.services.EmailSenderService;
 import com.project.meepletable.services.JwtService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
+
 
 @Service
 public class AuthenticationService {
+
+    Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
     @Autowired
     private UserRepository repository;
     @Autowired
@@ -23,6 +31,9 @@ public class AuthenticationService {
     private JwtService jwtService;
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private EmailSenderService emailSenderService;
 
     public Optional<String> register(RegisterRequest request) {
 
@@ -63,6 +74,27 @@ public class AuthenticationService {
         }
 
         return response;
+
+    }
+
+    public boolean resetPassword(String email) {
+
+        Optional<User> user = repository.findByEmail(email);
+        System.out.println(user.get().toString());
+        if (user.get().getUsername() != null){
+            String token = UUID.randomUUID().toString();
+            PasswordResetToken resetToken = new PasswordResetToken(token, user.get());
+
+            emailSenderService.sendEmail(
+                    email,
+                    "Reset Password: " + email,
+                    "reset passowrd here");
+
+            return true;
+        }
+
+        logger.error(email + " not found");
+        return false;
 
     }
 }

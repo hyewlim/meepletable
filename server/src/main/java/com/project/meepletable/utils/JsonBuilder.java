@@ -109,4 +109,11 @@ public class JsonBuilder {
                 .build();
     }
 
+    public static JsonObject emailVerification(String email) {
+
+            return Json.createObjectBuilder()
+                    .add("success", email)
+                    .build();
+    }
+
 }

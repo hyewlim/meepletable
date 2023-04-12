@@ -1,5 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
 import {User} from "../../shared/models";
 import {BehaviorSubject, catchError, lastValueFrom, Subject, tap, throwError} from "rxjs";
 import {JWTTokenService} from "./jwt-token.service";
@@ -52,6 +52,14 @@ export class UserService{
     localStorage.removeItem("jwt_token");
     this.isLoggedIn$.next(false);
 
+  }
+
+  resetPassword(email: string) {
+
+    const params = new HttpParams()
+      .append('email', email)
+
+    return lastValueFrom(this.http.get("/api/v1/auth/reset", {params: params}))
   }
 
 

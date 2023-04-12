@@ -60,4 +60,8 @@ export class SigninComponent implements OnInit{
   toRegister() {
     this.router.navigate(['signup'])
   }
+
+  forget() {
+    this.router.navigate(['forget'])
+  }
 }
