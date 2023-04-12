@@ -12,7 +12,7 @@ import {Subscription} from "rxjs";
 export class HeaderComponent implements OnInit {
 
   isLoggedIn!: boolean;
-  signedInUsername!: string;
+  user!: User;
 
 
   constructor(public userService: UserService) {
@@ -26,9 +26,9 @@ export class HeaderComponent implements OnInit {
       }
     )
 
-    this.userService.userName$.subscribe(
+    this.userService.signedInUser$.subscribe(
       data => {
-        this.signedInUsername = data;
+        this.user = data;
       }
     )
 

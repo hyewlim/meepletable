@@ -24,7 +24,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/v1")
 public class GameController {
 
     @Autowired
@@ -39,6 +39,8 @@ public class GameController {
 
     @GetMapping("/games")
     public ResponseEntity<String> getGames(@RequestParam String name) {
+
+        System.out.println(name);
 
         List<Boardgame> bgList = bggService.getGames(name);
 
@@ -80,7 +82,7 @@ public class GameController {
         ObjectMapper objectMapper = new ObjectMapper();
         List<Boardgame> boardgameList = objectMapper.readValue(body, new TypeReference<List<Boardgame>>(){});
 
-        gamesRepo.saveCollection(boardgameList, Integer.parseInt(userId));
+        gamesRepo.saveCollection(boardgameList, userId);
 
         return null;
     }
@@ -88,7 +90,7 @@ public class GameController {
     @GetMapping("/games/collection")
     public ResponseEntity<String> getCollection(@RequestParam String userId) {
 
-        List<Boardgame> bgList = gamesRepo.getCollection(Integer.parseInt(userId));
+        List<Boardgame> bgList = gamesRepo.getCollection(userId);
 
         JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
 
@@ -106,7 +108,7 @@ public class GameController {
     }
 
     @DeleteMapping("/games/collection")
-    public ResponseEntity<String> deleteCollection(@RequestParam int userId, @RequestParam int bgId) {
+    public ResponseEntity<String> deleteCollection(@RequestParam String userId, @RequestParam int bgId) {
 
         int result = gamesRepo.deleteCollection(userId, bgId);
 

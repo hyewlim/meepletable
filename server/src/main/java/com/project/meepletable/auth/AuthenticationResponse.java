@@ -5,11 +5,15 @@ public class AuthenticationResponse {
 
     private String token;
 
+    private String userId;
+
     public AuthenticationResponse() {
     }
 
-    public AuthenticationResponse(String token) {
+    public AuthenticationResponse(String token, String userId) {
+
         this.token = token;
+        this.userId = userId;
     }
 
     public String getToken() {
@@ -18,5 +22,13 @@ public class AuthenticationResponse {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

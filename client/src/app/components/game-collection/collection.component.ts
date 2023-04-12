@@ -20,10 +20,10 @@ export class CollectionComponent implements OnInit, OnDestroy {
   boardgames: Boardgame[] = [];
   boardgame!: Boardgame;
 
+  user!: User;
+
   bgDialog!: boolean;
   submitted!: boolean;
-
-
 
   constructor(private bglookup: BglookupService,
               private messageService: MessageService,
@@ -31,13 +31,17 @@ export class CollectionComponent implements OnInit, OnDestroy {
               private repositoryService: RepositoryService,
               private userService: UserService) {
 
-
-
   }
 
   ngOnInit(): void {
 
-    this.repositoryService.loadBoardgames(this.userService.user.userId)
+    this.userService.signedInUser$.subscribe(
+      user => {
+        this.user = user;
+      }
+    )
+
+    this.repositoryService.loadBoardgames(this.user.userId)
       .then(data => {
         console.log(data)
         this.boardgames = data

@@ -2,7 +2,7 @@
 <p-toolbar>
   <div class="p-toolbar-group-left">
 
-    <img src="assets/meeplelogo2.png" width="140" height="40">
+    <img src="../../assets/meeplelogo.png" width="140" height="40">
 
 
   </div>
@@ -37,7 +37,7 @@
 
     <p-button
       *ngIf="isLoggedIn"
-      label="{{signedInUsername}}"
+      label="{{user.username}}"
       styleClass="p-button-outlined p-button-warning">
     </p-button>
   </div>

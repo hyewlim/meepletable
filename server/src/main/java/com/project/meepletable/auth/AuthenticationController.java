@@ -41,7 +41,7 @@ public class AuthenticationController {
 
         AuthenticationResponse response = service.authenticate(request);
 
-        if (response.getToken()=="Bad credentials"){
+        if (response.getToken().equals("Bad credentials")){
             System.out.println("UNAUTHORIZED");
             return ResponseEntity
                     .status(HttpStatus.UNAUTHORIZED)
@@ -58,4 +58,13 @@ public class AuthenticationController {
         return ResponseEntity.ok(JsonBuilder.emailVerification(email).toString());
 
     }
+
+    @PostMapping("/changepassword")
+    public ResponseEntity<String> changePassword(@RequestBody String body) {
+
+        //todo
+
+        return null;
+    }
+
 }

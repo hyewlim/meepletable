@@ -2,7 +2,7 @@ export interface User {
   username: string
   password: string
   email: string
-  userId: number
+  userId: string
 }
 
 export interface Boardgame {
@@ -33,6 +33,13 @@ export interface GameSession {
   playerCount: number
   comment: string
   icon: string;
+}
+
+export interface JWTResponse {
+
+  token: string
+  userId: string
+
 }
 
 

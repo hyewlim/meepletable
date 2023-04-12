@@ -66,6 +66,7 @@ public class AuthenticationService {
             System.out.println(user.toString());
             String jwtToken = jwtService.generateToken(user);
             response.setToken(jwtToken);
+            response.setUserId(user.getId());
 
 
         } catch (Exception e) {
@@ -81,6 +82,11 @@ public class AuthenticationService {
 
         Optional<User> user = repository.findByEmail(email);
         System.out.println(user.get().toString());
+
+        String htmlMsg = "<p><b>Your Login details for Meeple Table</b><br><b>Email: </b> "
+                + email
+                + "<br><a href=\"http://localhost:4200/\">Click here to login</a></p>";
+
         if (user.get().getUsername() != null){
             String token = UUID.randomUUID().toString();
             PasswordResetToken resetToken = new PasswordResetToken(token, user.get());
@@ -88,7 +94,7 @@ public class AuthenticationService {
             emailSenderService.sendEmail(
                     email,
                     "Reset Password: " + email,
-                    "reset passowrd here");
+                    htmlMsg);
 
             return true;
         }

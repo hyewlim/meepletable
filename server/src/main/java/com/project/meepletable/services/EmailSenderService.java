@@ -3,6 +3,7 @@ package com.project.meepletable.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,11 +15,15 @@ public class EmailSenderService {
     public void sendEmail(String toEmail,
                           String subject,
                           String body) {
+
+
+
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("noreply@meepletable.com");
+        message.setFrom("meepletable@gmail.com");
         message.setTo(toEmail);
         message.setText(body);
         message.setSubject(subject);
+
 
         mailSender.send(message);
 

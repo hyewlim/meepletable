@@ -8,13 +8,16 @@ import { CollectionComponent } from './components/game-collection/collection.com
 import {SigninComponent} from "./components/user/signin.component";
 import {MeetupComponent} from "./components/meetup/meetup.component";
 import {ForgetPasswordComponent} from "./components/user/forget-password.component";
+import {ResetPasswordComponent} from "./components/user/reset-password.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'signup', component: SignupComponent},
   { path: 'signin', component: SigninComponent},
-  { path: 'forget', component: ForgetPasswordComponent},
+  { path: 'forget', component: ForgetPasswordComponent, children: [
+      {path: ':email', component: ResetPasswordComponent}
+    ]},
   { path: 'collection', component: CollectionComponent},
   { path: 'map', component: MapComponent},
   { path: 'meetup', component: MeetupComponent},

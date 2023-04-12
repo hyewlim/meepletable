@@ -17,7 +17,7 @@ public class GamesRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public void saveCollection(List<Boardgame> bgList, int userId) {
+    public void saveCollection(List<Boardgame> bgList, String userId) {
 
         jdbcTemplate.batchUpdate(SQL_INSERT_COLLECTION, new BatchPreparedStatementSetter() {
             @Override
@@ -47,7 +47,7 @@ public class GamesRepository {
 
     }
 
-    public List<Boardgame> getCollection(int userId) {
+    public List<Boardgame> getCollection(String userId) {
 
         return jdbcTemplate.query(SQL_GET_COLLECTION,
                 (rs, rowNum) -> new Boardgame(
@@ -62,7 +62,7 @@ public class GamesRepository {
 
     }
 
-    public int deleteCollection(int userId, int bgId) {
+    public int deleteCollection(String userId, int bgId) {
 
         return jdbcTemplate.update(SQL_DELETE_COLLECTION, userId, bgId);
 

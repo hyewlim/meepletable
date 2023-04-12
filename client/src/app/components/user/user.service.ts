@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
-import {User} from "../../shared/models";
+import {JWTResponse, User} from "../../shared/models";
 import {BehaviorSubject, catchError, lastValueFrom, Subject, tap, throwError} from "rxjs";
 import {JWTTokenService} from "./jwt-token.service";
 
@@ -9,9 +9,9 @@ import {JWTTokenService} from "./jwt-token.service";
 })
 export class UserService{
 
-  isLoggedIn$ = new BehaviorSubject<boolean>(false)
+  isLoggedIn$ = new BehaviorSubject<boolean>(false);
 
-  signedInUser = new Subject<User>()
+  signedInUser$ = new Subject<User>();
 
   userName$ = new BehaviorSubject<string>("");
 
@@ -35,14 +35,23 @@ export class UserService{
   }
 
   authUser(user: User) {
-    return lastValueFrom(this.http.post('/api/v1/auth/authenticate', user)
-      .pipe( tap((response) => {
+    return lastValueFrom(this.http.post<JWTResponse>('/api/v1/auth/authenticate', user)
+      .pipe( tap((response: JWTResponse) => {
 
-        // @ts-ignore
-        localStorage.setItem("jwt_token", response['token']);
-        // @ts-ignore
-        this.jwtService.setToken(response['token']);
-        this.userName$.next(<string>this.jwtService.getUser());
+        localStorage.setItem("jwt_token", response.token);
+        this.jwtService.setToken(response.token);
+
+        const username = <string>this.jwtService.getUser()
+
+        const newUser: User = {
+          username: username,
+          password: "",
+          email: "",
+          userId: response.userId
+        }
+
+        this.signedInUser$.next(newUser)
+        this.userName$.next(username);
         this.isLoggedIn$.next(true);
 
       })))
@@ -65,13 +74,12 @@ export class UserService{
 
 
   getUserIdObservable() {
-    return this.signedInUser.asObservable();
+    return this.signedInUser$.asObservable();
   }
 
   setUser(user: User) {
-    this.signedInUser.next(user);
-    // below is bugged
-    this.user = user;
+    this.signedInUser$.next(user);
+
   }
 
 

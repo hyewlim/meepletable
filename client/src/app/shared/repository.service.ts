@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {Boardgame, User} from "./models";
 import {lastValueFrom, Subject} from "rxjs";
 import {UserService} from "../components/user/user.service";
+import {JWTTokenService} from "../components/user/jwt-token.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,33 +13,44 @@ export class RepositoryService {
   boardgames = new Subject<Boardgame[]>()
 
   constructor(private http: HttpClient,
-              private userService: UserService) { }
+              private jwtTokenSvc: JWTTokenService) { }
 
-  saveBoardgames(boardgames: Boardgame[], userId: number) {
-
-    const params = new HttpParams()
-      .append("userId", userId)
-
-
-    return lastValueFrom(this.http.post("/api/games/collection", boardgames, {params: params}))
-  }
-
-  loadBoardgames(userId: number) {
+  saveBoardgames(boardgames: Boardgame[], userId: string) {
 
     const params = new HttpParams()
       .append("userId", userId)
 
-    return lastValueFrom(this.http.get<Boardgame[]>("/api/games/collection", {params: params}))
+    const header =
+       new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${this.jwtTokenSvc.jwtToken}'
+      })
+
+    return lastValueFrom(this.http.post("/api/v1/games/collection", boardgames, {params: params, headers:header}))
+  }
+
+  loadBoardgames(userId: string) {
+
+    const params = new HttpParams()
+      .append("userId", userId)
+
+    const header =
+      new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${this.jwtTokenSvc.jwtToken}'
+      })
+
+    return lastValueFrom(this.http.get<Boardgame[]>("/api/v1/games/collection", {params: params, headers:header}))
 
   }
 
-  deleteBoardgame(userId: number, bgId: number) {
+  deleteBoardgame(userId: string, bgId: number) {
 
     const params = new HttpParams()
       .append("userId", userId)
       .append("bgId", bgId)
 
-    return lastValueFrom(this.http.delete("/api/games/collection", {params: params}))
+    return lastValueFrom(this.http.delete("/api/v1/games/collection", {params: params}))
 
   }
 

@@ -38,6 +38,7 @@ import {SplitButtonModule} from "primeng/splitbutton";
 import {AuthInterceptor} from "./auth.interceptor";
 import {InputTextModule} from "primeng/inputtext";
 import { ForgetPasswordComponent } from './components/user/forget-password.component';
+import { ResetPasswordComponent } from './components/user/reset-password.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { ForgetPasswordComponent } from './components/user/forget-password.compo
     GameSessionComponent,
     GooglemapsAutocompleteComponent,
     ForgetPasswordComponent,
+    ResetPasswordComponent,
 
   ],
   imports: [
