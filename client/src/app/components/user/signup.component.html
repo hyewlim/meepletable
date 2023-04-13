@@ -11,7 +11,7 @@
         <input id="username" type="text" placeholder="username" formControlName="username" pInputText class="w-full mb-3" required>
 
         <div *ngIf="signupForm.controls['username'].invalid && (signupForm.controls['username'].dirty || signupForm.controls['username'].touched)" class="alert alert-danger">
-          <sub>Username length needs to be at least 4 characters</sub>
+          <p-message severity="error" text="Username length needs to be at least 4 characters"></p-message>
         </div>
 
         <br>
@@ -20,7 +20,7 @@
         <input id="email" type="text" placeholder="email" formControlName="email" pInputText class="w-full mb-3" name="email">
 
         <div *ngIf="signupForm.controls['email'].invalid && (signupForm.controls['email'].dirty || signupForm.controls['email'].touched)" class="alert alert-danger">
-            <sub>Please input a valid email</sub>
+          <p-message severity="error" text="Please input a valid email"></p-message>
         </div>
 
         <br>
@@ -29,7 +29,7 @@
         <input id="password" type="password" placeholder="password" formControlName="password" pInputText class="w-full mb-3">
 
         <div *ngIf="signupForm.controls['password'].invalid && (signupForm.controls['password'].dirty || signupForm.controls['password'].touched)" class="alert alert-danger">
-          <sub>Password length needs to be at least 8 characters</sub>
+          <p-message severity="error" text="Password length needs to be at least 8 characters"></p-message>
         </div>
 
         <br>
@@ -39,3 +39,5 @@
     </div>
   </div>
 </div>
+
+<p-toast position="bottom-center"></p-toast>

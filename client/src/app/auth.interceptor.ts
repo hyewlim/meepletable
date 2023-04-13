@@ -9,7 +9,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>,
             next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const idToken = localStorage.getItem("jwt_token");
+    const idToken = sessionStorage.getItem("jwt_token");
 
     if (idToken) {
       const cloned = req.clone({

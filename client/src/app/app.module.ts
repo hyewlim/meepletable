@@ -16,6 +16,10 @@ import { SigninComponent } from './components/user/signin.component';
 import { AutocompleteComponent } from './components/game-collection/autocomplete.component';
 import { MeetupComponent } from './components/meetup/meetup.component';
 import { GameSessionComponent } from './components/meetup/game-session.component';
+import { GooglemapsAutocompleteComponent } from './components/meetup/googlemaps-autocomplete.component';
+import {AuthInterceptor} from "./auth.interceptor";
+import { ForgetPasswordComponent } from './components/user/forget-password.component';
+import { ResetPasswordComponent } from './components/user/reset-password.component';
 
 import {ButtonModule} from 'primeng/button';
 import {AutoCompleteModule} from 'primeng/autocomplete';
@@ -32,13 +36,13 @@ import {CheckboxModule} from "primeng/checkbox";
 import {StyleClassModule} from "primeng/styleclass";
 import {DividerModule} from "primeng/divider";
 import {GMapModule} from "primeng/gmap";
-import { GooglemapsAutocompleteComponent } from './components/meetup/googlemaps-autocomplete.component';
 import {DropdownModule} from "primeng/dropdown";
 import {SplitButtonModule} from "primeng/splitbutton";
-import {AuthInterceptor} from "./auth.interceptor";
 import {InputTextModule} from "primeng/inputtext";
-import { ForgetPasswordComponent } from './components/user/forget-password.component';
-import { ResetPasswordComponent } from './components/user/reset-password.component';
+import {ToastModule} from "primeng/toast";
+import {MessagesModule} from "primeng/messages";
+import {MessageModule} from "primeng/message";
+
 
 
 @NgModule({
@@ -85,7 +89,10 @@ import { ResetPasswordComponent } from './components/user/reset-password.compone
     GoogleMapsModule,
     DropdownModule,
     SplitButtonModule,
-    InputTextModule
+    InputTextModule,
+    ToastModule,
+    MessagesModule,
+    MessageModule
 
   ],
   exports: [

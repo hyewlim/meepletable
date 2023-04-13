@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {Boardgame, User} from "../../shared/models";
 import {BglookupService} from "../../shared/bglookup.service";
 import {ConfirmationService} from "primeng/api";
@@ -14,13 +14,11 @@ import {UserService} from "../user/user.service";
   styleUrls: ['./collection.component.css'],
   providers: [ConfirmationService, MessageService]
 })
-export class CollectionComponent implements OnInit, OnDestroy {
+export class CollectionComponent implements OnInit {
 
   boardgamesSelected!: Boardgame[];
   boardgames: Boardgame[] = [];
   boardgame!: Boardgame;
-
-  user!: User;
 
   bgDialog!: boolean;
   submitted!: boolean;
@@ -35,18 +33,12 @@ export class CollectionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.userService.signedInUser$.subscribe(
-      user => {
-        this.user = user;
-      }
-    )
-
-    this.repositoryService.loadBoardgames(this.user.userId)
-      .then(data => {
-        console.log(data)
-        this.boardgames = data
-      })
-
+    if (this.userService.user) {
+      this.repositoryService.loadBoardgames(this.userService.user.userId)
+        .then(data => {
+          this.boardgames = data
+        })
+    }
   }
 
   addBoardgame(newBg: Boardgame){
@@ -131,11 +123,19 @@ export class CollectionComponent implements OnInit, OnDestroy {
   saveCollection() {
 
     this.repositoryService.saveBoardgames(this.boardgames, this.userService.user.userId)
+      .then( response => {
+
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'You have successfully saved your collection'})
+
+      })
   }
 
-  ngOnDestroy(): void {
-
+  importCollection() {
 
   }
+
 
 }

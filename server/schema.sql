@@ -35,7 +35,7 @@ create table boardgames (
 create table user_collection (
 
 
-    user_id int not null,
+    user_id varchar(36) not null,
     bg_id int not null,
     comment text,
 
@@ -48,7 +48,7 @@ create table game_session (
 
     game_session_id varchar(8) not null,
     title varchar(256) not null,
-    user_id int not null,
+    user_id varchar(36) not null,
     address_name varchar(256) not null,
     address_position point not null,
     date date not null,

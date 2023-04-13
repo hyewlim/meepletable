@@ -22,12 +22,12 @@
     <p-button
       *ngIf="!isLoggedIn"
       class="button-space" label="Login"
-      icon="pi pi-user" styleClass="p-button-warning"
+      icon="pi pi-sign-in" styleClass="p-button-warning"
       routerLink="signin"></p-button>
     <p-button
       *ngIf="isLoggedIn"
       class="button-space" label="Log Out"
-      icon="pi pi-user" styleClass="p-button-warning"
+      icon="pi pi-sign-out" styleClass="p-button-warning"
       routerLink="signin" (click)="logOut()"></p-button>
     <p-button
       *ngIf="!isLoggedIn"
@@ -35,11 +35,13 @@
       icon="pi pi-user-plus" styleClass="p-button-warning"
       routerLink="signup" ></p-button>
 
-    <p-button
-      *ngIf="isLoggedIn"
-      label="{{user.username}}"
-      styleClass="p-button-outlined p-button-warning">
-    </p-button>
+    <div *ngIf="isLoggedIn">
+      <p-button
+        label="{{user.username}}"
+        styleClass="p-button-outlined p-button-warning">
+      </p-button>
+    </div>
+
   </div>
 </p-toolbar>
 

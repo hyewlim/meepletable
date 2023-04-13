@@ -1,3 +1,4 @@
+
 <div class="classCenter">
     <div class="surface-card p-4 shadow-2 border-round w-full">
       <div class="text-center mb-5">
@@ -8,9 +9,18 @@
       </div>
       <div>
         <form [formGroup]="signinForm" (ngSubmit)="processForm()">
+          <div class="mt-4">
+            <label for="email" class="block text-900 font-medium mb-2">Email</label>
+            <input id="email" type="text" placeholder="Email address" formControlName="email" pInputText class="w-full mb-3" >
+            <div *ngIf="signinForm.controls['email'].invalid && (signinForm.controls['email'].dirty || signinForm.controls['email'].touched)">
+              <p-message severity="error" text="A valid email address is required"></p-message>
+              <br>
+              <br>
+            </div>
 
-          <label for="email" class="block text-900 font-medium mb-2">Email</label>
-          <input id="email" type="text" placeholder="Email address" formControlName="email" pInputText class="w-full mb-3">
+
+          </div>
+
 
           <label for="password" class="block text-900 font-medium mb-2">Password</label>
           <input id="password" type="password" placeholder="Password" formControlName="password" pInputText class="w-full mb-3">
@@ -27,3 +37,5 @@
       </div>
     </div>
   </div>
+
+<p-toast position="bottom-center"></p-toast>

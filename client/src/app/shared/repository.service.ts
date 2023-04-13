@@ -12,21 +12,14 @@ export class RepositoryService {
 
   boardgames = new Subject<Boardgame[]>()
 
-  constructor(private http: HttpClient,
-              private jwtTokenSvc: JWTTokenService) { }
+  constructor(private http: HttpClient) { }
 
   saveBoardgames(boardgames: Boardgame[], userId: string) {
 
     const params = new HttpParams()
       .append("userId", userId)
 
-    const header =
-       new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${this.jwtTokenSvc.jwtToken}'
-      })
-
-    return lastValueFrom(this.http.post("/api/v1/games/collection", boardgames, {params: params, headers:header}))
+    return lastValueFrom(this.http.post("/api/v1/games/collection", boardgames, {params: params}))
   }
 
   loadBoardgames(userId: string) {
@@ -34,13 +27,7 @@ export class RepositoryService {
     const params = new HttpParams()
       .append("userId", userId)
 
-    const header =
-      new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${this.jwtTokenSvc.jwtToken}'
-      })
-
-    return lastValueFrom(this.http.get<Boardgame[]>("/api/v1/games/collection", {params: params, headers:header}))
+    return lastValueFrom(this.http.get<Boardgame[]>("/api/v1/games/collection", {params: params}))
 
   }
 

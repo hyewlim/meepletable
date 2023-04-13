@@ -54,7 +54,8 @@ public class UserRepository {
 
     public Optional<User> findByEmail(String email) {
 
-        final SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_FIND_USER_BY_EMAIL, email);
+        final SqlRowSet rs = jdbcTemplate.queryForRowSet(
+                SQL_FIND_USER_BY_EMAIL, email);
 
         User user = new User();
         while (rs.next()) {
@@ -66,6 +67,24 @@ public class UserRepository {
         }
 
         return Optional.of(user);
+    }
+
+    public Optional<User> findByUsername(String username) {
+
+        final SqlRowSet rs = jdbcTemplate.queryForRowSet(
+                SQL_FIND_USER_BY_USERNAME, username);
+
+        User user = new User();
+        while (rs.next()) {
+            user.setId(rs.getString("user_id"));
+            user.setUsername(rs.getString("username"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
+            user.setRole(Role.valueOf((rs.getString("role"))));
+        }
+
+        return Optional.of(user);
+
     }
 
 }

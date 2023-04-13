@@ -3,12 +3,13 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {User} from "../../shared/models";
 import {UserService} from "./user.service";
-import {catchError} from "rxjs";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrls: ['./signup.component.css'],
+  providers: [MessageService]
 })
 export class SignupComponent implements OnInit {
 
@@ -16,7 +17,8 @@ export class SignupComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private route: Router,
-              private userService: UserService) {
+              private userService: UserService,
+              private messageService: MessageService) {
   }
 
   ngOnInit(): void {
@@ -40,18 +42,26 @@ export class SignupComponent implements OnInit {
 
     this.userService.registerNewUser(this.signupForm.value as User)
       .then( (response) => {
-        this.route.navigate(['signin'])
-        alert("You have successfully registered! Please sign in using the same credentials.")
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: 'You have successfully registered! Please sign in using the same credentials.'})
+
+        setTimeout(() => {
+          this.route.navigate(['signin'])
+        }, 2000)
       })
       .catch(
         (error) => {
           if (error.status === 400) {
-            alert("username and/or password is unavailable, please try again")
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Unavailable',
+              detail: 'username and/or password is unavailable, please try again'})
           }
           throw error;
         }
       )
-
   }
 
 }

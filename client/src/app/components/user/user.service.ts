@@ -20,7 +20,8 @@ export class UserService{
   constructor(private http: HttpClient,
               private jwtService: JWTTokenService) {
 
-    const token = localStorage.getItem("jwt_token");
+
+    const token = sessionStorage.getItem("jwt_token");
     this.isLoggedIn$.next(!!token);
 
     if (!!token){
@@ -37,8 +38,7 @@ export class UserService{
   authUser(user: User) {
     return lastValueFrom(this.http.post<JWTResponse>('/api/v1/auth/authenticate', user)
       .pipe( tap((response: JWTResponse) => {
-
-        localStorage.setItem("jwt_token", response.token);
+        sessionStorage.setItem("jwt_token", response.token)
         this.jwtService.setToken(response.token);
 
         const username = <string>this.jwtService.getUser()
@@ -50,15 +50,17 @@ export class UserService{
           userId: response.userId
         }
 
-        this.signedInUser$.next(newUser)
+        this.signedInUser$.next(newUser);
         this.userName$.next(username);
+        this.user = newUser;
+        sessionStorage.setItem("user", JSON.stringify(this.user));
         this.isLoggedIn$.next(true);
 
       })))
   }
 
   logOutUser() {
-    localStorage.removeItem("jwt_token");
+    sessionStorage.removeItem("jwt_token");
     this.isLoggedIn$.next(false);
 
   }
