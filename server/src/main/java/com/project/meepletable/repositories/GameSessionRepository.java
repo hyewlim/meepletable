@@ -21,7 +21,7 @@ public class GameSessionRepository {
     private JdbcTemplate jdbcTemplate;
 
 
-    public void postSession(GameSession session, int userId) {
+    public void postSession(GameSession session, String userId) {
 
         String randomUUID = UUID.randomUUID().toString().substring(0,8);
 

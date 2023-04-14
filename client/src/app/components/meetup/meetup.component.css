@@ -1,0 +1,13 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr; /* Two columns, left takes 1/3 of the width and right takes 2/3 */
+  height: 100vh; /* Set height to the full viewport height */
+}
+
+.left {
+  overflow-y: scroll; /* Enable vertical scrolling */
+}
+
+.right {
+  height: 100%; /* Set height to fill the remaining space */
+}

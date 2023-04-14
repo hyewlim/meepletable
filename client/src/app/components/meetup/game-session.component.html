@@ -1,21 +1,43 @@
 
-<button (click)="openSession()" type="button">Add Session</button>
-<br>
+  <p-button class="button-space"
+            label="Add Session"
+            styleClass="p-button-outlined p-button-secondary"
+            (click)="openSession()"
+  ></p-button>
 
-<div *ngIf="sessions">
-  <div *ngFor="let session of sessions">
-    <p-card header="{{session.title}}" subheader="{{session.date}} / {{session.address.name}}" [style]="{width: '360px'}" styleClass="p-card-shadow">
-      <p>{{session.comment}}</p>
-      <ng-template pTemplate="footer">
-        <p-button label="Join" icon="pi pi-plus-circle"></p-button>
-      </ng-template>
-    </p-card>
-  </div>
+
+
+
+<div class="card">
+  <p-dataView #dv [value]="sessions">
+    <ng-template let-session pTemplate="listItem">
+      <div class="col-12">
+        <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+          <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
+            <div class="flex flex-column align-items-start sm:align-items-start gap-1">
+              <div class="text-sm text-600">{{ session.date | date }}</div>
+
+            </div>
+            <div class="flex flex-column align-items-start sm:align-items-start gap-1">
+              <div class="text-base font-bold text-900">{{ session.title }}</div>
+              <div class="text-sm text-900">{{ session.host }}</div>
+              <div class="text-sm text-900"><span class="pi pi-map-marker"></span>{{ session.address.name }}</div>
+            </div>
+
+
+            <div class="flex sm:flex-column align-items-start sm:align-items-end gap-1 sm:gap-2">
+              <span class="text-sm ">{{ session.comment }}</span>
+            </div>
+
+            <div class="flex sm:flex-column align-items-start sm:align-items-end gap-1 sm:gap-2">
+              <p-button label="Attend" icon="pi pi-plus-circle" styleClass="p-button-outlined p-button-sm"></p-button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dataView>
 </div>
-
-
-
-
 
 
 <p-dialog [(visible)]="sessionDialog" [style]="{width: '450px'}" header="Add Session" [modal]="true" styleClass="p-fluid">

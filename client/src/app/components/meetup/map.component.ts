@@ -1,11 +1,8 @@
 import {AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import {catchError, map, Observable, of, Subscription} from "rxjs";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../environments/environment.development";
 import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
 import {Address, GameSession} from "../../shared/models";
 import {MapService} from "../../shared/map.service";
-import InfoWindow = google.maps.InfoWindow;
 
 @Component({
   selector: 'app-map',

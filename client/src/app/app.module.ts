@@ -42,6 +42,8 @@ import {InputTextModule} from "primeng/inputtext";
 import {ToastModule} from "primeng/toast";
 import {MessagesModule} from "primeng/messages";
 import {MessageModule} from "primeng/message";
+import {InputTextareaModule} from "primeng/inputtextarea";
+import {DataViewLayoutOptions, DataViewModule} from "primeng/dataview";
 
 
 
@@ -92,7 +94,9 @@ import {MessageModule} from "primeng/message";
     InputTextModule,
     ToastModule,
     MessagesModule,
-    MessageModule
+    MessageModule,
+    InputTextareaModule,
+    DataViewModule
 
   ],
   exports: [

@@ -21,16 +21,12 @@ export class MapService {
     this.markers.push(session)
     this.markersChanged.next(this.markers);
 
-
-    return lastValueFrom(this.http.post("/api/session" + "/" + this.userService.user.userId, session))
-
-
-
+    return lastValueFrom(this.http.post("/api/v1/session" + "/" + this.userService.user.userId, session))
 
   }
 
   loadMarkers() {
-    return lastValueFrom(this.http.get<GameSession[]>("/api/session"));
+    return lastValueFrom(this.http.get<GameSession[]>("/api/v1/session"));
   }
 
   getMarkers() {

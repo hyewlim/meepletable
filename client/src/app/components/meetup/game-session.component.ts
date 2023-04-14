@@ -8,6 +8,7 @@ import {RepositoryService} from "../../shared/repository.service";
 import {UserService} from "../user/user.service";
 import {MapService} from "../../shared/map.service";
 import {Subscription} from "rxjs";
+import {SelectItem} from "primeng/api";
 
 @Component({
   selector: 'app-game-session',
@@ -31,6 +32,7 @@ export class GameSessionComponent implements OnInit {
 
   sessionSub$!: Subscription;
 
+
   @ViewChild('search')
   public searchElementRef!: ElementRef;
 
@@ -45,11 +47,6 @@ export class GameSessionComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.createSessionForm();
-    // this.sessionSub$ = this.mapService.markersChanged.subscribe(
-    //   data => {
-    //     this.sessions = data
-    //   }
-    // )
 
     this.mapService.loadMarkers().then(
       data => {
@@ -57,6 +54,7 @@ export class GameSessionComponent implements OnInit {
         this.mapService.markersChanged.next(data)
       }
     )
+
 
   }
 
@@ -91,7 +89,8 @@ export class GameSessionComponent implements OnInit {
     console.log(sessionInfo)
 
     //save to markers[] , post to repository
-    this.mapService.addMarkers(sessionInfo)
+    this.mapService.addMarkers(sessionInfo);
+    this.sessions.push(sessionInfo);
 
     this.sessionDialog = false;
   }

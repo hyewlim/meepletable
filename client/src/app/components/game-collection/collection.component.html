@@ -82,7 +82,7 @@
 
 
 
-<p-dialog [(visible)]="bgDialog" [style]="{width: '450px'}" header="Game Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="bgDialog" [style]="{width: '450px'}" header="Edit" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
 
     <img [src]="boardgame.thumbnail" [alt]="boardgame.name" class="boardgame-image" *ngIf="boardgame.thumbnail">
@@ -97,8 +97,13 @@
     <br>
 
     <div class="field formfield">
-      <label for="comment">Comment: </label>
-      <textarea id="comment" pInputTextarea [(ngModel)]="boardgame.comment" required rows="3" cols="20"></textarea>
+      <textarea id="comment"
+                pInputTextarea
+                [(ngModel)]="boardgame.comment"
+                required
+                rows="3" cols="20"
+                [autoResize]="true"
+                placeholder="input your comment here"></textarea>
     </div>
 
   </ng-template>

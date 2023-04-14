@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/session")
+@RequestMapping(path = "/api/v1/session")
 public class GameSessionController {
 
     @Autowired
     private GameSessionRepository sessionRepository;
 
     @PostMapping("/{userId}")
-    public ResponseEntity<String> postSession(@RequestBody GameSession gameSession, @PathVariable int userId) {
+    public ResponseEntity<String> postSession(@RequestBody GameSession gameSession, @PathVariable String userId) {
 
         sessionRepository.postSession(gameSession, userId);
 
