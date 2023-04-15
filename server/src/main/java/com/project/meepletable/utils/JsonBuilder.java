@@ -73,6 +73,7 @@ public class JsonBuilder {
     public static JsonObject gsDetailToJson(GameSession gs) {
 
         return Json.createObjectBuilder()
+                .add("id", gs.getId())
                 .add("title", gs.getTitle())
                 .add("host", gs.getHost())
                 .add("address", JsonBuilder.addressToJson(gs))

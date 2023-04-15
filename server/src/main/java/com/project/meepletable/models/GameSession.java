@@ -1,13 +1,18 @@
 package com.project.meepletable.models;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+
 
 public class GameSession {
+
+    private String id;
 
     private String title;
     private String host;
     private Address address;
-    private Date date;
+    private LocalDateTime date;
     private int playerCount;
     private String comment;
     private String icon;
@@ -15,7 +20,8 @@ public class GameSession {
     public GameSession() {
     }
 
-    public GameSession(String title, String host, Address address, Date date, int playerCount, String comment, String icon) {
+    public GameSession(String id, String title, String host, Address address, LocalDateTime date, int playerCount, String comment, String icon) {
+        this.id = id;
         this.title = title;
         this.host = host;
         this.address = address;
@@ -23,6 +29,14 @@ public class GameSession {
         this.playerCount = playerCount;
         this.comment = comment;
         this.icon = icon;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -49,11 +63,11 @@ public class GameSession {
         this.address = address;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -84,11 +98,12 @@ public class GameSession {
     @Override
     public String toString() {
         return "GameSession{" +
-                "title='" + title + '\'' +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
                 ", host='" + host + '\'' +
                 ", address=" + address +
-                ", date='" + date + '\'' +
-                ", playerCount='" + playerCount + '\'' +
+                ", date=" + date +
+                ", playerCount=" + playerCount +
                 ", comment='" + comment + '\'' +
                 ", icon='" + icon + '\'' +
                 '}';

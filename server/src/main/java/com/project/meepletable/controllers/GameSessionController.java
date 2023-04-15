@@ -48,4 +48,13 @@ public class GameSessionController {
                 .body(result.toString());
 
     }
+
+    @DeleteMapping()
+    public ResponseEntity<String> deleteSession(@RequestParam String id) {
+
+        int result = sessionRepository.deleteSession(id);
+
+        return ResponseEntity.ok(String.valueOf(result));
+
+    }
 }

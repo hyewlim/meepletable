@@ -36,7 +36,7 @@ export class MapComponent implements OnInit {
     this.markersSub$ = this.meetupService.meetupsChanged.subscribe(
       data => {
         this.markers = data;
-        console.log(...this.markers.values())
+
       }
     )
 

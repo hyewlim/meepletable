@@ -1,20 +1,20 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {GoogleMap} from "@angular/google-maps";
-import {environment} from "../../../environments/environment.development";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {GooglemapService} from "../../shared/googlemap.service";
-import {Address, GameSession} from "../../shared/models";
+import {Address, Boardgame, GameSession} from "../../shared/models";
 import {RepositoryService} from "../../shared/repository.service";
 import {UserService} from "../user/user.service";
 import {MeetupService} from "../../shared/meetup.service";
 import {Subscription} from "rxjs";
-import {SelectItem} from "primeng/api";
-import {randomUUID} from "crypto";
+import {ConfirmationService, MessageService} from "primeng/api";
+import {v4 as uuidv4} from 'uuid';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-game-session',
   templateUrl: './game-session.component.html',
-  styleUrls: ['./game-session.component.css']
+  styleUrls: ['./game-session.component.css'],
+  providers: [ConfirmationService, MessageService]
 })
 export class GameSessionComponent implements OnInit {
 
@@ -27,6 +27,8 @@ export class GameSessionComponent implements OnInit {
   chosenAddress!: Address;
 
   sessions: GameSession[] = [];
+
+  session!: GameSession;
 
   sessionSub$!: Subscription;
 
@@ -48,15 +50,23 @@ export class GameSessionComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private repositoryService: RepositoryService,
               private userService: UserService,
-              private meetupService: MeetupService) {
+              private meetupService: MeetupService,
+              private confirmationService: ConfirmationService,
+              private messageService: MessageService,
+              private router: Router) {
+
+    //todo
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit(): void {
     this.form = this.createSessionForm();
 
-    this.meetupService.loadMarkers().then(
+    this.meetupService.loadSessions().then(
       data => {
         this.sessions = data
+
+        //do not remove, map markers depends on this init
         this.meetupService.meetupsChanged.next(data)
       }
     )
@@ -87,7 +97,7 @@ export class GameSessionComponent implements OnInit {
   saveForm() {
 
     let sessionInfo: GameSession = {
-      id: randomUUID(),
+      id: "",
       title: this.form.value['title'],
       host: this.userService.user.username,
       address: this.chosenAddress,
@@ -98,11 +108,13 @@ export class GameSessionComponent implements OnInit {
 
     }
 
-    console.log(sessionInfo)
-
-    //save to markers[] , post to repository
-    this.meetupService.addMeetup(sessionInfo);
-    this.sessions.push(sessionInfo);
+    this.meetupService.addMeetup(sessionInfo).then( value => {
+      this.messageService.add({severity: "success", summary: "Successful", detail: "Session Added", life:3000})
+      this.sessions.push(sessionInfo);
+      this.meetupService.meetupsChanged.next(this.sessions);
+      this.router.navigate(['meetup'])
+      }
+    );
 
     this.sessionDialog = false;
   }
@@ -112,4 +124,28 @@ export class GameSessionComponent implements OnInit {
   }
 
 
+  join() {
+
+  }
+
+  removeSession(session: GameSession) {
+
+    this.confirmationService.confirm({
+      message: "Are you sure you want to delete " + session.title + "?",
+      header: "Confirm",
+      icon: "pi pi-exclamation-triangle",
+      accept: () => {
+        this.sessions = this.sessions.filter(val => val.id !== session.id);
+        this.session = {} as GameSession;
+        this.messageService.add({severity: "success", summary: "Successful", detail: "Session Deleted", life:3000})
+        this.meetupService.deleteMeetup(session.id)
+          .then(value => {
+            this.meetupService.meetupsChanged.next(this.sessions)
+          })
+
+      }
+    });
+
+
+  }
 }

@@ -47,6 +47,7 @@ export class CollectionComponent implements OnInit {
     this.bglookup.getGameDetails(newBg.id)
       .then((data) => {
         this.boardgames.push(data)
+        this.messageService.add({severity: "success", summary: "Successful", detail: "Game Added", life:3000})
       })
     ;
   }
@@ -89,16 +90,14 @@ export class CollectionComponent implements OnInit {
         this.boardgames = this.boardgames.filter(val => val.id !== boardgame.id);
         this.boardgame = {} as Boardgame;
         this.messageService.add({severity: "success", summary: "Successful", detail: "Game Deleted", life:3000})
+        this.repositoryService.deleteBoardgame(this.userService.user.userId, boardgame.id)
+          .then(r => {
+            if (r===0)
+              console.log("remove failed")
+          })
+
       }
     });
-
-    console.log(this.boardgames)
-
-    this.repositoryService.deleteBoardgame(this.userService.user.userId, boardgame.id)
-      .then(value => {
-        console.log(value)
-      })
-
 
   }
 

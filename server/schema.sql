@@ -46,12 +46,12 @@ create table user_collection (
 
 create table game_session (
 
-    game_session_id varchar(8) not null,
+    game_session_id varchar(36) not null,
     title varchar(256) not null,
     user_id varchar(36) not null,
     address_name varchar(256) not null,
     address_position point not null,
-    date date not null,
+    date datetime not null,
     player_count int,
     comment text,
     icon varchar(256),

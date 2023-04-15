@@ -31,9 +31,12 @@ public class Queries {
 
     public static String SQL_GET_SESSIONS =
             """
-            select title, users.username, address_name, ST_X(address_position) as X, ST_Y(address_position) as Y, date, player_count, comment, icon from game_session
+            select game_session_id, title, users.username, address_name, ST_X(address_position) as X, ST_Y(address_position) as Y, date, player_count, comment, icon from game_session
             join users on game_session.user_id = users.user_id
             """;
+
+    public static String SQL_DELETE_SESSION =
+            "delete from game_session where game_session_id=?";
 
     public static String SQL_FIND_USER_BY_EMAIL =
             "select * from users where email=?";

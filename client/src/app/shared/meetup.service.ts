@@ -17,26 +17,25 @@ export class MeetupService {
               private userService: UserService) { }
 
   addMeetup(session: GameSession) {
-
-    this.meetups.push(session)
-    this.meetupsChanged.next(this.meetups);
+    //
+    // this.meetups.push(session)
+    // this.meetupsChanged.next(this.meetups);
 
     return lastValueFrom(this.http.post("/api/v1/session" + "/" + this.userService.user.userId, session))
 
   }
 
-  deleteMeetup(userId: string, bgId: number) {
+  deleteMeetup(id: string) {
 
     const params = new HttpParams()
-      .append("userId", userId)
-      .append("bgId", bgId)
+      .append("id", id)
 
-    return lastValueFrom(this.http.delete("/api/v1/games/collection", {params: params}))
+    return lastValueFrom(this.http.delete("/api/v1/session", {params: params}))
 
   }
 
-  loadMarkers() {
-    return lastValueFrom(this.http.get<GameSession[]>("/api/v1/session"));
+  loadSessions() {
+    return lastValueFrom(this.http.get<GameSession[]>("/api/v1/session"))
   }
 
   getMarkers() {
