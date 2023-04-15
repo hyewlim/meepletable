@@ -6,9 +6,10 @@ import {GooglemapService} from "../../shared/googlemap.service";
 import {Address, GameSession} from "../../shared/models";
 import {RepositoryService} from "../../shared/repository.service";
 import {UserService} from "../user/user.service";
-import {MapService} from "../../shared/map.service";
+import {MeetupService} from "../../shared/meetup.service";
 import {Subscription} from "rxjs";
 import {SelectItem} from "primeng/api";
+import {randomUUID} from "crypto";
 
 @Component({
   selector: 'app-game-session',
@@ -20,11 +21,8 @@ export class GameSessionComponent implements OnInit {
   form!: FormGroup;
 
   sessionDialog: boolean = false;
+
   map!: GoogleMap;
-
-  text!: string;
-
-  results!: string[];
 
   chosenAddress!: Address;
 
@@ -32,28 +30,39 @@ export class GameSessionComponent implements OnInit {
 
   sessionSub$!: Subscription;
 
+  minDate!: Date;
 
   @ViewChild('search')
   public searchElementRef!: ElementRef;
 
   iconImage = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
 
+  playerCount: any[] = [
+    { name: '2' , value: 2},
+    { name: '3-4' , value: 4},
+    { name: '5-6' , value: 6},
+    { name: '>6' , value: 7},
+  ];
+
 
   constructor(private fb: FormBuilder,
               private repositoryService: RepositoryService,
               private userService: UserService,
-              private mapService: MapService) {
+              private meetupService: MeetupService) {
   }
 
   ngOnInit(): void {
     this.form = this.createSessionForm();
 
-    this.mapService.loadMarkers().then(
+    this.meetupService.loadMarkers().then(
       data => {
         this.sessions = data
-        this.mapService.markersChanged.next(data)
+        this.meetupService.meetupsChanged.next(data)
       }
     )
+
+    //calender min date
+    this.minDate = new Date();
 
 
   }
@@ -78,6 +87,7 @@ export class GameSessionComponent implements OnInit {
   saveForm() {
 
     let sessionInfo: GameSession = {
+      id: randomUUID(),
       title: this.form.value['title'],
       host: this.userService.user.username,
       address: this.chosenAddress,
@@ -85,11 +95,13 @@ export class GameSessionComponent implements OnInit {
       playerCount: this.form.value['playerCount'],
       comment: this.form.value['comment'],
       icon: this.iconImage
+
     }
+
     console.log(sessionInfo)
 
     //save to markers[] , post to repository
-    this.mapService.addMarkers(sessionInfo);
+    this.meetupService.addMeetup(sessionInfo);
     this.sessions.push(sessionInfo);
 
     this.sessionDialog = false;

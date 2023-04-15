@@ -44,6 +44,9 @@ import {MessagesModule} from "primeng/messages";
 import {MessageModule} from "primeng/message";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {DataViewLayoutOptions, DataViewModule} from "primeng/dataview";
+import {CalendarModule} from "primeng/calendar";
+import {RadioButtonModule} from "primeng/radiobutton";
+import {SelectButtonModule} from "primeng/selectbutton";
 
 
 
@@ -96,7 +99,10 @@ import {DataViewLayoutOptions, DataViewModule} from "primeng/dataview";
     MessagesModule,
     MessageModule,
     InputTextareaModule,
-    DataViewModule
+    DataViewModule,
+    CalendarModule,
+    RadioButtonModule,
+    SelectButtonModule
 
   ],
   exports: [

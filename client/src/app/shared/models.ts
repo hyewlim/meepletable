@@ -25,7 +25,7 @@ export interface Address {
 }
 
 export interface GameSession {
-
+  id: string
   title: string
   host: string
   address: Address
@@ -33,6 +33,7 @@ export interface GameSession {
   playerCount: number
   comment: string
   icon: string;
+
 }
 
 export interface JWTResponse {

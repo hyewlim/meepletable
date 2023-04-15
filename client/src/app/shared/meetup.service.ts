@@ -1,27 +1,37 @@
 import { Injectable } from '@angular/core';
 import {Address, GameSession} from "./models";
 import {lastValueFrom, Subject} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {UserService} from "../components/user/user.service";
 
 @Injectable({
   providedIn: 'root'
 })
-export class MapService {
+export class MeetupService {
 
-  markers: GameSession[] = []
+  meetups: GameSession[] = []
 
-  markersChanged = new Subject<GameSession[]>();
+  meetupsChanged = new Subject<GameSession[]>();
 
   constructor(private http: HttpClient,
               private userService: UserService) { }
 
-  addMarkers(session: GameSession) {
+  addMeetup(session: GameSession) {
 
-    this.markers.push(session)
-    this.markersChanged.next(this.markers);
+    this.meetups.push(session)
+    this.meetupsChanged.next(this.meetups);
 
     return lastValueFrom(this.http.post("/api/v1/session" + "/" + this.userService.user.userId, session))
+
+  }
+
+  deleteMeetup(userId: string, bgId: number) {
+
+    const params = new HttpParams()
+      .append("userId", userId)
+      .append("bgId", bgId)
+
+    return lastValueFrom(this.http.delete("/api/v1/games/collection", {params: params}))
 
   }
 
@@ -30,6 +40,6 @@ export class MapService {
   }
 
   getMarkers() {
-    return this.markers.slice();
+    return this.meetups.slice();
   }
 }

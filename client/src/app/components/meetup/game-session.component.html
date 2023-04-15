@@ -16,6 +16,7 @@
           <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">
             <div class="flex flex-column align-items-start sm:align-items-start gap-1">
               <div class="text-sm text-600">{{ session.date | date }}</div>
+              <div class="text-sm text-600">{{ session.date | date:'shortTime' }}</div>
 
             </div>
             <div class="flex flex-column align-items-start sm:align-items-start gap-1">
@@ -46,7 +47,7 @@
       <div>
         <label for="title">Title: </label>
         <br>
-        <input type="text" formControlName="title" id="title">
+        <input type="text" pInputText formControlName="title" id="title" width="100%" placeholder="enter title">
       </div>
       <br>
       <div>
@@ -59,21 +60,28 @@
       <div>
         <label for="date">Date: </label>
         <br>
-        <input type="date" formControlName="date" id="date">
+        <p-calendar id="date"
+                    formControlName="date"
+                    [minDate]="minDate"
+                    [showIcon]="true"
+                    [showTime]="true"
+                    hourFormat="12"
+                    appendTo="body"
+        ></p-calendar>
       </div>
       <br>
+
       <div>
         <label for="playerCount">Player Count: </label>
-        <br>
-        <select formControlName="playerCount" id="playerCount">
-          <option value="">Select a number</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-          <option value=">6">>6</option>
-        </select>
+        <p-selectButton [options]="playerCount"
+                        formControlName="playerCount"
+                        optionLabel="name"
+                        optionValue="value"
+                        id="playerCount">
+
+        </p-selectButton>
       </div>
+
       <br>
       <div>
         <label for="comment">Comment: </label>
@@ -81,9 +89,9 @@
         <textarea
           id="comment"
           pInputTextarea
-          required rows="3"
+          required rows="5"
           cols="20"
-          style="width: 300px"
+          style="width: 100%"
           formControlName="comment"></textarea>
       </div>
     </form>

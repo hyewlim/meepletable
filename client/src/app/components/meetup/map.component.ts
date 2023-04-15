@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild} from '@
 import {catchError, map, Observable, of, Subscription} from "rxjs";
 import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
 import {Address, GameSession} from "../../shared/models";
-import {MapService} from "../../shared/map.service";
+import {MeetupService} from "../../shared/meetup.service";
 
 @Component({
   selector: 'app-map',
@@ -28,12 +28,12 @@ export class MapComponent implements OnInit {
     lng: 103.839112,
   }
 
-  constructor(private mapService: MapService) {
+  constructor(private meetupService: MeetupService) {
   }
 
   ngOnInit(): void {
 
-    this.markersSub$ = this.mapService.markersChanged.subscribe(
+    this.markersSub$ = this.meetupService.meetupsChanged.subscribe(
       data => {
         this.markers = data;
         console.log(...this.markers.values())
