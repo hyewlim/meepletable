@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Address, GameSession} from "./models";
-import {lastValueFrom, Subject} from "rxjs";
+import {AsyncSubject, BehaviorSubject, lastValueFrom, Subject} from "rxjs";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {UserService} from "../components/user/user.service";
 
@@ -14,15 +14,12 @@ export class MeetupService {
   meetupsChanged = new Subject<GameSession[]>();
 
   constructor(private http: HttpClient,
-              private userService: UserService) { }
+              private userService: UserService) {
+
+  }
 
   addMeetup(session: GameSession) {
-
-    // this.meetups.push(session)
-    this.meetupsChanged.next(this.meetups);
-
     return lastValueFrom(this.http.post("/api/v1/session" + "/" + this.userService.user.userId, session))
-
   }
 
   deleteMeetup(id: string) {
@@ -36,6 +33,13 @@ export class MeetupService {
 
   loadSessions() {
     return lastValueFrom(this.http.get<GameSession[]>("/api/v1/session"))
+      .then( result => {
+        this.meetups = result;
+        this.meetupsChanged.next(result)
+        })
+      .catch(error => {
+        console.error(error)
+      })
   }
 
   getMarkers() {

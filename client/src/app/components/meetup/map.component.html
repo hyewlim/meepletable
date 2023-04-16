@@ -21,7 +21,15 @@
         (mapClick)="openInfo(marker, infoWindow)"
       >
         <map-info-window #infoWindow="mapInfoWindow">
-          {{m.title}}
+          <div class="text-sm text-600">{{ m.date | date }} at {{ m.date | date:'shortTime' }}</div>
+          <br>
+          <div class="text-base font-bold text-900">{{ m.title }}</div>
+          <br>
+          <div class="text-sm text-900">Host: {{ m.host }}</div>
+          <br>
+          <div class="text-sm text-900"><span class="pi pi-map-marker"></span>{{ m.address.name }}</div>
+
+
         </map-info-window>
 
       </map-marker>

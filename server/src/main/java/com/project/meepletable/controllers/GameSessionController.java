@@ -25,6 +25,11 @@ public class GameSessionController {
     @PostMapping("/{userId}")
     public ResponseEntity<String> postSession(@RequestBody GameSession gameSession, @PathVariable String userId) {
 
+        List<User> users = gameSession.getParticipants();
+        for (User user: users){
+            System.out.println(user.toString());
+        }
+
         boolean success = sessionRepository.postSession(gameSession, userId);
 
         if (success) {
@@ -48,8 +53,6 @@ public class GameSessionController {
         }
 
         JsonArray result = arrayBuilder.build();
-
-        System.out.println(result.toString());
 
         return ResponseEntity
                 .status(HttpStatus.OK)

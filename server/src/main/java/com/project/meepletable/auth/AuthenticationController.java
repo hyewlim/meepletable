@@ -23,7 +23,7 @@ public class AuthenticationController {
 
         Optional<String> resp = service.register(request);
 
-        System.out.println(resp.get());
+
 
         if (resp.get().length() > 1){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

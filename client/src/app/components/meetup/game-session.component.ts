@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {GoogleMap} from "@angular/google-maps";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Address, Boardgame, GameSession, User} from "../../shared/models";
@@ -7,7 +7,6 @@ import {UserService} from "../user/user.service";
 import {MeetupService} from "../../shared/meetup.service";
 import {Subscription} from "rxjs";
 import {ConfirmationService, MessageService} from "primeng/api";
-import {v4 as uuidv4} from 'uuid';
 import {Router} from "@angular/router";
 
 @Component({
@@ -16,7 +15,7 @@ import {Router} from "@angular/router";
   styleUrls: ['./game-session.component.css'],
   providers: [ConfirmationService, MessageService]
 })
-export class GameSessionComponent implements OnInit {
+export class GameSessionComponent implements OnInit, OnDestroy {
 
   form!: FormGroup;
 
@@ -32,7 +31,7 @@ export class GameSessionComponent implements OnInit {
 
   session!: GameSession;
 
-  sessionSub$!: Subscription;
+  sessionsSub$!: Subscription;
 
   minDate!: Date;
 
@@ -57,22 +56,20 @@ export class GameSessionComponent implements OnInit {
               private meetupService: MeetupService,
               private confirmationService: ConfirmationService,
               private messageService: MessageService,
-              private router: Router) {
+              private router: Router
+              ) {
 
-    //todo
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit(): void {
     this.form = this.createSessionForm();
 
-    this.meetupService.loadSessions().then(
-      data => {
-        this.sessions = data
-        console.log(this.sessions)
+    this.meetupService.loadSessions();
 
-        //do not remove, map markers depends on this init
-        this.meetupService.meetupsChanged.next(data)
+    this.sessionsSub$ = this.meetupService.meetupsChanged.subscribe(
+      data => {
+        this.sessions = data;
+
       }
     )
 
@@ -111,7 +108,7 @@ export class GameSessionComponent implements OnInit {
     this.sessionDetailDialog = false;
   }
 
-  saveForm() {
+  addSession() {
 
     let participants: User[] = [];
 
@@ -127,10 +124,12 @@ export class GameSessionComponent implements OnInit {
       participants: participants
     }
 
+    this.meetupService.meetups.push(sessionInfo);
+    this.meetupService.meetupsChanged.next(this.meetupService.meetups.slice());
+
     this.meetupService.addMeetup(sessionInfo).then( value => {
       this.messageService.add({severity: "success", summary: "Successful", detail: "Session Added", life:3000})
-      this.meetupService.meetups.push(sessionInfo)
-      this.router.navigate(['meetup'])
+
       }
     );
 
@@ -182,5 +181,10 @@ export class GameSessionComponent implements OnInit {
     });
 
 
+  }
+
+  ngOnDestroy(): void {
+
+    this.sessionsSub$.unsubscribe();
   }
 }

@@ -25,17 +25,14 @@ export class AutocompleteComponent {
   }
 
   search(event: any) {
-    console.log(event.query)
     this.bglookupService.getSearchResults(event.query)
       .then(data => {
 
       this.results = data;
-      console.log(this.results)
     });
   }
 
   selectResult(boardgame: any) {
-    console.log(boardgame)
     this.newBgEvent.emit(boardgame);
 
   }

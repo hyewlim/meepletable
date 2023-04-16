@@ -6,7 +6,54 @@
             (click)="openSession()"
   ></p-button>
 
+<!--  <div class="card" >-->
+<!--    <p-dataView #dv [value]="sessions" >-->
+<!--      <ng-template let-session pTemplate="listItem" >-->
+<!--        <div class="col-12" >-->
+<!--          <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">-->
+<!--            <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">-->
+<!--              <div class="flex flex-column col-2">-->
+<!--                <div class="text-sm text-600">{{ session.date | date }}</div>-->
+<!--                <div class="text-sm text-600">{{ session.date | date:'shortTime' }}</div>-->
 
+<!--              </div>-->
+<!--              <div class="flex flex-column col-5">-->
+<!--                <div class="text-base font-bold text-900">{{ session.title }}</div>-->
+<!--                <div class="text-sm text-900">{{ session.host }}</div>-->
+<!--                <div class="text-sm text-900"><span class="pi pi-map-marker"></span>{{ session.address.name }}</div>-->
+<!--              </div>-->
+
+<!--              <div class="flex flex-column col-3">-->
+<!--                <span class="text-sm ">{{ session.participants.length }}</span>-->
+
+<!--              </div>-->
+
+<!--              <div class="flex flex-column col-1 ">-->
+<!--                <p-button-->
+<!--                  icon="pi pi-list"-->
+<!--                  styleClass="p-button-outlined p-button-sm"-->
+<!--                  (click)="openSessionDetail(session)"-->
+<!--                ></p-button>-->
+
+
+<!--                <div *ngIf="userName === session.host">-->
+<!--                  <p-button-->
+<!--                    icon="pi pi pi-trash"-->
+<!--                    styleClass="p-button-outlined p-button-sm"-->
+<!--                    (click)="removeSession(session)"-->
+<!--                  ></p-button>-->
+<!--                </div>-->
+
+
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--      </ng-template>-->
+<!--    </p-dataView>-->
+
+<!--  </div>-->
 
 
 <div class="card" >
@@ -20,7 +67,7 @@
               <div class="text-sm text-600">{{ session.date | date:'shortTime' }}</div>
 
             </div>
-            <div class="flex flex-column align-items-start sm:align-items-start gap-1">
+            <div class="flex col-6 flex-column align-items-start sm:align-items-start gap-1">
               <div class="text-base font-bold text-900">{{ session.title }}</div>
               <div class="text-sm text-900">{{ session.host }}</div>
               <div class="text-sm text-900"><span class="pi pi-map-marker"></span>{{ session.address.name }}</div>
@@ -73,7 +120,13 @@
         <div [innerHTML]="session.comment"></div>
 
         <br>
-        <div class="text-sm text-900">Attendees: {{ session.host }}</div>
+
+        <div class="text-sm text-900">
+          Attendees:</div>
+
+        <div class="text-sm text-900"
+             *ngFor="let participant of session.participants; index as i">
+          {{i+1}}) {{participant.username}}</div>
 
       </ng-template>
 
@@ -141,7 +194,7 @@
 
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveForm()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="addSession()"></button>
   </ng-template>
 </p-dialog>
 

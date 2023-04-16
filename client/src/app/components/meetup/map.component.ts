@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {catchError, map, Observable, of, Subscription} from "rxjs";
 import {GoogleMap, MapInfoWindow, MapMarker} from "@angular/google-maps";
 import {Address, GameSession} from "../../shared/models";
@@ -9,7 +9,7 @@ import {MeetupService} from "../../shared/meetup.service";
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
 
   @ViewChild(GoogleMap, { static: false })
   map!: google.maps.Map;
@@ -17,7 +17,6 @@ export class MapComponent implements OnInit {
   info!: MapInfoWindow;
 
   markers: GameSession[] = []
-  infoContent = ''
 
   markersSub$!: Subscription;
 
@@ -30,6 +29,10 @@ export class MapComponent implements OnInit {
 
   constructor(private meetupService: MeetupService) {
   }
+
+  ngOnDestroy(): void {
+        this.markersSub$.unsubscribe()
+    }
 
   ngOnInit(): void {
 
