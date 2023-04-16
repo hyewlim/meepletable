@@ -61,3 +61,12 @@ create table game_session (
 
 )
 
+create table gs_participants (
+
+    game_session_id varchar(36) not null,
+    user_id varchar(36) not null,
+
+    primary key (game_session_id, user_id)
+
+)
+

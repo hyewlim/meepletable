@@ -47,6 +47,8 @@ import {DataViewLayoutOptions, DataViewModule} from "primeng/dataview";
 import {CalendarModule} from "primeng/calendar";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {SelectButtonModule} from "primeng/selectbutton";
+import {EditorModule} from "primeng/editor";
+
 
 
 
@@ -102,8 +104,8 @@ import {SelectButtonModule} from "primeng/selectbutton";
     DataViewModule,
     CalendarModule,
     RadioButtonModule,
-    SelectButtonModule
-
+    SelectButtonModule,
+    EditorModule
   ],
   exports: [
     MapComponent

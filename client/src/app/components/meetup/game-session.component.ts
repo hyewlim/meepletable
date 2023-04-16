@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {GoogleMap} from "@angular/google-maps";
 import {FormBuilder, FormGroup} from "@angular/forms";
-import {Address, Boardgame, GameSession} from "../../shared/models";
+import {Address, Boardgame, GameSession, User} from "../../shared/models";
 import {RepositoryService} from "../../shared/repository.service";
 import {UserService} from "../user/user.service";
 import {MeetupService} from "../../shared/meetup.service";
@@ -22,6 +22,8 @@ export class GameSessionComponent implements OnInit {
 
   sessionDialog: boolean = false;
 
+  sessionDetailDialog: boolean = false;
+
   map!: GoogleMap;
 
   chosenAddress!: Address;
@@ -33,6 +35,8 @@ export class GameSessionComponent implements OnInit {
   sessionSub$!: Subscription;
 
   minDate!: Date;
+
+  userName!: string;
 
   @ViewChild('search')
   public searchElementRef!: ElementRef;
@@ -65,6 +69,7 @@ export class GameSessionComponent implements OnInit {
     this.meetupService.loadSessions().then(
       data => {
         this.sessions = data
+        console.log(this.sessions)
 
         //do not remove, map markers depends on this init
         this.meetupService.meetupsChanged.next(data)
@@ -73,6 +78,12 @@ export class GameSessionComponent implements OnInit {
 
     //calender min date
     this.minDate = new Date();
+
+    this.userService.userName$.subscribe(
+      value => {
+        this.userName = value;
+      }
+    )
 
 
   }
@@ -90,11 +101,19 @@ export class GameSessionComponent implements OnInit {
     this.sessionDialog = true;
   }
 
+  openSessionDetail(session: GameSession) {
+    this.session = {...session};
+    this.sessionDetailDialog = true;
+  }
+
   hideDialog() {
     this.sessionDialog = false;
+    this.sessionDetailDialog = false;
   }
 
   saveForm() {
+
+    let participants: User[] = [];
 
     let sessionInfo: GameSession = {
       id: "",
@@ -104,14 +123,13 @@ export class GameSessionComponent implements OnInit {
       date: this.form.value['date'],
       playerCount: this.form.value['playerCount'],
       comment: this.form.value['comment'],
-      icon: this.iconImage
-
+      icon: this.iconImage,
+      participants: participants
     }
 
     this.meetupService.addMeetup(sessionInfo).then( value => {
       this.messageService.add({severity: "success", summary: "Successful", detail: "Session Added", life:3000})
-      this.sessions.push(sessionInfo);
-      this.meetupService.meetupsChanged.next(this.sessions);
+      this.meetupService.meetups.push(sessionInfo)
       this.router.navigate(['meetup'])
       }
     );
@@ -124,7 +142,24 @@ export class GameSessionComponent implements OnInit {
   }
 
 
-  join() {
+  joinSession(session: GameSession) {
+    const existingUser = session.participants.find(
+      user => user.userId === this.userService.user.userId)
+
+    if (existingUser){
+      this.messageService.add({
+        severity: "error",
+        summary: "Unable to add",
+        detail: "You have already signed up for this session", life:3000})
+    } else {
+      session.participants.push(this.userService.user);
+      this.messageService.add({
+        severity: "success",
+        summary: "Successful",
+        detail: "You have signed up for this session", life:3000})
+    }
+
+    this.meetupService.addMeetup(session);
 
   }
 

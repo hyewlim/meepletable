@@ -1,6 +1,7 @@
 package com.project.meepletable.controllers;
 
 import com.project.meepletable.models.GameSession;
+import com.project.meepletable.models.User;
 import com.project.meepletable.repositories.GameSessionRepository;
 import com.project.meepletable.utils.JsonBuilder;
 import jakarta.json.Json;
@@ -24,9 +25,15 @@ public class GameSessionController {
     @PostMapping("/{userId}")
     public ResponseEntity<String> postSession(@RequestBody GameSession gameSession, @PathVariable String userId) {
 
-        sessionRepository.postSession(gameSession, userId);
+        boolean success = sessionRepository.postSession(gameSession, userId);
 
-        return null;
+        if (success) {
+            return ResponseEntity.status(HttpStatus.CREATED).body("Game session created successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to create game session");
+        }
+
+
     }
 
     @GetMapping()
@@ -41,6 +48,8 @@ public class GameSessionController {
         }
 
         JsonArray result = arrayBuilder.build();
+
+        System.out.println(result.toString());
 
         return ResponseEntity
                 .status(HttpStatus.OK)

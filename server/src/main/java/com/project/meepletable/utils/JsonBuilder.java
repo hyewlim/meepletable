@@ -2,10 +2,12 @@ package com.project.meepletable.utils;
 
 import com.project.meepletable.models.Boardgame;
 import com.project.meepletable.models.GameSession;
+import com.project.meepletable.models.User;
 import jakarta.json.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,6 +74,10 @@ public class JsonBuilder {
 
     public static JsonObject gsDetailToJson(GameSession gs) {
 
+        List<User> users = gs.getParticipants();
+
+        JsonArray jsonArray = participantstoJson(users);
+
         return Json.createObjectBuilder()
                 .add("id", gs.getId())
                 .add("title", gs.getTitle())
@@ -81,8 +87,22 @@ public class JsonBuilder {
                 .add("playerCount", gs.getPlayerCount())
                 .add("comment", gs.getComment())
                 .add("icon", gs.getIcon())
+                .add("participants", jsonArray)
                 .build();
 
+    }
+
+    public static JsonArray participantstoJson(List<User> users){
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+
+        for (User u:users) {
+            arrayBuilder.add(
+                    Json.createObjectBuilder()
+                            .add("userId", u.getId())
+                            .add("username", u.getUsername())
+                            .build());
+        }
+        return arrayBuilder.build();
     }
 
     public static JsonObject positionToJson(GameSession gs) {

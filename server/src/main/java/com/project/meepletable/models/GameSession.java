@@ -3,6 +3,7 @@ package com.project.meepletable.models;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.util.List;
 
 
 public class GameSession {
@@ -17,10 +18,39 @@ public class GameSession {
     private String comment;
     private String icon;
 
+    private List<User> participants;
+
     public GameSession() {
     }
 
-    public GameSession(String id, String title, String host, Address address, LocalDateTime date, int playerCount, String comment, String icon) {
+    public GameSession(String id,
+                       String title,
+                       String host,
+                       Address address,
+                       LocalDateTime date,
+                       int playerCount,
+                       String comment,
+                       String icon,
+                       List<User> participants) {
+        this.id = id;
+        this.title = title;
+        this.host = host;
+        this.address = address;
+        this.date = date;
+        this.playerCount = playerCount;
+        this.comment = comment;
+        this.icon = icon;
+        this.participants = participants;
+    }
+
+    public GameSession(String id,
+                       String title,
+                       String host,
+                       Address address,
+                       LocalDateTime date,
+                       int playerCount,
+                       String comment,
+                       String icon) {
         this.id = id;
         this.title = title;
         this.host = host;
@@ -95,6 +125,14 @@ public class GameSession {
         this.icon = icon;
     }
 
+    public List<User> getParticipants() {
+        return participants;
+    }
+
+    public void setParticipants(List<User> participants) {
+        this.participants = participants;
+    }
+
     @Override
     public String toString() {
         return "GameSession{" +
@@ -106,6 +144,7 @@ public class GameSession {
                 ", playerCount=" + playerCount +
                 ", comment='" + comment + '\'' +
                 ", icon='" + icon + '\'' +
+                ", participants=" + participants +
                 '}';
     }
 }

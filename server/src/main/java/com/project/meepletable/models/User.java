@@ -9,7 +9,7 @@ import java.util.List;
 
 public class User implements UserDetails {
 
-    private String id;
+    private String userId;
     private String username;
     private String email;
     private String password;
@@ -17,6 +17,11 @@ public class User implements UserDetails {
     private Role role;
 
     public User() {
+    }
+
+    public User(String username, String userId) {
+        this.username = username;
+        this.userId = userId;
     }
 
     public User(String username, String email, String password) {
@@ -32,16 +37,16 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "userId='" + userId + '\'' +
+                ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -69,11 +74,11 @@ public class User implements UserDetails {
     }
 
     public String getId() {
-        return id;
+        return userId;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.userId = id;
     }
 
     public String getUsername() {

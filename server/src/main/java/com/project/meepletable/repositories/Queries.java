@@ -27,12 +27,22 @@ public class Queries {
 
 
     public static String SQL_ADD_GAME_SESSION =
-            "insert into game_session(game_session_id, title, user_id, address_name, address_position, date, player_count, comment, icon) values (?,?,?,?,POINT(?, ?),?,?,?,?)";
+            "insert ignore into game_session(game_session_id, title, user_id, address_name, address_position, date, player_count, comment, icon) values (?,?,?,?,POINT(?, ?),?,?,?,?)";
 
     public static String SQL_GET_SESSIONS =
             """
             select game_session_id, title, users.username, address_name, ST_X(address_position) as X, ST_Y(address_position) as Y, date, player_count, comment, icon from game_session
             join users on game_session.user_id = users.user_id
+            """;
+
+    public static String SQL_INSERT_PARTICIPANTS =
+            "insert ignore into gs_participants(game_session_id, user_id) values (?, ?)";
+
+    public static String SQL_GET_PARTICIPANTS =
+            """
+            select users.user_id as userId, users.username from gs_participants
+            join users on gs_participants.user_id=users.user_id
+            where game_session_id=?
             """;
 
     public static String SQL_DELETE_SESSION =

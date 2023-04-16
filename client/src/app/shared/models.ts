@@ -33,6 +33,7 @@ export interface GameSession {
   playerCount: number
   comment: string
   icon: string;
+  participants: User[]
 
 }
 

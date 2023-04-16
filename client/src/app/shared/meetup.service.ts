@@ -17,9 +17,9 @@ export class MeetupService {
               private userService: UserService) { }
 
   addMeetup(session: GameSession) {
-    //
+
     // this.meetups.push(session)
-    // this.meetupsChanged.next(this.meetups);
+    this.meetupsChanged.next(this.meetups);
 
     return lastValueFrom(this.http.post("/api/v1/session" + "/" + this.userService.user.userId, session))
 
