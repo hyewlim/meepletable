@@ -69,7 +69,6 @@ export class GameSessionComponent implements OnInit, OnDestroy {
     this.sessionsSub$ = this.meetupService.meetupsChanged.subscribe(
       data => {
         this.sessions = data;
-
       }
     )
 

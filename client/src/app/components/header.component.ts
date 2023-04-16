@@ -1,8 +1,8 @@
-import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
-import {MenuItem} from "primeng/api";
+import {Component, OnInit} from '@angular/core';
 import {User} from "../shared/models";
 import {UserService} from "./user/user.service";
 import {Subscription} from "rxjs";
+import {JWTTokenService} from "./user/jwt-token.service";
 
 @Component({
   selector: 'app-header',
@@ -14,20 +14,44 @@ export class HeaderComponent implements OnInit {
   isLoggedIn!: boolean;
   user!: User;
 
+  userSub$!: Subscription;
+  isLogSub$!: Subscription;
 
-  constructor(public userService: UserService) {
+
+  constructor(public userService: UserService,
+              public jwtService: JWTTokenService) {
   }
 
   ngOnInit(): void {
 
-    this.userService.isLoggedIn$.subscribe(
+      if (!this.userService.user) {
+
+        const token = sessionStorage.getItem("jwt_token");
+        const user = JSON.parse(sessionStorage.getItem("user") || "[]");
+        this.userService.isLoggedIn$.next(!!token);
+
+        if (!!token && !!user){
+          this.jwtService.setToken(token);
+          this.userService.userName$.next(user.username);
+          this.userService.signedInUser$.next(user);
+          this.userService.user = user;
+          this.user = user;
+        }
+      }
+
+
+
+
+    this.isLogSub$ = this.userService.isLoggedIn$.subscribe(
       data => {
+        console.log("IS LOGGED IN", data)
         this.isLoggedIn = data;
       }
     )
 
-    this.userService.signedInUser$.subscribe(
+    this.userSub$ = this.userService.signedInUser$.subscribe(
       data => {
+        console.log("USER SUBBED", data)
         this.user = data;
       }
     )

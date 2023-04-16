@@ -39,6 +39,7 @@ export class UserService{
     return lastValueFrom(this.http.post<JWTResponse>('/api/v1/auth/authenticate', user)
       .pipe( tap((response: JWTResponse) => {
         sessionStorage.setItem("jwt_token", response.token)
+
         this.jwtService.setToken(response.token);
 
         const username = <string>this.jwtService.getUser()
@@ -61,6 +62,7 @@ export class UserService{
 
   logOutUser() {
     sessionStorage.removeItem("jwt_token");
+    sessionStorage.removeItem("user")
     this.isLoggedIn$.next(false);
 
   }
