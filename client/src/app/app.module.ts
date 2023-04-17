@@ -50,6 +50,7 @@ import {SelectButtonModule} from "primeng/selectbutton";
 import {EditorModule} from "primeng/editor";
 import { CalendarComponent } from './components/calendar/calendar.component';
 import {FullCalendarModule} from "@fullcalendar/angular";
+import { ChatComponent } from './components/chat/chat.component';
 
 
 
@@ -71,6 +72,7 @@ import {FullCalendarModule} from "@fullcalendar/angular";
     ForgetPasswordComponent,
     ResetPasswordComponent,
     CalendarComponent,
+    ChatComponent,
 
   ],
   imports: [

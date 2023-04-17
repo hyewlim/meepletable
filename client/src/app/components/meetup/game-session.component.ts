@@ -192,4 +192,8 @@ export class GameSessionComponent implements OnInit, OnDestroy {
 
     this.sessionsSub$.unsubscribe();
   }
+
+  toChat() {
+    this.router.navigate(['chat'])
+  }
 }

@@ -44,14 +44,12 @@ export class HeaderComponent implements OnInit {
 
     this.isLogSub$ = this.userService.isLoggedIn$.subscribe(
       data => {
-        console.log("IS LOGGED IN", data)
         this.isLoggedIn = data;
       }
     )
 
     this.userSub$ = this.userService.signedInUser$.subscribe(
       data => {
-        console.log("USER SUBBED", data)
         this.user = data;
       }
     )
