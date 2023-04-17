@@ -149,15 +149,21 @@ export class GameSessionComponent implements OnInit, OnDestroy {
         severity: "error",
         summary: "Unable to add",
         detail: "You have already signed up for this session", life:3000})
+    } else if (session.participants.length === session.playerCount) {
+      this.messageService.add({
+        severity: "error",
+        summary: "Unable to add",
+        detail: "The maximum number of players have been reached", life:3000})
     } else {
       session.participants.push(this.userService.user);
+      this.meetupService.addMeetup(session);
       this.messageService.add({
         severity: "success",
         summary: "Successful",
         detail: "You have signed up for this session", life:3000})
     }
 
-    this.meetupService.addMeetup(session);
+
 
   }
 

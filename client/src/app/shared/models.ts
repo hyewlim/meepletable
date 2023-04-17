@@ -44,4 +44,9 @@ export interface JWTResponse {
 
 }
 
+export interface CalEvent {
+  title: string
+  date: Date
+}
+
 

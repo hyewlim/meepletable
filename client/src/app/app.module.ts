@@ -48,6 +48,8 @@ import {CalendarModule} from "primeng/calendar";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {EditorModule} from "primeng/editor";
+import { CalendarComponent } from './components/calendar/calendar.component';
+import {FullCalendarModule} from "@fullcalendar/angular";
 
 
 
@@ -68,6 +70,7 @@ import {EditorModule} from "primeng/editor";
     GooglemapsAutocompleteComponent,
     ForgetPasswordComponent,
     ResetPasswordComponent,
+    CalendarComponent,
 
   ],
   imports: [
@@ -105,7 +108,8 @@ import {EditorModule} from "primeng/editor";
     CalendarModule,
     RadioButtonModule,
     SelectButtonModule,
-    EditorModule
+    EditorModule,
+    FullCalendarModule
   ],
   exports: [
     MapComponent

@@ -9,6 +9,7 @@ import {SigninComponent} from "./components/user/signin.component";
 import {MeetupComponent} from "./components/meetup/meetup.component";
 import {ForgetPasswordComponent} from "./components/user/forget-password.component";
 import {ResetPasswordComponent} from "./components/user/reset-password.component";
+import {CalendarComponent} from "./components/calendar/calendar.component";
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
   { path: 'collection', component: CollectionComponent},
   { path: 'map', component: MapComponent},
   { path: 'meetup', component: MeetupComponent},
+  { path: 'calendar', component: CalendarComponent},
   { path: 'not-found', component: PageNotFoundComponent},
   { path: '**', redirectTo: '/not-found'},
 ];

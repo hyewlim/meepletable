@@ -20,6 +20,11 @@
       icon="pi pi-map-marker" styleClass="p-button-warning"
       routerLink="meetup"></p-button>
     <p-button
+      *ngIf="isLoggedIn"
+      class="button-space" label="Calendar"
+      icon="pi pi-calendar" styleClass="p-button-warning"
+      routerLink="calendar"></p-button>
+    <p-button
       *ngIf="!isLoggedIn"
       class="button-space" label="Login"
       icon="pi pi-sign-in" styleClass="p-button-warning"
