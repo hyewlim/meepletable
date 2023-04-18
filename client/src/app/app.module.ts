@@ -111,7 +111,8 @@ import { ChatComponent } from './components/chat/chat.component';
     RadioButtonModule,
     SelectButtonModule,
     EditorModule,
-    FullCalendarModule
+    FullCalendarModule,
+
   ],
   exports: [
     MapComponent
