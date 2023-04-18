@@ -1,10 +1,21 @@
-<p>chat works!</p>
 
-<div *ngFor="let string of greetings"> <div class="container">
-  <p>{{string}}</p>
+<div *ngFor="let message of messageLog"> <div class="container">
+  <p>{{message.time | date: 'short' }} : {{message.sender}} : {{message.content}}</p>
 </div></div><form #loginForm=ngForm>
   <div>
     <br>
-    <textarea autocomplete="off" placeholder="Type Your Message..." name="newmessage" [(ngModel)]="newmessage" required></textarea>  <button class="btn btn-primary" (click)="sendMessage()" [disabled]="!loginForm.valid">Send</button>
+    <textarea
+      autocomplete="off"
+      placeholder="Type Your Message..."
+      name="newmessage"
+      [(ngModel)]="newMessage"
+      required
+    ></textarea>
+
+    <button
+      class="btn btn-primary"
+      (click)="sendMessage()"
+      [disabled]="!loginForm.valid"
+    >Send</button>
   </div>
 </form>

@@ -49,4 +49,17 @@ export interface CalEvent {
   date: Date
 }
 
+export interface ChatMessage {
+  sender: string
+  content: string
+  sessionId: string
+  time: number
+  type: MessageType;
+}
+
+enum MessageType {
+  CHAT,
+  LEAVE,
+  JOIN,
+}
 

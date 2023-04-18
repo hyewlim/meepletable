@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {GoogleMap} from "@angular/google-maps";
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Address, Boardgame, GameSession, User} from "../../shared/models";
@@ -23,6 +23,8 @@ export class GameSessionComponent implements OnInit, OnDestroy {
 
   sessionDetailDialog: boolean = false;
 
+  chatRoomDialog: boolean = false;
+
   map!: GoogleMap;
 
   chosenAddress!: Address;
@@ -36,6 +38,9 @@ export class GameSessionComponent implements OnInit, OnDestroy {
   minDate!: Date;
 
   userName!: string;
+
+  @Output()
+  idOutput!: string;
 
   @ViewChild('search')
   public searchElementRef!: ElementRef;
@@ -195,5 +200,10 @@ export class GameSessionComponent implements OnInit, OnDestroy {
 
   toChat() {
     this.router.navigate(['chat'])
+  }
+
+  openChatRoom(sessionId: string) {
+    this.chatRoomDialog = true;
+    this.idOutput = sessionId;
   }
 }

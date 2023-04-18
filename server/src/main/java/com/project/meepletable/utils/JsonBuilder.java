@@ -1,6 +1,7 @@
 package com.project.meepletable.utils;
 
 import com.project.meepletable.models.Boardgame;
+import com.project.meepletable.models.ChatMessage;
 import com.project.meepletable.models.GameSession;
 import com.project.meepletable.models.User;
 import jakarta.json.*;
@@ -137,4 +138,14 @@ public class JsonBuilder {
                     .build();
     }
 
+    public static JsonObject msgDetailToJson(ChatMessage msg) {
+
+        return Json.createObjectBuilder()
+                .add("sessionId", msg.getSessionId())
+                .add("content", msg.getContent())
+                .add("sender", msg.getSender())
+                .add("type", msg.getType().ordinal())
+                .add("time", msg.getTime().getTime())
+                .build();
+    }
 }

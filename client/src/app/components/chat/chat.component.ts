@@ -1,7 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { io } from 'socket.io-client';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
+import {UserService} from "../user/user.service";
+import {Subscription} from "rxjs";
+import {ChatMessage} from "../../shared/models";
+import {ChatRepositoryService} from "./chat-repository.service";
 
 @Component({
   selector: 'app-chat',
@@ -9,61 +13,88 @@ import * as SockJS from 'sockjs-client';
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent {
-  greetings: string[] = [];
+  messageLog: ChatMessage[] = [];
   disabled = true;
-  newmessage!: string;
+  newMessage!: string;
   private stompClient = null;
+  username!: string;
+  usernameSub$ !: Subscription;
 
-  constructor(){}
+  @Input()
+  sessionId!: string;
+
+  constructor(private userService: UserService,
+              private chatService: ChatRepositoryService){}
 
   ngOnInit() {
+
+    this.usernameSub$ = this.userService.userName$.subscribe(
+      value => {
+        this.username = value;
+      }
+    )
+
+    this.chatService.loadChatLog(this.sessionId).then(
+      data => {
+        this.messageLog = data;
+        console.log(this.messageLog);
+
+      }
+    )
+
     this.connect();
+
   }
 
   setConnected(connected: boolean) {
     this.disabled = !connected;
 
     if (connected) {
-      this.greetings = [];
+      this.messageLog = [];
     }
   }
 
   connect() {
-    const socket = new SockJS('/testchat');
+    const socket = new SockJS('/meeplechat');
     // @ts-ignore
     this.stompClient = Stomp.over(socket);
-
-    const _this = this;
-
     // @ts-ignore
-    this.stompClient.connect({}, function (frame) {
-      console.log('Connected: ' + frame);
+    this.stompClient.connect({}, this.onConnected());
+  }
 
-      // @ts-ignore
-      _this.stompClient.subscribe('/start/initial', function (hello) {
-        console.log(JSON.parse(hello.body));
+  onConnected() {
+    //connect to start topic
+    // @ts-ignore
+    this.stompClient.subscribe('/start/topic', onMessageReceived);
+    //tell your username to server
+    // @ts-ignore
+    this.stompClient.send("/current/chat.register", {}, JSON.stringify({sender: this.username, type: 'JOIN'}))
 
-        _this.showMessage(JSON.parse(hello.body));
-      });
-    });
   }
 
   sendMessage() {
 
-    // @ts-ignore
-    this.stompClient.send(
-      '/current/resume',
-      {},
-      JSON.stringify(this.newmessage)
-    );
-    this.newmessage = "";
+    var messageContent = this.newMessage.trim();
 
+    if (messageContent && this.stompClient){
+      var chatMessage: ChatMessage = {
+        sender: this.username,
+        content: messageContent,
+        sessionId: this.sessionId,
+        time: Date.now(),
+        type: 0
+      };
+
+      this.messageLog.push(chatMessage);
+
+      // @ts-ignore
+      this.stompClient.send("/current/chat.send", {}, JSON.stringify(chatMessage));
+
+      console.log("CHAT LOG", this.messageLog)
+      this.newMessage = '';
+
+    }
   }
 
-  showMessage(message: string) {
-
-    this.greetings.push(message);
-
-  }
 
 }

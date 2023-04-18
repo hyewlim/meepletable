@@ -19,7 +19,7 @@ public class WebSocketChatConfiguration implements WebSocketMessageBrokerConfigu
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry
-                .addEndpoint("/testchat")
+                .addEndpoint("/meeplechat")
                 .withSockJS();
     }
 }
