@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "./user.service";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-forget-password',
@@ -13,10 +12,8 @@ export class ForgetPasswordComponent {
 
 
   constructor(private fb: FormBuilder,
-              private userService: UserService,
-              private router: Router,
-  ) {
-  }
+              private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.resetForm = this.createForm()
@@ -26,9 +23,7 @@ export class ForgetPasswordComponent {
     return this.fb.group({
       email: this.fb.control<string>('', [Validators.required, Validators.email])
     })
-
   }
-
 
   processForm() {
       this.userService.resetPassword(this.resetForm.value['email'])
@@ -38,6 +33,5 @@ export class ForgetPasswordComponent {
             alert("If your email exists, you will receive instructions to reset your password.")
           }
         )
-
   }
 }

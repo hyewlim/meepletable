@@ -3,6 +3,7 @@ import {User} from "../shared/models";
 import {UserService} from "./user/user.service";
 import {Subscription} from "rxjs";
 import {JWTTokenService} from "./user/jwt-token.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -19,7 +20,8 @@ export class HeaderComponent implements OnInit {
 
 
   constructor(public userService: UserService,
-              public jwtService: JWTTokenService) {
+              public jwtService: JWTTokenService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -58,5 +60,9 @@ export class HeaderComponent implements OnInit {
 
   logOut() {
     this.userService.logOutUser();
+  }
+
+  toCollection() {
+    this.router.navigate(['/collection', this.user.userId])
   }
 }

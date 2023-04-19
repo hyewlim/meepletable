@@ -1,37 +1,42 @@
 <div class="card">
   <p-toolbar styleClass="mb-4 gap-2">
     <ng-template pTemplate="left">
-      <app-autocomplete (newBgEvent)="addBoardgame($event)"></app-autocomplete>
+        <button type="button" pButton label="Add a Game"></button>
+        <app-autocomplete (newBgEvent)="addBoardgame($event)"></app-autocomplete>
     </ng-template>
 
     <ng-template pTemplate="right">
       <p-button class="button-space"
-                label="Import"
+                label="Save Collection"
                 styleClass="p-button-outlined p-button-secondary"
                 icon="pi pi-download"
-                (click)="importCollection()">
-      </p-button>
-      <p-button class="button-space"
-                label="Export"
-                styleClass="p-button-outlined p-button-secondary"
-                icon="pi pi-upload"
                 (click)="saveCollection()">
       </p-button>
-
-
     </ng-template>
   </p-toolbar>
 
-  <p-table #dt [value]="boardgames" [rows]="10" [paginator]="true" [globalFilterFields]="['title']" [tableStyle]="{'min-width': '75rem'}"
-           [(selection)]="boardgamesSelected" [rowHover]="true" dataKey="id"
-           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+  <p-table #dt
+           [value]="boardgames"
+           [rows]="10"
+           [paginator]="true"
+           [globalFilterFields]="['name', 'yearPublished']"
+           [tableStyle]="{'min-width': '75rem'}"
+           [(selection)]="boardgamesSelected"
+           [rowHover]="true"
+           dataKey="id"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+           [showCurrentPageReport]="true"
+  >
 
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
         <h5 class="m-0">Manage Collection</h5>
         <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($event.target, 'contains')" placeholder="Search..." />
+                    <input pInputText
+                           type="text"
+                           (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                           placeholder="Search..." />
         </span>
       </div>
     </ng-template>
@@ -42,11 +47,11 @@
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
         <th>Image</th>
-        <th pSortableColumn="title" style="min-width:15rem">Title <p-sortIcon field="title"></p-sortIcon></th>
+        <th pSortableColumn="name" style="min-width:15rem">Title <p-sortIcon field=""></p-sortIcon></th>
 
-        <th pSortableColumn="year">Year <p-sortIcon field="year"></p-sortIcon></th>
+        <th pSortableColumn="yearPublished">Year <p-sortIcon field=""></p-sortIcon></th>
         <th pSortableColumn="playingTime" style="min-width:10rem">Playing Time <p-sortIcon field="playingTime"></p-sortIcon></th>
-        <th pSortableColumn="comment">Comment <p-sortIcon field="comment"></p-sortIcon></th>
+        <th>Comment</th>
 
         <th></th>
       </tr>

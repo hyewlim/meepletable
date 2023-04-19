@@ -42,9 +42,13 @@
 
               <p-button
                 icon="pi pi-comments"
-                styleClass="p-button-outlined p-button-sm"
+                styleClass="p-button-outlined p-button-sm "
                 (click)="openChatRoom(session.id)"
-              ></p-button>
+              >
+
+              <p-badge value="20" severity="success"></p-badge>
+
+              </p-button>
 
 
               <div *ngIf="userName === session.host">

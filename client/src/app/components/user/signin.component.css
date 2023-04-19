@@ -1,7 +1,6 @@
 .classCenter{
-  margin: auto;
-  width: 30%;
-
+  display: flex;
+  justify-content: center;
 }
 
 .text-space {

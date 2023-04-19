@@ -13,14 +13,14 @@ import {CalendarComponent} from "./components/calendar/calendar.component";
 import {ChatComponent} from "./components/chat/chat.component";
 
 const appRoutes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: SigninComponent },
   { path: 'home', component: HomeComponent },
   { path: 'signup', component: SignupComponent},
   { path: 'signin', component: SigninComponent},
   { path: 'forget', component: ForgetPasswordComponent, children: [
       {path: ':email', component: ResetPasswordComponent}
     ]},
-  { path: 'collection', component: CollectionComponent},
+  { path: 'collection/:userId', component: CollectionComponent},
   { path: 'map', component: MapComponent},
   { path: 'chat', component: ChatComponent},
   { path: 'meetup', component: MeetupComponent},

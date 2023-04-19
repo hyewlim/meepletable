@@ -45,9 +45,8 @@ export class SigninComponent implements OnInit{
 
     this.userService.authUser(this.signinForm.value as User)
       .then(r => {
-        //todo navigation
         if (this.userService.isLoggedIn$){
-          this.router.navigate(['collection'])
+          this.router.navigate(['meetup'])
         } else {
           this.router.navigate(['signin'])
         }

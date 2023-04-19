@@ -1,7 +1,6 @@
 .classCenter{
-  margin: auto;
-  width: 25%;
-
+  display: flex;
+  justify-content: center;
 }
 
 input.ng-invalid.ng-touched {

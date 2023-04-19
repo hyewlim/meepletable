@@ -13,7 +13,7 @@
       *ngIf="isLoggedIn"
       class="button-space" label="Collection"
       icon="pi pi-box" styleClass="p-button-warning"
-      routerLink="collection"></p-button>
+      (click)="toCollection()"></p-button>
     <p-button
       *ngIf="isLoggedIn"
       class="button-space" label="Meetup"

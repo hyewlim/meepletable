@@ -12,11 +12,8 @@ export class ResetPasswordComponent {
   resetForm!: FormGroup;
 
 
-  constructor(private fb: FormBuilder,
-              private userService: UserService,
-              private router: Router,
-  ) {
-  }
+  constructor(private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.resetForm = this.createForm()
@@ -26,7 +23,6 @@ export class ResetPasswordComponent {
     return this.fb.group({
       password: this.fb.control<string>('', [Validators.required, Validators.minLength(8)])
     })
-
   }
 
   processForm() {
