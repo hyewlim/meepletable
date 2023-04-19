@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { io } from 'socket.io-client';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
@@ -12,7 +12,7 @@ import {ChatRepositoryService} from "./chat-repository.service";
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent {
+export class ChatComponent implements OnDestroy{
   messageLog: ChatMessage[] = [];
   disabled = true;
   newMessage!: string;
@@ -94,6 +94,12 @@ export class ChatComponent {
       this.newMessage = '';
 
     }
+  }
+
+  ngOnDestroy(): void {
+
+    // @ts-ignore
+    this.stompClient.unsubscribe
   }
 
 

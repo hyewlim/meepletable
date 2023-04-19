@@ -17,9 +17,11 @@ import { AutocompleteComponent } from './components/game-collection/autocomplete
 import { MeetupComponent } from './components/meetup/meetup.component';
 import { GameSessionComponent } from './components/meetup/game-session.component';
 import { GooglemapsAutocompleteComponent } from './components/meetup/googlemaps-autocomplete.component';
-import {AuthInterceptor} from "./auth.interceptor";
+import { AuthInterceptor } from "./auth.interceptor";
 import { ForgetPasswordComponent } from './components/user/forget-password.component';
 import { ResetPasswordComponent } from './components/user/reset-password.component';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 import {ButtonModule} from 'primeng/button';
 import {AutoCompleteModule} from 'primeng/autocomplete';
@@ -43,14 +45,13 @@ import {ToastModule} from "primeng/toast";
 import {MessagesModule} from "primeng/messages";
 import {MessageModule} from "primeng/message";
 import {InputTextareaModule} from "primeng/inputtextarea";
-import {DataViewLayoutOptions, DataViewModule} from "primeng/dataview";
+import {DataViewModule} from "primeng/dataview";
 import {CalendarModule} from "primeng/calendar";
 import {RadioButtonModule} from "primeng/radiobutton";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {EditorModule} from "primeng/editor";
-import { CalendarComponent } from './components/calendar/calendar.component';
 import {FullCalendarModule} from "@fullcalendar/angular";
-import { ChatComponent } from './components/chat/chat.component';
+import {ScrollerModule} from "primeng/scroller";
 
 
 
@@ -112,6 +113,7 @@ import { ChatComponent } from './components/chat/chat.component';
     SelectButtonModule,
     EditorModule,
     FullCalendarModule,
+    ScrollerModule
 
   ],
   exports: [

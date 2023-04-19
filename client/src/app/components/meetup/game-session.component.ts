@@ -85,8 +85,6 @@ export class GameSessionComponent implements OnInit, OnDestroy {
         this.userName = value;
       }
     )
-
-
   }
 
   private createSessionForm(): FormGroup {

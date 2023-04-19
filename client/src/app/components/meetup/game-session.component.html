@@ -11,56 +11,6 @@
             (click)="toChat()"
   ></p-button>
 
-<!--  <div class="card" >-->
-<!--    <p-dataView #dv [value]="sessions" >-->
-<!--      <ng-template let-session pTemplate="listItem" >-->
-<!--        <div class="col-12" >-->
-<!--          <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">-->
-<!--            <div class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4">-->
-<!--              <div class="flex flex-column col-2">-->
-<!--                <div class="text-sm text-600">{{ session.date | date }}</div>-->
-<!--                <div class="text-sm text-600">{{ session.date | date:'shortTime' }}</div>-->
-
-<!--              </div>-->
-<!--              <div class="flex flex-column col-5">-->
-<!--                <div class="text-base font-bold text-900">{{ session.title }}</div>-->
-<!--                <div class="text-sm text-900">{{ session.host }}</div>-->
-<!--                <div class="text-sm text-900"><span class="pi pi-map-marker"></span>{{ session.address.name }}</div>-->
-<!--              </div>-->
-
-<!--              <div class="flex flex-column col-3">-->
-<!--                <span class="text-sm ">{{ session.participants.length }}</span>-->
-
-<!--              </div>-->
-
-<!--              <div class="flex flex-column col-1 ">-->
-<!--                <p-button-->
-<!--                  icon="pi pi-list"-->
-<!--                  styleClass="p-button-outlined p-button-sm"-->
-<!--                  (click)="openSessionDetail(session)"-->
-<!--                ></p-button>-->
-
-
-<!--                <div *ngIf="userName === session.host">-->
-<!--                  <p-button-->
-<!--                    icon="pi pi pi-trash"-->
-<!--                    styleClass="p-button-outlined p-button-sm"-->
-<!--                    (click)="removeSession(session)"-->
-<!--                  ></p-button>-->
-<!--                </div>-->
-
-
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-<!--      </ng-template>-->
-<!--    </p-dataView>-->
-
-<!--  </div>-->
-
-
 <div class="card" >
   <p-dataView #dv [value]="sessions" >
     <ng-template let-session pTemplate="listItem" >
@@ -225,11 +175,9 @@
       <app-chat [sessionId]="idOutput"></app-chat>
       </ng-template>
 
-      <ng-template pTemplate="footer">
-
-        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-
-      </ng-template>
+<!--      <ng-template pTemplate="footer">-->
+<!--        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>-->
+<!--      </ng-template>-->
     </p-dialog>
   </div>
 
