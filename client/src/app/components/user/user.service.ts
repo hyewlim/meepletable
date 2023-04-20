@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpParams} from "@angular/common/http";
-import {JWTResponse, User} from "../../shared/models";
+import {ChangePassword, JWTResponse, User} from "../../shared/models";
 import {BehaviorSubject, catchError, lastValueFrom, Subject, tap, throwError} from "rxjs";
 import {JWTTokenService} from "./jwt-token.service";
 
@@ -87,5 +87,12 @@ export class UserService{
   }
 
 
+  changePassword(data: ChangePassword) {
 
+    const params = new HttpParams()
+      .append('newPassword', data.newPassword)
+
+    return lastValueFrom(this.http.post("/api/v1/auth/changepassword", data, {params: params}))
+
+  }
 }

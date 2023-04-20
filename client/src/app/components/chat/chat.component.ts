@@ -20,6 +20,10 @@ export class ChatComponent implements OnDestroy{
   username!: string;
   usernameSub$ !: Subscription;
 
+  jwtHeader = {
+    Authorization: 'Bearer ' + sessionStorage.getItem("jwt_token")
+  }
+
   @Input()
   sessionId!: string;
 
@@ -56,19 +60,21 @@ export class ChatComponent implements OnDestroy{
 
   connect() {
     const socket = new SockJS('/meeplechat');
+
     // @ts-ignore
     this.stompClient = Stomp.over(socket);
+
     // @ts-ignore
-    this.stompClient.connect({}, this.onConnected());
+    this.stompClient.connect(this.jwtHeader, this.onConnected());
   }
 
   onConnected() {
     //connect to start topic
     // @ts-ignore
-    this.stompClient.subscribe('/start/topic', onMessageReceived);
+    this.stompClient.subscribe('/start/topic');
     //tell your username to server
     // @ts-ignore
-    this.stompClient.send("/current/chat.register", {}, JSON.stringify({sender: this.username, type: 'JOIN'}))
+    this.stompClient.send("/current/chat.register", this.jwtHeader, JSON.stringify({sender: this.username, type: 'JOIN'}))
 
   }
 

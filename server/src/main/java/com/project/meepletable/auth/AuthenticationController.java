@@ -30,7 +30,7 @@ public class AuthenticationController {
                     .body(JsonBuilder.SQLError(resp.get()).toString());
         }
 
-        return ResponseEntity.ok(resp.get().toString());
+        return ResponseEntity.ok(resp.get());
 
     }
 
@@ -60,11 +60,19 @@ public class AuthenticationController {
     }
 
     @PostMapping("/changepassword")
-    public ResponseEntity<String> changePassword(@RequestBody String body) {
+    public ResponseEntity<String> changePassword(@RequestBody AuthenticationRequest request, @RequestParam String newPassword) {
 
-        //todo
+        boolean result = service.changePassword(request, newPassword);
 
-        return null;
+        if (result){
+
+            return ResponseEntity.ok(String.valueOf(result));
+
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(String.valueOf(result));
     }
 
 }

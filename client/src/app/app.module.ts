@@ -54,6 +54,7 @@ import {FullCalendarModule} from "@fullcalendar/angular";
 import {ScrollerModule} from "primeng/scroller";
 import {PaginatorModule} from "primeng/paginator";
 import {BadgeModule} from "primeng/badge";
+import {MenuModule} from "primeng/menu";
 
 
 
@@ -117,7 +118,8 @@ import {BadgeModule} from "primeng/badge";
         FullCalendarModule,
         ScrollerModule,
         PaginatorModule,
-        BadgeModule
+        BadgeModule,
+        MenuModule
 
     ],
   exports: [

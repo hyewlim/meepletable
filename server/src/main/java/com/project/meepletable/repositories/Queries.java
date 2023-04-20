@@ -6,8 +6,11 @@ public class Queries {
             "insert into users(user_id, username, email, password, role) values(UUID(),?,?,?,?)";
 
     public static String SQL_AUTH_USER =
-            "select user_id from users where username=? and password=sha1(?)";
+            "select count(*) > 0 as auth_state from users where email=? and password=?";
 //            "select count(*) > 0 as auth_state from users where username=? and password=sha1(?)";
+
+    public static String SQL_UPDATE_PASSWORD =
+            "update users set password=? where email=?";
 
     public static String SQL_INSERT_COLLECTION =
             "insert ignore into boardgames values (?, ?, ?, ?, ?, ?)";

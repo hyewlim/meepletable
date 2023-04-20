@@ -1,5 +1,6 @@
 package com.project.meepletable.repositories;
 
+import com.project.meepletable.auth.AuthenticationRequest;
 import com.project.meepletable.models.Role;
 import com.project.meepletable.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,15 +42,21 @@ public class UserRepository {
 
     }
 
-    public int authUser(User user){
+    public boolean authUser(AuthenticationRequest request){
 
-        final SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_AUTH_USER, user.getUsername(), user.getPassword());
+        System.out.println("AUTHUSER EMAIL>>" + request.getEmail());
+        System.out.println("AUTHUSER PASSWORD>>" + request.getPassword());
+
+        final SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_AUTH_USER, request.getEmail(), request.getPassword());
+
+        boolean result = false;
 
         while (rs.next()) {
-            return rs.getInt("user_id");
+            System.out.println("RESULT FROM USER SEARRCH >>>" + result);
+            result = rs.getBoolean("auth_state");
         }
 
-        return 0;
+        return result;
     }
 
     public Optional<User> findByEmail(String email) {
@@ -87,4 +94,8 @@ public class UserRepository {
 
     }
 
+    public boolean updatePassword(AuthenticationRequest request, String newPassword) {
+
+        return jdbcTemplate.update(SQL_UPDATE_PASSWORD, newPassword, request.getEmail()) > 0;
+    }
 }

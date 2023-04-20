@@ -63,3 +63,9 @@ enum MessageType {
   JOIN,
 }
 
+export interface ChangePassword {
+  email: string
+  newPassword: string
+  password: string
+}
+

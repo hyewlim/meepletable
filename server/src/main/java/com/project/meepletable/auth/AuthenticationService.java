@@ -55,7 +55,7 @@ public class AuthenticationService {
         AuthenticationResponse response = new AuthenticationResponse();
 
         try {
-            Authentication auth = authenticationManager.authenticate(
+            authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             request.getEmail(),
                             request.getPassword()
@@ -80,7 +80,7 @@ public class AuthenticationService {
     public boolean resetPassword(String email) {
 
         Optional<User> user = repository.findByEmail(email);
-        System.out.println(user.get().toString());
+
 
         String htmlMsg = "<p><b>Your Login details for Meeple Table</b><br><b>Email: </b> "
                 + email
@@ -101,5 +101,24 @@ public class AuthenticationService {
         logger.error(email + " not found");
         return false;
 
+    }
+
+    public boolean changePassword(AuthenticationRequest request, String newPassword) {
+
+        try {
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getEmail(),
+                            request.getPassword()
+                    )
+            );
+
+            if (auth.isAuthenticated()) {
+            return repository.updatePassword(request, passwordEncoder.encode(newPassword));
+            }
+        } catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+        return false;
     }
 }

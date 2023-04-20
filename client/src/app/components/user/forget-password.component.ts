@@ -1,18 +1,21 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserService} from "./user.service";
+import {MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-forget-password',
   templateUrl: './forget-password.component.html',
-  styleUrls: ['./forget-password.component.css']
+  styleUrls: ['./forget-password.component.css'],
+  providers: [MessageService]
 })
 export class ForgetPasswordComponent {
   resetForm!: FormGroup;
 
 
   constructor(private fb: FormBuilder,
-              private userService: UserService
+              private userService: UserService,
+              private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -26,12 +29,13 @@ export class ForgetPasswordComponent {
   }
 
   processForm() {
-      this.userService.resetPassword(this.resetForm.value['email'])
-        .then(
-          v=> {
-            console.log(v)
-            alert("If your email exists, you will receive instructions to reset your password.")
-          }
-        )
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'If your email exists, you will receive instructions to reset your password.'})
+
+    this.userService.resetPassword(this.resetForm.value['email'])
+
   }
 }

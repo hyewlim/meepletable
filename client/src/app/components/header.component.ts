@@ -4,11 +4,13 @@ import {UserService} from "./user/user.service";
 import {Subscription} from "rxjs";
 import {JWTTokenService} from "./user/jwt-token.service";
 import {Router} from "@angular/router";
+import {MenuItem, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  providers: [MessageService]
 })
 export class HeaderComponent implements OnInit {
 
@@ -17,6 +19,7 @@ export class HeaderComponent implements OnInit {
 
   userSub$!: Subscription;
   isLogSub$!: Subscription;
+  items!: MenuItem[];
 
 
   constructor(public userService: UserService,
@@ -41,9 +44,6 @@ export class HeaderComponent implements OnInit {
         }
       }
 
-
-
-
     this.isLogSub$ = this.userService.isLoggedIn$.subscribe(
       data => {
         this.isLoggedIn = data;
@@ -55,6 +55,27 @@ export class HeaderComponent implements OnInit {
         this.user = data;
       }
     )
+
+    this.items = [
+      {
+        label: 'User Options',
+        items: [
+          {
+            label: 'Change Password',
+            icon: 'pi pi-user-edit',
+            routerLink: '/changepw'
+          },
+          {
+            label: 'Sign Out',
+            icon: 'pi pi-sign-out',
+            routerLink: '/signin',
+            command: event => {
+              this.logOut()
+            }
+          }
+        ]
+      }
+    ];
 
   }
 

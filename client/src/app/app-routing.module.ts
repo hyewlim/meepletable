@@ -17,6 +17,7 @@ const appRoutes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'signup', component: SignupComponent},
   { path: 'signin', component: SigninComponent},
+  { path: 'changepw', component: ResetPasswordComponent},
   { path: 'forget', component: ForgetPasswordComponent, children: [
       {path: ':email', component: ResetPasswordComponent}
     ]},

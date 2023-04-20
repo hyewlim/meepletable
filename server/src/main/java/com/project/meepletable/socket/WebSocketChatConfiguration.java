@@ -1,6 +1,8 @@
 package com.project.meepletable.socket;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -21,5 +23,14 @@ public class WebSocketChatConfiguration implements WebSocketMessageBrokerConfigu
         registry
                 .addEndpoint("/meeplechat")
                 .withSockJS();
+    }
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(chatSessionInterceptor());
+    }
+    @Bean
+    public ChatSessionInterceptor chatSessionInterceptor() {
+        return new ChatSessionInterceptor();
     }
 }
