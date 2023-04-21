@@ -18,11 +18,7 @@ export class AutocompleteComponent {
   @Output()
   newBgEvent = new EventEmitter<Boardgame>;
 
-  bgSelectionSub$!: Subscription;
-
-  constructor(private bglookupService: BglookupService,
-              private repositoryService: RepositoryService) {
-  }
+  constructor(private bglookupService: BglookupService,) {}
 
   search(event: any) {
     this.bglookupService.getSearchResults(event.query)

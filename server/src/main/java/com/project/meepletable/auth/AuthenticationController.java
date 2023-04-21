@@ -1,10 +1,9 @@
 package com.project.meepletable.auth;
 
-import com.project.meepletable.models.User;
 import com.project.meepletable.utils.JsonBuilder;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,23 +50,40 @@ public class AuthenticationController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/reset")
-    public ResponseEntity<String> resetPassword(@RequestParam String email){
+    @GetMapping("/resetPWEmail")
+    public ResponseEntity<String> resetPasswordEmail(@RequestParam String email) throws MessagingException {
 
-        service.resetPassword(email);
+        service.resetPasswordEmail(email);
         return ResponseEntity.ok(JsonBuilder.emailVerification(email).toString());
 
     }
 
+    @GetMapping("/resetPW")
+    public ResponseEntity<String> resetPassword(
+            @RequestParam String token,
+            @RequestParam String password) {
+
+        boolean result = service.resetPassword(token, password);
+
+        if (result){
+            return ResponseEntity.ok(String.valueOf(result));
+        }
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(String.valueOf(result));
+
+    }
+
     @PostMapping("/changepassword")
-    public ResponseEntity<String> changePassword(@RequestBody AuthenticationRequest request, @RequestParam String newPassword) {
+    public ResponseEntity<String> changePassword(
+            @RequestBody AuthenticationRequest request,
+            @RequestParam String newPassword) {
 
         boolean result = service.changePassword(request, newPassword);
 
         if (result){
-
             return ResponseEntity.ok(String.valueOf(result));
-
         }
 
         return ResponseEntity

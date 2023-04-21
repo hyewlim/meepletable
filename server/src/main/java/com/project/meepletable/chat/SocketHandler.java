@@ -1,4 +1,4 @@
-package com.project.meepletable.socket;
+package com.project.meepletable.chat;
 
 import org.springframework.web.socket.*;
 

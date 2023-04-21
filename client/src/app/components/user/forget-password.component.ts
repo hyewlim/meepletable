@@ -35,7 +35,7 @@ export class ForgetPasswordComponent {
       summary: 'Success',
       detail: 'If your email exists, you will receive instructions to reset your password.'})
 
-    this.userService.resetPassword(this.resetForm.value['email'])
+    this.userService.sendResetPasswordEmail(this.resetForm.value['email'])
 
   }
 }

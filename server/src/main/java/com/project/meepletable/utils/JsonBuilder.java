@@ -1,14 +1,13 @@
 package com.project.meepletable.utils;
 
 import com.project.meepletable.models.Boardgame;
-import com.project.meepletable.models.ChatMessage;
+import com.project.meepletable.chat.ChatMessage;
 import com.project.meepletable.models.GameSession;
 import com.project.meepletable.models.User;
 import jakarta.json.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

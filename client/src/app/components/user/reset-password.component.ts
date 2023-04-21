@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {Form, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, Form, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
 import {UserService} from "./user.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {ChangePassword} from "../../shared/models";
 
@@ -14,40 +14,48 @@ import {ChangePassword} from "../../shared/models";
 export class ResetPasswordComponent {
 
   changeForm!: FormGroup;
+  uuid!: string;
 
+  passwordMatchingValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+
+    return password?.value === confirmPassword?.value ? null : { notmatched: true };
+  };
 
   constructor(private fb: FormBuilder,
               private messageService: MessageService,
               private userService: UserService,
-              private router: Router
+              private router: Router,
+              private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+
+    this.uuid = this.route.snapshot.params['uuid']
+
     this.changeForm = this.createForm()
   }
 
   createForm(): FormGroup {
     return this.fb.group({
-      newPassword: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
+      confirmPassword: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
       password: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
-      email: this.fb.control<string>('', [Validators.required, Validators.email])
-    })
+
+    }, {validators: this.passwordMatchingValidator})
   }
 
   processForm() {
 
-    const data: ChangePassword = this.changeForm.value as ChangePassword;
+    console.log(this.changeForm)
 
-
-
-    this.userService.changePassword(data)
+    this.userService.resetPassword(this.uuid, this.changeForm.value['password'])
       .then(
       value => {
         this.messageService.add({
           severity: 'success',
           summary: 'Success',
           detail: 'You have successfully changed your password! Please sign in using your new password.'})
-
         setTimeout(() => {
           this.router.navigate(['signin']);
           this.userService.logOutUser();

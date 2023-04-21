@@ -44,9 +44,6 @@ public class UserRepository {
 
     public boolean authUser(AuthenticationRequest request){
 
-        System.out.println("AUTHUSER EMAIL>>" + request.getEmail());
-        System.out.println("AUTHUSER PASSWORD>>" + request.getPassword());
-
         final SqlRowSet rs = jdbcTemplate.queryForRowSet(SQL_AUTH_USER, request.getEmail(), request.getPassword());
 
         boolean result = false;
@@ -89,13 +86,12 @@ public class UserRepository {
             user.setPassword(rs.getString("password"));
             user.setRole(Role.valueOf((rs.getString("role"))));
         }
-
         return Optional.of(user);
-
     }
 
     public boolean updatePassword(AuthenticationRequest request, String newPassword) {
 
         return jdbcTemplate.update(SQL_UPDATE_PASSWORD, newPassword, request.getEmail()) > 0;
     }
+
 }

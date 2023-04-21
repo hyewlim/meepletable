@@ -5,13 +5,13 @@ import com.project.meepletable.models.User;
 import com.project.meepletable.repositories.UserRepository;
 import com.project.meepletable.services.EmailSenderService;
 import com.project.meepletable.services.JwtService;
+import jakarta.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,8 @@ public class AuthenticationService {
     private JwtService jwtService;
     @Autowired
     private AuthenticationManager authenticationManager;
-
+    @Autowired
+    private TokenService tokenService;
     @Autowired
     private EmailSenderService emailSenderService;
 
@@ -77,18 +78,24 @@ public class AuthenticationService {
 
     }
 
-    public boolean resetPassword(String email) {
+    public boolean resetPasswordEmail(String email) throws MessagingException {
 
         Optional<User> user = repository.findByEmail(email);
 
 
-        String htmlMsg = "<p><b>Your Login details for Meeple Table</b><br><b>Email: </b> "
-                + email
-                + "<br><a href=\"http://localhost:4200/\">Click here to login</a></p>";
 
         if (user.get().getUsername() != null){
             String token = UUID.randomUUID().toString();
             PasswordResetToken resetToken = new PasswordResetToken(token, user.get());
+            tokenService.saveToken(resetToken);
+
+            String url = "http://localhost:4200/#/resetpw/" + token;
+
+            String htmlMsg = "<p><b>Your Login details for Meeple Table</b><br><b>Email: </b> "
+                    + email
+                    + "<br><a href="
+                    + url
+                    + ">Click here to change your password</a></p>";
 
             emailSenderService.sendEmail(
                     email,
@@ -100,6 +107,25 @@ public class AuthenticationService {
 
         logger.error(email + " not found");
         return false;
+
+    }
+
+    public boolean resetPassword(String token, String newPassword) {
+
+        Optional<PasswordResetToken> prt = tokenService.findToken(token);
+
+        if (prt.isPresent()) {
+
+            AuthenticationRequest request = new AuthenticationRequest(
+                    prt.get().getUser().getEmail(),
+                    prt.get().getUser().getPassword()
+            );
+
+            return repository.updatePassword(request, passwordEncoder.encode(newPassword));
+
+        } else {
+            return false;
+        }
 
     }
 

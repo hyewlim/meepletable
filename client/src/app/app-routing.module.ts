@@ -11,13 +11,15 @@ import {ForgetPasswordComponent} from "./components/user/forget-password.compone
 import {ResetPasswordComponent} from "./components/user/reset-password.component";
 import {CalendarComponent} from "./components/calendar/calendar.component";
 import {ChatComponent} from "./components/chat/chat.component";
+import {ChangePasswordComponent} from "./components/user/change-password.component";
 
 const appRoutes: Routes = [
   { path: '', component: SigninComponent },
   { path: 'home', component: HomeComponent },
   { path: 'signup', component: SignupComponent},
   { path: 'signin', component: SigninComponent},
-  { path: 'changepw', component: ResetPasswordComponent},
+  { path: 'changepw', component: ChangePasswordComponent},
+  { path: 'resetpw/:uuid', component: ResetPasswordComponent},
   { path: 'forget', component: ForgetPasswordComponent, children: [
       {path: ':email', component: ResetPasswordComponent}
     ]},
@@ -31,7 +33,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
+  imports: [RouterModule.forRoot(appRoutes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

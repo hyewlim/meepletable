@@ -1,4 +1,4 @@
-package com.project.meepletable.models;
+package com.project.meepletable.chat;
 
 import jakarta.persistence.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

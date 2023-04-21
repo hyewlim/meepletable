@@ -67,12 +67,23 @@ export class UserService{
 
   }
 
-  resetPassword(email: string) {
+  sendResetPasswordEmail(email: string) {
 
     const params = new HttpParams()
       .append('email', email)
 
-    return lastValueFrom(this.http.get("/api/v1/auth/reset", {params: params}))
+    return lastValueFrom(this.http.get("/api/v1/auth/resetPWEmail", {params: params}))
+  }
+
+  resetPassword(token: string, password: string){
+
+    const params = new HttpParams()
+      .append('token', token)
+      .append('password', password)
+
+    return lastValueFrom(this.http.get("/api/v1/auth/resetPW", {params: params}))
+
+
   }
 
 

@@ -4,19 +4,21 @@ import com.project.meepletable.models.User;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.lang.NonNull;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
 
-
+@Document(collection = "PWResetToken")
 public class PasswordResetToken {
 
     private static final int EXPIRATION = 60 * 24;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String id;
 
     @NonNull
     private String token;
@@ -25,6 +27,7 @@ public class PasswordResetToken {
     private LocalDateTime createdAt;
 
     @NonNull
+    @Indexed(name = "expiredAtIndex", expireAfterSeconds = 10)
     private LocalDateTime expiredAt;
 
     private LocalDateTime confirmedAt;
@@ -44,13 +47,20 @@ public class PasswordResetToken {
     }
 
     public PasswordResetToken(String token, User user) {
+        this.token = token;
+        this.user = user;
+        this.createdAt = LocalDateTime.now();
+        this.expiredAt = this.createdAt.plusHours(1);
     }
 
-    public Long getId() {
+    public PasswordResetToken() {
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -78,7 +88,6 @@ public class PasswordResetToken {
         this.confirmedAt = confirmedAt;
     }
 
-    @NonNull
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -93,5 +102,17 @@ public class PasswordResetToken {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "PasswordResetToken{" +
+                "id='" + id + '\'' +
+                ", token='" + token + '\'' +
+                ", createdAt=" + createdAt +
+                ", expiredAt=" + expiredAt +
+                ", confirmedAt=" + confirmedAt +
+                ", user=" + user +
+                '}';
     }
 }

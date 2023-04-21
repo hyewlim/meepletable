@@ -1,6 +1,5 @@
-package com.project.meepletable.repositories;
+package com.project.meepletable.chat;
 
-import com.project.meepletable.models.ChatMessage;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

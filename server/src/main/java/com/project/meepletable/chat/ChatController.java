@@ -1,8 +1,5 @@
-package com.project.meepletable.socket;
+package com.project.meepletable.chat;
 
-import com.project.meepletable.models.Boardgame;
-import com.project.meepletable.models.ChatMessage;
-import com.project.meepletable.services.ChatMessageService;
 import com.project.meepletable.utils.JsonBuilder;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;

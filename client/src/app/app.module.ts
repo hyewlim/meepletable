@@ -55,6 +55,7 @@ import {ScrollerModule} from "primeng/scroller";
 import {PaginatorModule} from "primeng/paginator";
 import {BadgeModule} from "primeng/badge";
 import {MenuModule} from "primeng/menu";
+import { ChangePasswordComponent } from './components/user/change-password.component';
 
 
 
@@ -77,6 +78,7 @@ import {MenuModule} from "primeng/menu";
     ResetPasswordComponent,
     CalendarComponent,
     ChatComponent,
+    ChangePasswordComponent,
 
   ],
     imports: [

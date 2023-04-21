@@ -1,7 +1,7 @@
-package com.project.meepletable.services;
+package com.project.meepletable.chat;
 
-import com.project.meepletable.models.ChatMessage;
-import com.project.meepletable.repositories.ChatMessageRepository;
+import com.project.meepletable.chat.ChatMessage;
+import com.project.meepletable.chat.ChatMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
