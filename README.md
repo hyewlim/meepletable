@@ -16,17 +16,15 @@ Meeple Table's primary concept is to facilitate connections among boardgamers an
 
 ## User
 
-### User Registration
-![user reg](/client/src/assets/readme-images/userreg.PNG "user reg")
+The platform includes a comprehensive user management system, which empowers users to reset their passwords in case they forget them. The system operates by sending an email to the user, containing a link and a token. Once the user clicks on the link, they will be redirected to the password reset page. If the token is legitimate, the user will be able to effortlessly change their password.
 
-### Login Page
-![login image](/client/src/assets/readme-images/login.PNG "login image")
-
-### Forget Password
-![forget password](/client/src/assets/readme-images/forget.PNG "forget password")
 
 ---
 
+## Game Collection
+
+Users are able to add games to their game collection.
+The search bar features a autocomplete api from boardgamegeek xml. Once the game has been added to the collection, details will be auto-generated into the table.
 
 
 
