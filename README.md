@@ -16,13 +16,13 @@ Meeple Table's primary concept is to facilitate connections among boardgamers an
 
 ## User
 
-# User Registration
+### User Registration
 ![user reg](/client/src/assets/readme-images/userreg.PNG "user reg")
 
-# Login Page
+### Login Page
 ![login image](/client/src/assets/readme-images/login.PNG "login image")
 
-# Forget Password
+### Forget Password
 ![forget password](/client/src/assets/readme-images/forget.PNG "forget password")
 
 ---
