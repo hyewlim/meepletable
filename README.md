@@ -37,18 +37,3 @@ Furthermore, the platform features a calendar page that facilitates users in swi
 
 
 ---
-
-
-
-
-
-### REST API
-
-
-
----
-
-## Limitations
-
-
-___
