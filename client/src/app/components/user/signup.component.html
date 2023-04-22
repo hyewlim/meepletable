@@ -34,6 +34,19 @@
 
         <br>
 
+        <label for="confirmPassword" class="block text-900 font-medium mb-2">Confirm Password</label>
+        <input id="confirmPassword" type="password" placeholder="confirm password" formControlName="confirmPassword" pInputText class="w-full mb-3">
+
+        <div *ngIf="signupForm.invalid && signupForm.controls['confirmPassword'].valid && (signupForm.controls['confirmPassword'].dirty || signupForm.controls['confirmPassword'].touched)" class="alert alert-danger">
+          <p-message severity="error" text="Passwords do not match. Please ensure that the passwords entered in both fields are the same"></p-message>
+        </div>
+
+        <div *ngIf="signupForm.controls['confirmPassword'].invalid && (signupForm.controls['confirmPassword'].dirty || signupForm.controls['confirmPassword'].touched)" class="alert alert-danger">
+          <p-message severity="error" text="Password length needs to be at least 8 characters"></p-message>
+        </div>
+
+        <br>
+
         <button pButton pRipple label="Register" icon="pi pi-user" class="w-full" type="submit" [disabled]="signupForm.invalid"></button>
       </form>
     </div>

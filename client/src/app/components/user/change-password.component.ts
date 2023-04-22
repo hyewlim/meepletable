@@ -4,6 +4,7 @@ import {MessageService} from "primeng/api";
 import {UserService} from "./user.service";
 import {Router} from "@angular/router";
 import {ChangePassword} from "../../shared/models";
+import {passwordMatchValidator} from "./custom-validators";
 
 @Component({
   selector: 'app-change-password',
@@ -27,10 +28,11 @@ export class ChangePasswordComponent {
 
   createForm(): FormGroup {
     return this.fb.group({
-      newPassword: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
       password: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
+      confirmPassword: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
+      oldPassword: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
       email: this.fb.control<string>('', [Validators.required, Validators.email])
-    })
+    }, {validators: passwordMatchValidator})
   }
 
   processForm() {

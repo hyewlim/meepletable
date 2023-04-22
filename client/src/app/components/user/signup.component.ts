@@ -4,6 +4,7 @@ import {Router} from "@angular/router";
 import {User} from "../../shared/models";
 import {UserService} from "./user.service";
 import {MessageService} from "primeng/api";
+import {passwordMatchValidator} from "./custom-validators";
 
 @Component({
   selector: 'app-signup',
@@ -33,8 +34,9 @@ export class SignupComponent implements OnInit {
     return this.fb.group({
       username: this.fb.control<string>('', [Validators.required, Validators.minLength(4)]),
       email: this.fb.control<string>('', [Validators.required, Validators.email]),
-      password: this.fb.control<string>('', [Validators.required, Validators.minLength(8)])
-    })
+      password: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
+      confirmPassword: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
+    }, {validators: passwordMatchValidator})
 
   }
 

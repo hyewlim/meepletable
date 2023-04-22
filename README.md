@@ -9,7 +9,7 @@ Deployed: xxx
 
 ## Description
 
-
+Meeple Table's primary concept is to facilitate connections among boardgamers and simplify the process of locating game sessions with fellow players.
 
 
 ---

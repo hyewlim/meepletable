@@ -4,6 +4,7 @@ import {UserService} from "./user.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MessageService} from "primeng/api";
 import {ChangePassword} from "../../shared/models";
+import {passwordMatchValidator} from "./custom-validators";
 
 @Component({
   selector: 'app-reset-password',
@@ -15,13 +16,6 @@ export class ResetPasswordComponent {
 
   changeForm!: FormGroup;
   uuid!: string;
-
-  passwordMatchingValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-
-    return password?.value === confirmPassword?.value ? null : { notmatched: true };
-  };
 
   constructor(private fb: FormBuilder,
               private messageService: MessageService,
@@ -42,7 +36,7 @@ export class ResetPasswordComponent {
       confirmPassword: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
       password: this.fb.control<string>('', [Validators.required, Validators.minLength(8)]),
 
-    }, {validators: this.passwordMatchingValidator})
+    }, {validators: passwordMatchValidator})
   }
 
   processForm() {
