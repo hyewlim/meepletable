@@ -3,7 +3,7 @@
 # Meeple Table
 VTTP 2022 Batch 2 Final Project
 
-Deployed: xxx
+Deployed: https://meepletable-production.up.railway.app/#/signin
 
 ---
 
