@@ -89,7 +89,7 @@ public class AuthenticationService {
             PasswordResetToken resetToken = new PasswordResetToken(token, user.get());
             tokenService.saveToken(resetToken);
 
-            String url = "http://localhost:4200/#/resetpw/" + token;
+            String url = "https://meepletable-production.up.railway.app/#/resetpw/" + token;
 
             String htmlMsg = "<p><b>Your Login details for Meeple Table</b><br><b>Email: </b> "
                     + email
