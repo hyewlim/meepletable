@@ -19,6 +19,7 @@ import java.util.List;
 
 
 @Controller
+@CrossOrigin()
 public class ChatController {
 
     @Autowired
