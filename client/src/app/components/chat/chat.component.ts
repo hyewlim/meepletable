@@ -12,17 +12,13 @@ import {ChatRepositoryService} from "./chat-repository.service";
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
 })
-export class ChatComponent implements OnDestroy{
+export class ChatComponent {
   messageLog: ChatMessage[] = [];
   disabled = true;
   newMessage!: string;
   private stompClient = null;
   username!: string;
   usernameSub$ !: Subscription;
-
-  jwtHeader = {
-    Authorization: 'Bearer ' + sessionStorage.getItem("jwt_token")
-  }
 
   @Input()
   sessionId!: string;
@@ -65,16 +61,13 @@ export class ChatComponent implements OnDestroy{
     this.stompClient = Stomp.over(socket);
 
     // @ts-ignore
-    this.stompClient.connect(this.jwtHeader, this.onConnected());
-  }
-
-  onConnected() {
-    //connect to start topic
-    // @ts-ignore
-    this.stompClient.subscribe('/start/topic');
-    //tell your username to server
-    // @ts-ignore
-    this.stompClient.send("/current/chat.register", this.jwtHeader, JSON.stringify({sender: this.username, type: 'JOIN'}))
+    this.stompClient.connect({}, (resp) => {
+      // @ts-ignore
+      this.stompClient.subscribe('/start/topic', (message) => {
+        console.log(JSON.parse(message.body))
+        this.showMessage(JSON.parse(message.body));
+      });
+    });
 
   }
 
@@ -91,8 +84,6 @@ export class ChatComponent implements OnDestroy{
         type: 0
       };
 
-      this.messageLog.push(chatMessage);
-
       // @ts-ignore
       this.stompClient.send("/current/chat.send", {}, JSON.stringify(chatMessage));
 
@@ -102,11 +93,10 @@ export class ChatComponent implements OnDestroy{
     }
   }
 
-  ngOnDestroy(): void {
-
-    // @ts-ignore
-    this.stompClient.unsubscribe
+  showMessage(message: ChatMessage) {
+    this.messageLog.push(message);
   }
+
 
 
 }

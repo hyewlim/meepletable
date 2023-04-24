@@ -1,38 +1,82 @@
+<!--<div class="p-mt-5 p-d-flex p-flex-column p-jcc">-->
+<!--  <div class="card">-->
+<!--      <p-scroller [items]="messageLog" [itemSize]="50" scrollHeight="350px" styleClass="border-1 surface-border" >-->
+<!--        <ng-template pTemplate="item" let-item let-options="options">-->
+<!--          <div class="flex align-items-center p-2" [ngClass]="{ 'surface-ground': options.odd }" style="height: 50px;">-->
+
+<!--            <div class="text-600" style="font-size: 0.5rem">{{item.time | date: 'shortTime'}}</div> &nbsp;-->
+<!--            <div class="text-xs text-600"> {{item.sender}}:</div>&nbsp;-->
+<!--            <div class="text-sm text-900"> {{item.content}}</div>-->
+
+<!--          </div>-->
+<!--        </ng-template>-->
+<!--      </p-scroller>-->
+<!--    -->
+<!--    <form #loginForm=ngForm>-->
+<!--    <div class="p-card-footer p-py-2 p-px-3">-->
+<!--      <div class="p-inputgroup">-->
+<!--        <input-->
+<!--          type="text"-->
+<!--          class="p-inputtext"-->
+<!--          placeholder="Type your message"-->
+<!--          [(ngModel)]="newMessage"-->
+<!--          name="newMessage"-->
+<!--          required>-->
+
+<!--        <button-->
+<!--          class="p-button p-button-primary"-->
+<!--          type="button"-->
+<!--          (click)="sendMessage()"-->
+<!--          [disabled]="!loginForm.valid"-->
+<!--        >Send-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    </form>-->
+
+<!--  </div>-->
+<!--</div>-->
+
+
+
 <div class="p-mt-5 p-d-flex p-flex-column p-jcc">
   <div class="card">
-      <p-scroller [items]="messageLog" [itemSize]="50" scrollHeight="350px" styleClass="border-1 surface-border" >
-        <ng-template pTemplate="item" let-item let-options="options">
-          <div class="flex align-items-center p-2" [ngClass]="{ 'surface-ground': options.odd }" style="height: 50px;">
 
-            <div class="text-600" style="font-size: 0.5rem">{{item.time | date: 'shortTime'}}</div> &nbsp;
-            <div class="text-xs text-600"> {{item.sender}}:</div>&nbsp;
-            <div class="text-sm text-900"> {{item.content}}</div>
+    <div *ngFor="let message of messageLog" styleClass="border-1 surface-border">
+      <div class="flex align-items-center p-2"  style="height: 30px;">
 
-          </div>
-        </ng-template>
-      </p-scroller>
-    <form #loginForm=ngForm>
-    <div class="p-card-footer p-py-2 p-px-3">
-      <div class="p-inputgroup">
-        <input
-          type="text"
-          class="p-inputtext"
-          placeholder="Type your message"
-          [(ngModel)]="newMessage"
-          name="newMessage"
-          required>
+        <div class="text-600" style="font-size: 0.5rem">{{message.time | date: 'shortTime'}}</div> &nbsp;
+        <div class="text-xs text-600"> {{message.sender}}:</div>&nbsp;
+        <div class="text-sm text-900"> {{message.content}}</div>
 
-        <button
-          class="p-button p-button-primary"
-          type="button"
-          (click)="sendMessage()"
-          [disabled]="!loginForm.valid"
-        >Send
-        </button>
       </div>
     </div>
+
+    <form #loginForm=ngForm>
+      <div class="p-card-footer p-py-2 p-px-3">
+        <div class="p-inputgroup">
+          <input
+            type="text"
+            class="p-inputtext"
+            placeholder="Type your message"
+            [(ngModel)]="newMessage"
+            name="newMessage"
+            required>
+
+          <button
+            class="p-button p-button-primary"
+            type="button"
+            (click)="sendMessage()"
+            [disabled]="!loginForm.valid"
+          >Send
+          </button>
+        </div>
+      </div>
     </form>
 
   </div>
 </div>
+
+
+
 
