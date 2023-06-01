@@ -1,7 +1,6 @@
 "# meepletable" 
 
 # Meeple Table
-VTTP 2022 Batch 2 Final Project
 
 Deployed: https://meepletable-production.up.railway.app/
 
